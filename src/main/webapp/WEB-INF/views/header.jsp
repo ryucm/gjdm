@@ -62,7 +62,7 @@
                             <div class="collapse" id="collapseLayouts1" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="#">달력</a>
-                                    <a class="nav-link" href="#">코드</a>
+                                    <a class="nav-link" href="code.do">코드</a>
                                     <a class="nav-link" href="standard_nation.do">국가</a>
                                     <a class="nav-link" href="#">지역</a>
                                 </nav>
