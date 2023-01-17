@@ -1,0 +1,25 @@
+/****************************************************************************/
+/**         Webfont												           **/
+/****************************************************************************/
+@charset 'utf-8';
+@font-face {
+    font-family: 'NotoSans-Light';
+    src: url('NotoSans-Light.otf'); /* IE9 Compat Modes */
+    src: url('NotoSans-Light.otf?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('NotoSans-Light.otf') format('opentype'), /* Open Type Font */
+    url('NotoSans-Light.otf') format('woff'); /* Modern Browsers */
+}
+@font-face {
+    font-family: 'NotoSans-Regular';
+    src: url('NotoSans-Regular.otf'); /* IE9 Compat Modes */
+    src: url('NotoSans-Regular.otf?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('NotoSans-Regular.otf') format('opentype'), /* Open Type Font */
+    url('NotoSans-Regular.otf') format('woff'); /* Modern Browsers */
+}
+@font-face {
+    font-family: 'NotoSans-Medium';
+    src: url('fonts/NotoSans-Medium.eot'); /* IE9 Compat Modes */
+    src: url('fonts/NotoSans-Medium.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('fonts/NotoSans-Medium.otf') format('opentype'), /* Open Type Font */
+    url('fonts/NotoSans-Medium.woff') format('woff'); /* Modern Browsers */
+}
