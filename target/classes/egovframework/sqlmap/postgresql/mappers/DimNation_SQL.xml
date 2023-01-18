@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="egovframework.gjdm.mapper.DimNationMapper">
+	
+	<resultMap id="dimNationList" type="egovframework.gjdm.service.DimNationVO">
+		<result property="nation_id" column="nation_id"/>
+		<result property="nation_nm" column="nation_nm"/>
+		<result property="nation_nm_en" column="nation_nm_en"/>
+		<result property="iso_cd" column="iso_cd"/>
+		<result property="iso3_cd" column="iso3_cd"/>
+		<result property="iso_no" column="iso_no"/>
+		<result property="continent" column="continent"/>
+		<result property="rgtr_dt" column="rgtr_dt"/>
+		<result property="rgtr_id" column="rgtr_id"/>
+		<result property="updt_dt" column="updt_dt"/>
+		<result property="updt_id" column="updt_id"/>
+	</resultMap>
+	
+	
+	<select id="selectDimNationList" resultMap="dimNationList">
+		select * from dwdm.dim_nation
+	</select>
+</mapper>

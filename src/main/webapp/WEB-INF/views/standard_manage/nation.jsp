@@ -1,5 +1,54 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
 <%@ include file="../header.jsp"%>
-	<embed src="http://211.253.9.250:8088/superset/dashboard/world_health/?native_filters_key=QsHiOxOe_d62PoGZp-swxweHZIhrf3A2x-z_M-e_Ucuz-tELsgZGUCWyUFa95fYH" id="layoutSidenav_content">
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid px-4">
+                        <h1 class="mt-4">국가관리</h1>
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i>
+                                국가 관리
+                            </div>
+                            <div class="card-body">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>국가ID</th>
+                                            <th>국가명(한글)</th>
+                                            <th>국가명(영문)</th>
+                                            <th>ISO코드</th>
+                                            <th>ISO3코드</th>
+                                            <th>ISON번호</th>
+                                            <th>대륙명(한글)</th>
+                                            <th>등록일시</th>
+                                            <th>등록자</th>
+                                            <th>변경일시</th>
+                                            <th>변경자</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach items="${dimNationList}" var="vo">
+                                        	<tr>
+                                        		<td><c:out value="${vo.nation_id}"/></td>
+                                        		<td><c:out value="${vo.nation_nm}"/></td>
+                                        		<td><c:out value="${vo.nation_nm_en}"/></td>
+                                        		<td><c:out value="${vo.iso_cd}"/></td>
+                                        		<td><c:out value="${vo.iso3_cd}"/></td>
+                                        		<td><c:out value="${vo.iso_no}"/></td>
+                                        		<td><c:out value="${vo.continent}"/></td>
+                                        		<td><c:out value="${vo.rgtr_dt}"/></td>
+                                        		<td><c:out value="${vo.rgtr_id}"/></td>
+                                        		<td><c:out value="${vo.updt_dt}"/></td>
+                                        		<td><c:out value="${vo.updt_id}"/></td>
+                                        	</tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
 <%@ include file="../footer.jsp"%>
-        
-.

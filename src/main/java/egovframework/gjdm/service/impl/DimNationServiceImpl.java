@@ -1,0 +1,23 @@
+package egovframework.gjdm.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import egovframework.gjdm.mapper.DimNationMapper;
+import egovframework.gjdm.service.DimNationService;
+import egovframework.gjdm.service.DimNationVO;
+
+@Service("DimNationService")
+public class DimNationServiceImpl implements DimNationService{
+	
+	@Autowired
+	DimNationMapper dimNationMapper;
+	
+	@Override
+	public List<DimNationVO> selectDimNationList() throws Exception {
+		// TODO Auto-generated method stub
+		return dimNationMapper.selectDimNationList();
+	}
+}
