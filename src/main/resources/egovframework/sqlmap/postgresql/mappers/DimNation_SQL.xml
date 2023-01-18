@@ -3,7 +3,7 @@
 
 <mapper namespace="egovframework.gjdm.mapper.DimNationMapper">
 	
-	<resultMap id="dimNationList" type="egovframework.gjdm.service.DimNationVO">
+	<resultMap id="dimNationList" type="egovframework.gjdm.vo.DimNationVO">
 		<result property="nation_id" column="nation_id"/>
 		<result property="nation_nm" column="nation_nm"/>
 		<result property="nation_nm_en" column="nation_nm_en"/>

@@ -11,7 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import egovframework.gjdm.service.DimNationService;
-import egovframework.gjdm.service.DimNationVO;
+import egovframework.gjdm.vo.DimNationVO;
 
 @Controller
 public class DimNationController {

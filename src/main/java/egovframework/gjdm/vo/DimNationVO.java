@@ -1,4 +1,4 @@
-package egovframework.gjdm.service;
+package egovframework.gjdm.vo;
 
 import java.util.Date;
 

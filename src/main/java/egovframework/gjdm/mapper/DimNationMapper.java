@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.egovframe.rte.psl.dataaccess.mapper.Mapper;
 
-import egovframework.gjdm.service.DimNationVO;
+import egovframework.gjdm.vo.DimNationVO;
 
 @Mapper("DimNationMapper")
 public interface DimNationMapper {

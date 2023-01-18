@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import egovframework.gjdm.mapper.DimNationMapper;
 import egovframework.gjdm.service.DimNationService;
-import egovframework.gjdm.service.DimNationVO;
+import egovframework.gjdm.vo.DimNationVO;
 
 @Service("DimNationService")
 public class DimNationServiceImpl implements DimNationService{
