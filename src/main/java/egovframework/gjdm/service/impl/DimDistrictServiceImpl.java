@@ -1,6 +1,7 @@
 package egovframework.gjdm.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,9 +17,9 @@ public class DimDistrictServiceImpl implements DimDistrictService {
 	DimDistrictMapper dimDistrictMapper;
 	
 	@Override
-	public List<DimDistrictVO> selectDimDistrictList() throws Exception {
+	public List<DimDistrictVO> selectDimDistrictList(Map<String, String> paramMap) throws Exception {
 		// TODO Auto-generated method stub
-		return dimDistrictMapper.selectDimDistrictList();
+		return dimDistrictMapper.selectDimDistrictList(paramMap);
 	}
 
 }

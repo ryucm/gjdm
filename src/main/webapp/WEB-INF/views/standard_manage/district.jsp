@@ -11,6 +11,24 @@
                                 지역 관리
                             </div>
                             <div class="card-body">
+                            	<form action="/gjdm/dimDistrictList.do" method="post">
+	                            	<label>
+	                            		국가
+	                            		<input type="text" id="nationId" value="${searchNation}">
+	                            	</label>
+	                            	<label>
+	                            		시도
+	                            		<input type="text" id="distLvl1" value="${searchDistLvl1}">
+	                            	</label>
+	                            	<label>
+	                            		군구
+	                            		<input type="text" id="distLvl2" value="${searchDistLvl2}">
+	                            	</label>
+	                            	<button type="submit">조회</button>
+                            	</form>
+<!-- 	                            	<button>저장</button>-->
+                            </div>
+                            <div class="card-body">
                                 <table>
                                     <thead>
                                         <tr>
@@ -34,9 +52,9 @@
                                         		<td><c:out value="${vo.distLvl1}"/></td>
                                         		<td><c:out value="${vo.distLvl2}"/></td>
                                         		<td><c:out value="${vo.distLvl3}"/></td>
-                                        		<td><c:out value="${vo.rgtrDt}"/></td>
+                                        		<td><fmt:formatDate value="${vo.rgtrDt}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
                                         		<td><c:out value="${vo.rgtrId}"/></td>
-                                        		<td><c:out value="${vo.updtDt}"/></td>
+                                        		<td><fmt:formatDate value="${vo.updtDt}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
                                         		<td><c:out value="${vo.updtId}"/></td>
                                         	</tr>
                                         </c:forEach>

@@ -2,6 +2,8 @@ package egovframework.gjdm.vo;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class DimDistrictVO {
 	private int districtId;
 	private int nationId;
