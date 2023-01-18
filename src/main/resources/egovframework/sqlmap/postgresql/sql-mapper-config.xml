@@ -2,11 +2,14 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
+	<!-- 쿼리에서 가져온 컬럼들을 자동으로 카멜케이스 표기법으로 변환 -->
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="true"></setting>
+	</settings>
+	
     <typeAliases>
-		<!-- <typeAlias alias="egovMap" type="org.egovframe.rte.psl.dataaccess.util.EgovMap"/> -->
-		<!-- <typeAlias alias="searchVO" type="egovframework.example.sample.service.SampleDefaultVO"/>
-		<typeAlias alias="sampleVO" type="egovframework.example.sample.service.SampleVO"/> -->
 		<typeAlias alias="dimNationVO" type="egovframework.gjdm.vo.DimNationVO"/>
+		<typeAlias alias="dimDistrictVO" type="egovframework.gjdm.vo.DimDistrictVO"/>
     </typeAliases>
    
     
