@@ -5,15 +5,29 @@
 
 	<select id="selectDimDistrictList" parameterType="java.util.Map" resultType="dimDistrictVO">
 		select * from dwdm.dim_district where 1=1
-		<if test="searchNation != null">
-			and nation_id like CONCAT('%', #{searchNation}, '%')
-		</if>
-		<if test="searchDistLvl1 != null">
-			and dist_lvl_1 like CONCAT('%', #{searchDistLvl1}, '%')
-		</if>
-		<if test="searchDistLvl2 != null">
-			and dist_lvl_2 like CONCAT('%', #{searchDistLvl2}, '%')
-		</if>
+			<if test="nationId != null and nationId != ''">
+				and nation_id = cast(#{nationId} as integer)
+			</if>
+			<if test="distLvl1 != null and distLvl1 != ''">
+				and dist_lvl_1 like CONCAT('%', #{distLvl1}, '%')
+			</if>
+			<if test="distLvl2 != null and distLvl2 != ''">
+				and dist_lvl_2 like CONCAT('%', #{distLvl2}, '%')
+			</if>
 	</select>
+	
+	<insert id="insertDimDistrict" parameterType="java.util.Map">
+		insert into dwdm.dim_district (nation_id, dist_lvl_1, dist_lvl_2, dist_lvl_3, rgtr_id, updt_id)
+			values (cast(#{nationId} as integer), #{distLvl1}, #{distLvl2}, #{distLvl3}, #{rgtr_id}, #{updt_id})
+	</insert>
+	
+	<update id="updateDimDistrict" parameterType="java.util.Map">
+		update dwdm.dim_district set nation_id = cast(#{nationId} as integer), dist_lvl_1 = #{distLvl1}, dist_lvl_2 = #{distLvl2}, dist_lvl_3 = #{distLvl3}, updt_dt = now(), updt_id = 'test2'
+			where district_id = cast(#{districtId} as integer)
+	</update>
+	
+	<delete id="deleteDimDistrict" parameterType="int">
+		delete from dwdm.dim_district where district_id = #{districtId}
+	</delete>
 
 </mapper>
