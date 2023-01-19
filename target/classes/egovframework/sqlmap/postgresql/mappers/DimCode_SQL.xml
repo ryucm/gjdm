@@ -10,4 +10,9 @@
 	<delete id="deleteDimCode">
 		delete from dwdm.dim_code where code_id=#{codeId}
 	</delete>
+	
+	<update id="updateDimCode">
+		update dwdm.dim_code set group_code=#{groupCode}, group_name=#{groupName}, code=#{code}, code_value=#{codeValue}, display_name=#{displayName}, use_yn=#{useYN}, updt_dt=now(), updt_id = 'change'
+		where code_id=cast(#{codeId} as integer)
+	</update>
 </mapper>
