@@ -1,6 +1,7 @@
 package egovframework.gjdm.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -30,7 +31,13 @@ public class DimCodeController {
 	
 	@RequestMapping("/deleteCode.do")
 	public String deleteCode(int codeId) throws Exception{
-		int result = dimCodeService.deleteDimCode(codeId);
+		dimCodeService.deleteDimCode(codeId);
+		return "redirect:code.do";
+	}
+	
+	@RequestMapping("/updateCode.do")
+	public String updateCode(@RequestParam Map<String, String> paramMap) throws Exception {
+		dimCodeService.updateDimCode(paramMap);
 		return "redirect:code.do";
 	}
 }
