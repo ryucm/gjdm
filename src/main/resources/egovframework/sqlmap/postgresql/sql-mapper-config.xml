@@ -10,7 +10,7 @@
     <typeAliases>
 		<typeAlias alias="dimNationVO" type="egovframework.gjdm.vo.DimNationVO"/>
  
-		<typeAlias alias="CalendarVO" type="egovframework.gjdm.vo.CalendarVO"/>
+		<typeAlias alias="dimCalendarVO" type="egovframework.gjdm.vo.DimCalendarVO"/>
 		<typeAlias alias="dimDistrictVO" type="egovframework.gjdm.vo.DimDistrictVO"/>
 		<typeAlias alias="dimCodeVO" type="egovframework.gjdm.vo.DimCodeVO"/>
     </typeAliases>

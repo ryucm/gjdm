@@ -13,7 +13,7 @@
                             <div class="card-body">
                             	<label>
                                   연도
-                                  <input type="search" id="nationId">
+                                  <input type="search" id="dateId">
                      			  <button><strong>조회</strong></button>
                                 <table>
                                     <thead>
@@ -35,7 +35,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <c:forEach items="${CalendarList}" var="vo">
+                                        <c:forEach items="${dimCalendarList}" var="vo">
                                         	<tr>
                                         		<td><c:out value="${vo.date_id}"/></td>
                                         		<td><c:out value="${vo.yyyymmdd}"/></td>

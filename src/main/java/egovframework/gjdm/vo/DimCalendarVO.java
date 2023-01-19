@@ -2,7 +2,7 @@ package egovframework.gjdm.vo;
 
 import java.util.Date;
 
-public class CalendarVO {
+public class DimCalendarVO {
 	private int date_id;
 	private String yyyymmdd;
 	private String yyyymm;
