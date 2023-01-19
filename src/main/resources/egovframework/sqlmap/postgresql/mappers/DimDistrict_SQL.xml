@@ -3,8 +3,17 @@
 
 <mapper namespace="egovframework.gjdm.mapper.DimDistrictMapper">
 
-	<select id="selectDimDistrictList" resultType="dimDistrictVO">
-		select * from dwdm.dim_district
+	<select id="selectDimDistrictList" parameterType="java.util.Map" resultType="dimDistrictVO">
+		select * from dwdm.dim_district where 1=1
+		<if test="searchNation != null">
+			and nation_id like CONCAT('%', #{searchNation}, '%')
+		</if>
+		<if test="searchDistLvl1 != null">
+			and dist_lvl_1 like CONCAT('%', #{searchDistLvl1}, '%')
+		</if>
+		<if test="searchDistLvl2 != null">
+			and dist_lvl_2 like CONCAT('%', #{searchDistLvl2}, '%')
+		</if>
 	</select>
 
 </mapper>
