@@ -15,7 +15,7 @@
 									<label for="nationSearch">국가</label>
 									<select name="nationId" id="nationSearch">
 										<c:forEach items="${dimNationList}" var="nation">
-											<option value="${nation.nationId}">${nation.nation_nm}</option>
+											<option value="${nation.nationId}">${nation.nationNm}</option>
 										</c:forEach>
 									</select>
 	                            	<label>
@@ -32,7 +32,7 @@
                             		<label for="nationInsert">국가</label>
 									<select name="nationId" id="nationInsert">
 										<c:forEach items="${dimNationList}" var="nation">
-											<option value="${nation.nationId}">${nation.nation_nm}</option>
+											<option value="${nation.nationId}">${nation.nationNm}</option>
 										</c:forEach>
 									</select>
 	                            	<label>
@@ -77,7 +77,7 @@
 	                                        		<td><select name="nationId" id="nationId${vo.nationId}" disabled>
 														<c:forEach items="${dimNationList}" var="nation">
 															<option <c:if test="${nation.nationId eq vo.nationId}">selected="selected"</c:if>
-															value="${nation.nationId}">${nation.nation_nm}</option>
+															value="${nation.nationId}">${nation.nationNm}</option>
 														</c:forEach>
 													</select></td>
 	                                        		<td><input name="distLvl1" class="${vo.districtId}" value="${vo.distLvl1}" readonly></td>

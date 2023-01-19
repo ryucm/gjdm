@@ -7,6 +7,13 @@
 	</resultMap>
 	
 	<select id="selectDimNationList" resultMap="dimNationList">
-		select * from dwdm.dim_nation
+		select * 
+		from dwdm.dim_nation
+	</select>
+	
+	<select id="selectDimNationListByContinent" parameterType="String" resultMap="dimNationList">
+		select * 
+		from dwdm.dim_nation 
+		where continent = #{continent}
 	</select>
 </mapper>

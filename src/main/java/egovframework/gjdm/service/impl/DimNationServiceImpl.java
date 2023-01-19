@@ -17,7 +17,13 @@ public class DimNationServiceImpl implements DimNationService{
 	
 	@Override
 	public List<DimNationVO> selectDimNationList() throws Exception {
-		// TODO Auto-generated method stub
+
 		return dimNationMapper.selectDimNationList();
+	}
+
+	@Override
+	public List<DimNationVO> selectDimNationListByContinent(String continent) throws Exception {
+		
+		return dimNationMapper.selectDimNationListByContinent(continent);
 	}
 }
