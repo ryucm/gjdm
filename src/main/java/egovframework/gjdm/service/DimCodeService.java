@@ -1,4 +1,4 @@
-package egovframework.gjdm.service;
+ package egovframework.gjdm.service;
 
 import java.util.List;
 
@@ -7,4 +7,5 @@ import egovframework.gjdm.vo.DimCodeVO;
 public interface DimCodeService {
 
 	public List<DimCodeVO> selectDimCodeList() throws Exception;
+	public int deleteDimCode(int codeId) throws Exception;
 }
