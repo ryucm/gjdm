@@ -8,6 +8,7 @@
 	</settings>
 	
     <typeAliases>
+    	<typeAlias alias="dimCodeVO" type="egovframework.gjdm.vo.DimCodeVO"/>
 		<typeAlias alias="dimNationVO" type="egovframework.gjdm.vo.DimNationVO"/>
 		<typeAlias alias="dimDistrictVO" type="egovframework.gjdm.vo.DimDistrictVO"/>
     </typeAliases>

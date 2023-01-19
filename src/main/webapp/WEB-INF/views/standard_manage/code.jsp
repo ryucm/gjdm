@@ -2,56 +2,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ include file="../header.jsp"%>
-<<<<<<< HEAD
-            <div id="layoutSidenav_content">
-                <main>
-                    <div class="container-fluid px-4">
-                        <h1 class="mt-4">코드관리</h1>
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-table me-1"></i>
-                                코드 관리
-                            </div>
-                            <div class="card-body">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>코드ID</th>
-                                            <th>코드관리</th>
-                                            <th>코드그룹명</th>
-                                            <th>코드</th>
-                                            <th>코드값</th>
-                                            <th>출력명</th>
-                                            <th>사용여부</th>
-                                            <th>등록일시</th>
-                                            <th>등록자</th>
-                                            <th>변경일시</th>
-                                            <th>변경자</th>
-
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>61</td>
-                                            <td>2011/04/25</td>
-                                            <td>$320,800</td>
-                                            <td>$320,800</td>
-                                            <td>$320,800</td>
-                                            <td>$320,800</td>
-                                            <td>$320,800</td>
-                                            <td>$320,800</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </main>
-            </div>
-=======
 <script>
 function fn_submit() {
 	if(document.frm.groupCode.value == ""){
@@ -78,6 +28,13 @@ function fn_delete(codeId){
 		location = "deleteCode.do?codeId="+codeId;
 	}
 }
+
+function updateDistrict${vo.codeId}() {
+	$("#groupCode${vo.groupCode}").attr('disabled', false);
+	$(".${vo.codeId}").attr('readonly', false);
+	$("#updateBtn${vo.codeId}").hide();
+	$("#submitBtn${vo.codeId}").attr('hidden', false);
+};
 
 </script>
 <div id="layoutSidenav_content">
@@ -146,7 +103,18 @@ function fn_delete(codeId){
 					<tbody>
 						<c:forEach items="${dimCodeList}" var="vo">
 							<tr>
-								<td><c:out value="${vo.codeId}" /></td>
+								<td><input name="codeId" class="${vo.codeId}" value="${vo.codeId}"  readonly size="8%"></td>
+								<td><input name="groupCode" class="${vo.groupCode}" value="${vo.groupCode}"  readonly size="8%"></td>
+								<td><input name="groupName" class="${vo.groupName}" value="${vo.groupName}"  readonly size="8%"></td>
+								<td><input name="code" class="${vo.code}" value="${vo.code}"  readonly size="8%"></td>
+								<td><input name="codeValue" class="${vo.codeValue}" value="${vo.codeValue}"  readonly size="8%"></td>
+								<td><input name="displayName" class="${vo.displayName}" value="${vo.displayName}"  readonly size="8%"></td>
+								<td><input name="useYN" class="${vo.useYN}" value="${vo.useYN}"  readonly size="1%"></td>
+								<td><input value="<fmt:formatDate value="${vo.rgtrDt}" pattern="yyyy-MM-dd HH:mm:ss"/>"  readonly size="18.5%"></td>
+								<td><input name="rgtrId" class="${vo.rgtrId}" value="${vo.rgtrId}"  readonly size="8%"></td>
+								<td><input value="<fmt:formatDate value="${vo.rgtrDt}" pattern="yyyy-MM-dd HH:mm:ss"/>"  readonly size="18.5%"></td>
+								<td><input name="codeId" class="${vo.codeId}" value="${vo.codeId}"  readonly size="8%"></td>
+							<%-- 	<td><c:out value="${vo.codeId}" /></td>
 								<td><c:out value="${vo.groupCode}" /></td>
 								<td><c:out value="${vo.groupName}" /></td>
 								<td><c:out value="${vo.code}" /></td>
@@ -156,11 +124,12 @@ function fn_delete(codeId){
 								<td><fmt:formatDate value="${vo.rgtrDt}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 								<td><c:out value="${vo.rgtrId}" /></td>
 								<td><fmt:formatDate value="${vo.updtDt}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-								<td><c:out value="${vo.updtId}" /></td>
-								<td>
-									<form name="update" method="get" action="/code.do?codeId=${vo.codeId}">
-										<button type="submit" value="delete">수정</button>
-									</form>
+								<td><c:out value="${vo.updtId}" /></td> --%>
+								<td id="updateBtn${vo.codeId}">
+									<button type="button" onClick="updateDistrict${vo.codeId}()" value="수정">수정</button>
+								</td>
+								<td id="submitBtn${vo.codeId}" hidden>
+									<button type="submit" onClick="updateDistrict${vo.codeId}()">수정</button>
 								</td>
 								<td>
 									<button type="button" onclick="fn_delete(${vo.codeId})">삭제</button>
@@ -173,5 +142,4 @@ function fn_delete(codeId){
 		</div>
 	</main>
 </div>
->>>>>>> 4998cb63e1c3314063716d07b75f3bd3c8f66966
 <%@ include file="../footer.jsp"%>
