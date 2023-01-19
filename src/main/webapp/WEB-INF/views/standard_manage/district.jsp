@@ -15,7 +15,7 @@
 									<label for="nationSearch">국가</label>
 									<select name="nationId" id="nationSearch">
 										<c:forEach items="${dimNationList}" var="nation">
-											<option value="${nation.nationId}">${nation.nation_nm}</option>
+											<option value="${nation.nationId}">${nation.nationNm}</option>
 										</c:forEach>
 									</select>
 	                            	<label>
@@ -32,7 +32,7 @@
                             		<label for="nationInsert">국가</label>
 									<select name="nationId" id="nationInsert">
 										<c:forEach items="${dimNationList}" var="nation">
-											<option value="${nation.nationId}">${nation.nation_nm}</option>
+											<option value="${nation.nationId}">${nation.nationNm}</option>
 										</c:forEach>
 									</select>
 	                            	<label>
@@ -69,15 +69,15 @@
                                             <th></th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody class="managingList">
                                         <c:forEach items="${dimDistrictList}" var="vo">
-<!--                                         	<tr> -->
+                                        	<tr>
 	                                        	<form action="/gjdm/updateDimDistrict.do" method="post">
 	                                        		<td><input name="districtId" value="${vo.districtId}" readonly></td>
 	                                        		<td><select name="nationId" id="nationId${vo.nationId}" disabled>
 														<c:forEach items="${dimNationList}" var="nation">
 															<option <c:if test="${nation.nationId eq vo.nationId}">selected="selected"</c:if>
-															value="${nation.nationId}">${nation.nation_nm}</option>
+															value="${nation.nationId}">${nation.nationNm}</option>
 														</c:forEach>
 													</select></td>
 	                                        		<td><input name="distLvl1" class="${vo.districtId}" value="${vo.distLvl1}" readonly></td>
@@ -91,7 +91,7 @@
 	                                        		<td id="submitBtn${vo.districtId}" hidden><button type="submit" onClick="updateDistrict${vo.districtId}()">수정</button></td>
 	                                        		<td><a href="/gjdm/deleteDimDistrict.do?districtId=${vo.districtId}">삭제</a></td>
 	                                        	</form>
-<!--                                         	</tr> -->
+                                        	</tr>
                                         	<script>
 												function updateDistrict${vo.districtId}() {
 													$("#nationId${vo.nationId}").attr('disabled', false);

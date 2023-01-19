@@ -14,6 +14,7 @@
 			<if test="distLvl2 != null and distLvl2 != ''">
 				and dist_lvl_2 like CONCAT('%', #{distLvl2}, '%')
 			</if>
+			order by district_id
 	</select>
 	
 	<insert id="insertDimDistrict" parameterType="java.util.Map">
