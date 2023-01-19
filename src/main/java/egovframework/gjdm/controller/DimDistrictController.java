@@ -11,48 +11,61 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import egovframework.gjdm.service.DimDistrictService;
+import egovframework.gjdm.service.DimNationService;
 import egovframework.gjdm.vo.DimDistrictVO;
+import egovframework.gjdm.vo.DimNationVO;
 
 @Controller
 public class DimDistrictController {
+	
+	@Resource(name="DimNationService")
+	private DimNationService DimNationService;
+	
 	@Resource(name="DimDistrictService")
 	private DimDistrictService dimDistrictService;
 	
 	@RequestMapping("/dimDistrictList.do")
 	public String selectDimDistrictList(Model model, @RequestParam Map<String, String> paramMap) throws Exception {
-		List<DimDistrictVO> list = dimDistrictService.selectDimDistrictList(paramMap);
+		List<DimNationVO> nationList = DimNationService.selectDimNationList();
+		List<DimDistrictVO> districtList = dimDistrictService.selectDimDistrictList(paramMap);
 		
-		model.addAttribute("dimDistrictList", list);
+		model.addAttribute("dimNationList", nationList);
+		model.addAttribute("dimDistrictList", districtList);
 		
-		System.out.println("11111111" + paramMap);
-		System.out.println("11111111" + paramMap.get("distLvl1"));
-		System.out.println("11111111" + paramMap.get("searchDistLvl2"));
-		
-		if(paramMap.get("searchNation") != null && !paramMap.get("searchNation").equals("")) {
-			System.out.println(paramMap.get("searchNation"));
-			System.out.println(paramMap.get("searchDistLvl1"));
-			System.out.println(paramMap.get("searchDistLvl2"));
-			model.addAttribute("searchNation", paramMap.get("searchNation"));
+		if(paramMap.get("nationId") != null && !paramMap.get("nationId").equals("")) {
+			model.addAttribute("nationId", paramMap.get("nationId"));
 		}
 		
-		if(paramMap.get("searchDistLvl1") != null && !paramMap.get("searchDistLvl1").equals("")) {
-			System.out.println(paramMap.get("searchNation"));
-			System.out.println(paramMap.get("searchDistLvl1"));
-			System.out.println(paramMap.get("searchDistLvl2"));
-			model.addAttribute("searchDistLvl1", paramMap.get("searchDistLvl1"));
+		if(paramMap.get("distLvl1") != null && !paramMap.get("distLvl1").equals("")) {
+			model.addAttribute("distLvl1", paramMap.get("distLvl1"));
 		}
 		
-		if(paramMap.get("searchDistLvl2") != null && !paramMap.get("searchDistLvl2").equals("")) {
-			System.out.println(paramMap.get("searchNation"));
-			System.out.println(paramMap.get("searchDistLvl1"));
-			System.out.println(paramMap.get("searchDistLvl2"));
-			model.addAttribute("searchDistLvl2", paramMap.get("searchDistLvl2"));
+		if(paramMap.get("distLvl2") != null && !paramMap.get("distLvl2").equals("")) {
+			model.addAttribute("distLvl2", paramMap.get("distLvl2"));
 		}
-		
-		System.out.println("222222222" + paramMap.get("searchNation"));
-		System.out.println("222222222" + paramMap.get("searchDistLvl1"));
-		System.out.println("222222222" + paramMap.get("searchDistLvl2"));
 		
 		return "standard_manage/district";
 	}
+	
+	@RequestMapping("/insertDimDistrict.do")
+	public String insertDimDistrict(@RequestParam Map<String, String> paramMap) throws Exception {
+		dimDistrictService.insertDimDistrict(paramMap);
+		
+		return "redirect:dimDistrictList.do";
+	}
+	
+	@RequestMapping("/updateDimDistrict.do")
+	public String updateDimDistrict(@RequestParam Map<String, String> paramMap) throws Exception {
+		dimDistrictService.updateDimDistrict(paramMap);
+		
+		return "redirect:dimDistrictList.do";
+	}
+	
+	@RequestMapping("/deleteDimDistrict.do")
+	public String deleteDimDistrict(@RequestParam int districtId) throws Exception {
+		dimDistrictService.deleteDimDistrict(districtId);
+		
+		return "redirect:dimDistrictList.do";
+	}
+	
 }

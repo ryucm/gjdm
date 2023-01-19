@@ -22,4 +22,22 @@ public class DimDistrictServiceImpl implements DimDistrictService {
 		return dimDistrictMapper.selectDimDistrictList(paramMap);
 	}
 
+	@Override
+	public void insertDimDistrict(Map<String, String> paramMap) throws Exception {
+		// TODO Auto-generated method stub
+		dimDistrictMapper.insertDimDistrict(paramMap);
+	}
+	
+	@Override
+	public void updateDimDistrict(Map<String, String> paramMap) throws Exception {
+		// TODO Auto-generated method stub
+		dimDistrictMapper.updateDimDistrict(paramMap);
+	}
+
+	@Override
+	public void deleteDimDistrict(int districtId) throws Exception {
+		// TODO Auto-generated method stub
+		dimDistrictMapper.deleteDimDistrict(districtId);
+	}
+
 }
