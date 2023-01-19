@@ -71,7 +71,7 @@
                                     </thead>
                                     <tbody class="managingList">
                                         <c:forEach items="${dimDistrictList}" var="vo">
-                                        	<tr>
+                                         	<tr>
 	                                        	<form action="/gjdm/updateDimDistrict.do" method="post">
 	                                        		<td><input name="districtId" value="${vo.districtId}" readonly></td>
 	                                        		<td><select name="nationId" id="nationId${vo.nationId}" disabled>
@@ -91,7 +91,7 @@
 	                                        		<td id="submitBtn${vo.districtId}" hidden><button type="submit" onClick="updateDistrict${vo.districtId}()">수정</button></td>
 	                                        		<td><a href="/gjdm/deleteDimDistrict.do?districtId=${vo.districtId}">삭제</a></td>
 	                                        	</form>
-                                        	</tr>
+                                         	</tr>
                                         	<script>
 												function updateDistrict${vo.districtId}() {
 													$("#nationId${vo.nationId}").attr('disabled', false);
