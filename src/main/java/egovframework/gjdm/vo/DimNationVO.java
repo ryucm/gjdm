@@ -3,53 +3,53 @@ package egovframework.gjdm.vo;
 import java.util.Date;
 
 public class DimNationVO {
-	private int nation_id;
-	private String nation_nm;
-	private String nation_nm_en;
-	private String iso_cd;
-	private String iso3_cd;
-	private String iso_no;
+	private int nationId;
+	private String nationNm;
+	private String nationNmEn;
+	private String isoCd;
+	private String iso3Cd;
+	private String isoNo;
 	private String continent;
-	private Date rgtr_dt;
-	private String rgtr_id;
-	private Date updt_dt;
-	private String updt_id;
+	private Date rgtrDt;
+	private String rgtrId;
+	private Date updtDt;
+	private String updtId;
 	
-	public int getNation_id() {
-		return nation_id;
+	public int getNationId() {
+		return nationId;
 	}
-	public void setNation_id(int nation_id) {
-		this.nation_id = nation_id;
+	public void setNationId(int nationId) {
+		this.nationId = nationId;
 	}
-	public String getNation_nm() {
-		return nation_nm;
+	public String getNationNm() {
+		return nationNm;
 	}
-	public void setNation_nm(String nation_nm) {
-		this.nation_nm = nation_nm;
+	public void setNationNm(String nationNm) {
+		this.nationNm = nationNm;
 	}
-	public String getNation_nm_en() {
-		return nation_nm_en;
+	public String getNationNmEn() {
+		return nationNmEn;
 	}
-	public void setNation_nm_en(String nation_nm_en) {
-		this.nation_nm_en = nation_nm_en;
+	public void setNationNmEn(String nationNmEn) {
+		this.nationNmEn = nationNmEn;
 	}
-	public String getIso_cd() {
-		return iso_cd;
+	public String getIsoCd() {
+		return isoCd;
 	}
-	public void setIso_cd(String iso_cd) {
-		this.iso_cd = iso_cd;
+	public void setIsoCd(String isoCd) {
+		this.isoCd = isoCd;
 	}
-	public String getIso3_cd() {
-		return iso3_cd;
+	public String getIso3Cd() {
+		return iso3Cd;
 	}
-	public void setIso3_cd(String iso3_cd) {
-		this.iso3_cd = iso3_cd;
+	public void setIso3Cd(String iso3Cd) {
+		this.iso3Cd = iso3Cd;
 	}
-	public String getIso_no() {
-		return iso_no;
+	public String getIsoNo() {
+		return isoNo;
 	}
-	public void setIso_no(String iso_no) {
-		this.iso_no = iso_no;
+	public void setIsoNo(String isoNo) {
+		this.isoNo = isoNo;
 	}
 	public String getContinent() {
 		return continent;
@@ -57,30 +57,29 @@ public class DimNationVO {
 	public void setContinent(String continent) {
 		this.continent = continent;
 	}
-	public Date getRgtr_dt() {
-		return rgtr_dt;
+	public Date getRgtrDt() {
+		return rgtrDt;
 	}
-	public void setRgtr_dt(Date rgtr_dt) {
-		this.rgtr_dt = rgtr_dt;
+	public void setRgtrDt(Date rgtrDt) {
+		this.rgtrDt = rgtrDt;
 	}
-	public String getRgtr_id() {
-		return rgtr_id;
+	public String getRgtrId() {
+		return rgtrId;
 	}
-	public void setRgtr_id(String rgtr_id) {
-		this.rgtr_id = rgtr_id;
+	public void setRgtrId(String rgtrId) {
+		this.rgtrId = rgtrId;
 	}
-	public Date getUpdt_dt() {
-		return updt_dt;
+	public Date getUpdtDt() {
+		return updtDt;
 	}
-	public void setUpdt_dt(Date updt_dt) {
-		this.updt_dt = updt_dt;
+	public void setUpdtDt(Date updtDt) {
+		this.updtDt = updtDt;
 	}
-	public String getUpdt_id() {
-		return updt_id;
+	public String getUpdtId() {
+		return updtId;
 	}
-	public void setUpdt_id(String updt_id) {
-		this.updt_id = updt_id;
+	public void setUpdtId(String updtId) {
+		this.updtId = updtId;
 	}
-	
 	
 }

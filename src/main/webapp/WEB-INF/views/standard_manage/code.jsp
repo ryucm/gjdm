@@ -12,6 +12,21 @@
                                 코드 관리
                             </div>
                             <div class="card-body">
+                            	  <label>
+	                                  코드 ID
+	                                  <input type="search" id="nationId">
+	                               </label>
+	                               <label>
+	                                  코드 그룹
+	                                  <input type="search" id="distLvl1">
+	                               </label>
+	                               <label>
+	                                  코드
+	                                  <input type="search" id="distLvl2">
+	                               </label>
+	                               <button>조회</button>
+	                               <button>저장</button>
+	                            </div>
                                 <table>
                                     <thead>
                                         <tr>
@@ -30,19 +45,21 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>61</td>
-                                            <td>2011/04/25</td>
-                                            <td>$320,800</td>
-                                            <td>$320,800</td>
-                                            <td>$320,800</td>
-                                            <td>$320,800</td>
-                                            <td>$320,800</td>
-                                            <td>$320,800</td>
-                                        </tr>
+                                           <c:forEach items="${dimCodeList}" var="vo">
+                                        	<tr>
+                                        		<td><c:out value="${vo.codeId}"/></td>
+                                        		<td><c:out value="${vo.groupCode}"/></td>
+                                        		<td><c:out value="${vo.groupName}"/></td>
+                                        		<td><c:out value="${vo.code}"/></td>
+                                        		<td><c:out value="${vo.codeValue}"/></td>
+                                        		<td><c:out value="${vo.displayName}"/></td>
+                                        		<td><c:out value="${vo.useYN}"/></td>
+                                        		<td><c:out value="${vo.rgtrDt}"/></td>
+                                        		<td><c:out value="${vo.rgtrId}"/></td>
+                                        		<td><c:out value="${vo.updtDt}"/></td>
+                                        		<td><c:out value="${vo.updtId}"/></td>
+                                        	</tr>
+                                        </c:forEach>
                                     </tbody>
                                 </table>
                             </div>

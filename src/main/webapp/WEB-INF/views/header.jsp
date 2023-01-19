@@ -66,7 +66,7 @@
                                     <a class="nav-link" href="CalendarList.do">달력</a>
                                     <a class="nav-link" href="code.do">코드</a>
                                     <a class="nav-link" href="dimNationList.do">국가</a>
-                                    <a class="nav-link" href="#">지역</a>
+                                    <a class="nav-link" href="dimDistrictList.do">지역</a>
                                 </nav>
                             </div>
                             
