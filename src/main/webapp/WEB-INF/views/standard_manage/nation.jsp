@@ -11,6 +11,14 @@
                                 국가 관리
                             </div>
                             <div class="card-body">
+	                            <div class="card-body">
+	                               <label>
+	                                  대륙
+	                                  <input type="search" id="continent">
+	                               </label>
+	                               <button>조회</button>
+	                               <button>저장</button>
+	                            </div>
                                 <table>
                                     <thead>
                                         <tr>
@@ -31,17 +39,17 @@
                                     <tbody>
                                         <c:forEach items="${dimNationList}" var="vo">
                                         	<tr>
-                                        		<td><c:out value="${vo.nation_id}"/></td>
-                                        		<td><c:out value="${vo.nation_nm}"/></td>
-                                        		<td><c:out value="${vo.nation_nm_en}"/></td>
-                                        		<td><c:out value="${vo.iso_cd}"/></td>
-                                        		<td><c:out value="${vo.iso3_cd}"/></td>
-                                        		<td><c:out value="${vo.iso_no}"/></td>
+                                        		<td><c:out value="${vo.nationId}"/></td>
+                                        		<td><c:out value="${vo.nationNm}"/></td>
+                                        		<td><c:out value="${vo.nationNmEn}"/></td>
+                                        		<td><c:out value="${vo.isoCd}"/></td>
+                                        		<td><c:out value="${vo.iso3Cd}"/></td>
+                                        		<td><c:out value="${vo.isoNo}"/></td>
                                         		<td><c:out value="${vo.continent}"/></td>
-                                        		<td><c:out value="${vo.rgtr_dt}"/></td>
-                                        		<td><c:out value="${vo.rgtr_id}"/></td>
-                                        		<td><c:out value="${vo.updt_dt}"/></td>
-                                        		<td><c:out value="${vo.updt_id}"/></td>
+                                        		<td><c:out value="${vo.rgtrDt}"/></td>
+                                        		<td><c:out value="${vo.rgtrId}"/></td>
+                                        		<td><c:out value="${vo.updtDt}"/></td>
+                                        		<td><c:out value="${vo.updtId}"/></td>
                                         	</tr>
                                         </c:forEach>
                                     </tbody>
