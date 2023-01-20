@@ -26,7 +26,7 @@
 	                            		군구
 	                            		<input type="text" name="distLvl2" value="${distLvl2}">
 	                            	</label>
-	                            	<button type="submit">조회</button>
+	                            	<button type="submit" class="districtBtn">조회</button>
                             	</form>
                             	<form action="/gjdm/insertDimDistrict.do" method="post">
                             		<label for="nationInsert">국가</label>
@@ -49,8 +49,14 @@
 	                            	</label>
 	                            	<input type="hidden" name="rgtr_id" value="test">
 	                            	<input type="hidden" name="updt_id" value="test">
-	                            	<button type="submit">추가</button>
+	                            	<button type="submit" class="districtBtn">추가</button>
 	                            </form>
+                            </div>
+                        </div>
+                        <div class="card mb-4 districtList">
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i>
+                                지역 리스트
                             </div>
                             <div class="card-body">
                                 <table>
@@ -72,42 +78,36 @@
                                     <tbody>
                                         <c:forEach items="${dimDistrictList}" var="vo">
                                          	<tr>
-	                                        	<form action="/gjdm/updateDimDistrict.do" method="post" class="managingList">
+	                                        	<form action="/gjdm/updateDimDistrict.do" method="post">
 	                                        		<td><input name="districtId" class="districtInput" value="${vo.districtId}" readonly></td>
-	                                        		<td><select name="nationId" id="nationId${vo.nationId}" disabled>
+	                                        		<td><select name="nationId" id="nationId${vo.districtId}" disabled>
 														<c:forEach items="${dimNationList}" var="nation">
 															<option <c:if test="${nation.nationId eq vo.nationId}">selected="selected"</c:if>
 															value="${nation.nationId}">${nation.nationNm}</option>
 														</c:forEach>
 													</select></td>
-	                                        		<td><input name="distLvl1" class="${vo.districtId} districtInput" value="${vo.distLvl1}" readonly></td>
-	                                        		<td><input name="distLvl2" class="${vo.districtId} districtInput" value="${vo.distLvl2}" readonly></td>
-	                                        		<td><input name="distLvl3" class="${vo.districtId} districtInput" value="${vo.distLvl3}" readonly></td>
-	                                        		<td><input value="<fmt:formatDate value="${vo.rgtrDt}" pattern="yyyy-MM-dd HH:mm:ss"/>" readonly></td>
-	                                        		<td><input value="${vo.rgtrId}" class="districtInput" readonly/></td>
-	                                        		<td><input value="<fmt:formatDate value="${vo.updtDt}" pattern="yyyy-MM-dd HH:mm:ss"/>" readonly></td>
-	                                        		<td><input name="updtId" id="updtId${vo.districtId}" class="districtInput" value="${vo.updtId}" readonly></td>
-	                                        		<td id="updateBtn${vo.districtId}"><input type="button" onClick="updateDistrict${vo.districtId}()" value="수정"></td>
-	                                        		<td id="submitBtn${vo.districtId}" hidden><button type="submit" onClick="updateDistrict${vo.districtId}()">수정</button></td>
-	                                        		<td><a href="/gjdm/deleteDimDistrict.do?districtId=${vo.districtId}">삭제</a></td>
+	                                        		<td><input name="distLvl1" class="${vo.districtId} districtInput" value="${vo.distLvl1}" disabled required></td>
+	                                        		<td><input name="distLvl2" class="${vo.districtId} districtInput" value="${vo.distLvl2}" disabled required></td>
+	                                        		<td><input name="distLvl3" class="${vo.districtId} districtInput" value="${vo.distLvl3}" disabled required></td>
+	                                        		<td><input value="<fmt:formatDate value="${vo.rgtrDt}" pattern="yyyy-MM-dd HH:mm:ss"/>" disabled></td>
+	                                        		<td><input value="${vo.rgtrId}" class="districtIdInput" disabled/></td>
+	                                        		<td><input value="<fmt:formatDate value="${vo.updtDt}" pattern="yyyy-MM-dd HH:mm:ss"/>" disabled></td>
+	                                        		<td><input name="updtId" id="updtId${vo.districtId}" class="districtIdInput" value="${vo.updtId}" disabled></td>
+	                                        		<td id="updateBtn${vo.districtId}"><input type="button" onClick="updateDistrict${vo.districtId}()" class="districtBtn" value="수정"></td>
+	                                        		<td id="submitBtn${vo.districtId}" hidden><button type="submit" class="districtBtn">저장</button></td>
+	                                        		<td><a href="/gjdm/deleteDimDistrict.do?districtId=${vo.districtId}" class="districtBtn">삭제</a></td>
 	                                        	</form>
+	                                        	<script>
+													function updateDistrict${vo.districtId}() {
+														$("#nationId${vo.districtId}").attr('disabled', false);
+														$(".${vo.districtId}").attr('disabled', false);
+														$("#updateBtn${vo.districtId}").hide();
+														$("#submitBtn${vo.districtId}").attr('hidden', false);
+													};
+													$(function() {
+													});
+												</script>
                                          	</tr>
-                                        	<script>
-												function updateDistrict${vo.districtId}() {
-													$("#nationId${vo.nationId}").attr('disabled', false);
-													$(".${vo.districtId}").attr('readonly', false)
-																		  .css("border", "1px solid");
-													$("#updateBtn${vo.districtId}").hide();
-													$("#submitBtn${vo.districtId}").attr('hidden', false);
-												};
-												$(function(){
-													if($("input").is("[readonly]")) {													
-														$("input[readonly]").css("border", "none");
-													}
-														$(":focus-visible").css("outline", "red !important");
-													$(".districtInput").css("width", "100px");
-												})
-											</script>
                                         </c:forEach>
                                     </tbody>
                                 </table>
@@ -116,4 +116,88 @@
                     </div>
                 </main>
             </div>
+            <style>
+            	.districtList > .card-body {
+            		padding: 0;
+            	}
+            	table {
+            		margin: 0;
+            		width: 100%;
+            	}
+            	thead {
+            		border-bottom: 3px solid black;
+            		height: 40px;
+            	}
+            	th, td {
+            		text-align: center;
+            		padding: 0;
+            	}
+            	tr {
+            		padding: 3px;
+            		height: 35px;
+            	}
+            	tr:nth-child(even) {
+            		background-color: rgba(0, 0, 0, 0.03);
+            	}
+            	select {
+            		width: 120px;
+            	}
+            	select[disabled] {
+				    -webkit-appearance:none; /* 크롬 화살표 없애기 */
+				    -moz-appearance:none; /* 파이어폭스 화살표 없애기 */
+				    appearance:none; /* 화살표 없애기 */
+				    border: none;
+				    text-align: center;
+				    background: none;
+				}
+				input {
+					background-color: #f1f1f1;
+					border: none;
+					border-bottom: 1px solid #777;
+				}
+            	input[disabled], input[readonly] {
+            		background: none;
+            		border: none;
+            		text-align: center;
+            	}
+            	:focus-visible {
+            		outline: none;
+            	}
+             	.districtInput { 
+              		width: 120px;
+              		padding: 3px;
+              		border-radius: 0;
+              		align-content: center;
+             	} 
+             	.districtIdInput {
+             		width: 70px;
+             		text-align: center;
+             	}
+				.districtBtn {
+					box-shadow:inset 0px 1px 0px 0px #ffffff;
+					background:linear-gradient(to bottom, #ededed 5%, #dfdfdf 100%);
+					background-color:#ededed;
+					border-radius:6px;
+					border:1px solid #dcdcdc;
+					display:inline-block;
+					cursor:pointer;
+					color:#777777;
+					font-family:Arial;
+					font-size:13px;
+					font-weight:bold;
+					padding:4px 15px;
+					text-decoration:none;
+					text-shadow:0px 1px 0px #ffffff;
+					margin: 1px;
+				}
+				.districtBtn:hover {
+					background:linear-gradient(to bottom, #dfdfdf 5%, #ededed 100%);
+					background-color:#dfdfdf;
+					color:#777777;
+				}
+				.districtBtn:active {
+					position:relative;
+					top:1px;
+				}
+            </style>
 <%@ include file="../footer.jsp"%>
