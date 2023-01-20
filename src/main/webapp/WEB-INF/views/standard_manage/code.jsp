@@ -136,13 +136,13 @@ function updateCode(codeId) {
 									<td><input name="rgtrId" class="${vo.rgtrId}"
 										value="${vo.rgtrId}" disabled size="8%"></td>
 									<td><input
-										value="<fmt:formatDate value="${vo.rgtrDt}" pattern="yyyy-MM-dd HH:mm:ss"/>"
+										value="<fmt:formatDate value="${vo.updtDt}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 										disabled size="18.5%"></td>
-									<td><input name="codeId" class="${vo.codeId}"
-										value="${vo.codeId}" disabled size="8%"></td>
-									<td id="updateBtn${vo.codeId}">
+									<td><input class="${vo.codeId}"
+										value="${vo.updtId}" disabled size="8%"></td>
+									<td id="updateBtn${vo.updtId}">
 										<button type="button" onClick="updateCode(${vo.codeId})"
-											value="수정">수정</button>
+											>수정</button>
 									</td>
 									<td id="submitBtn${vo.codeId}" hidden>
 										<button type="submit">저장</button>
