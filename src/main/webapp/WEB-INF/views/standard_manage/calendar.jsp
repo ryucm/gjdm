@@ -16,6 +16,9 @@
                                   <input type="search" id="dateId">
                      			  <button><strong>조회</strong></button>
                                 <table>
+                                	<caption>
+                                		<div>Total : ${selectDimCalendarList }</div>
+                                	</caption>
                                     <thead>
                                         <tr>
                                         	<th>날짜ID</th>
@@ -54,18 +57,16 @@
                                         </c:forEach>
                                     </tbody>
                                 </table>
-                                <div>
-            					<ul class="pagination justify-content-center">
-                					<li><a href="#" style="margin-right:5px;" class="text-secondary">◀</a></li>
-                					<li><a href="#" style="margin-right:5px;" class="text-secondary">1</a></li>
-                					<li><a href="#" style="margin-right:5px;" class="text-secondary">2</a></li>
-                					<li><a href="#" style="margin-right:5px;" class="text-secondary">3</a></li>
-                					<li><a href="#" style="margin-right:5px;" class="text-secondary">4</a></li>
-                					<li><a href="#" style="margin-right:5px;" class="text-secondary">5</a></li>
-                					<li><a href="#" style="margin-right:5px;" class="text-secondary">▶</a></li>
-            					</ul>
-        					</div>
-                            </div>
+                                <div class="paging">
+  									<ui:pagination paginationInfo="${paginationInfo}" type="text" jsFunction="linkPage"/>
+								</div>
+ 
+								<script type="text/javascript">
+									function linkPage(pageNo){
+										location.href = "/standard_manage/calendar.do?pageNo="+pageNo;
+									}	
+								</script>
+
                         </div>
                     </div>
                 </main>

@@ -95,6 +95,4 @@ public class DimCalendarVO {
 	public void setUpdt_id(String updt_id) {
 		this.updt_id = updt_id;
 	}
-	
-	
 }

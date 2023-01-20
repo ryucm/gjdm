@@ -1,6 +1,7 @@
 package egovframework.gjdm.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +19,17 @@ public class DimCodeServiceImpl extends EgovAbstractServiceImpl
 	DimCodeMapper dimCodeMapper;
 	
 	@Override
-	public List<DimCodeVO> selectDimCodeList() throws Exception {
-		return dimCodeMapper.selectDimCodeList();
+	public List<DimCodeVO> selectDimCodeList(Map<String, String> paramMap) throws Exception {
+		return dimCodeMapper.selectDimCodeList(paramMap);
 	}
 
 	@Override
-	public int deleteDimCode(int codeId) throws Exception {
-		return dimCodeMapper.deleteDimCode(codeId);
+	public void deleteDimCode(int codeId) throws Exception {
+		dimCodeMapper.deleteDimCode(codeId);
+	}
+
+	@Override
+	public void updateDimCode(Map<String, String> paramMap) throws Exception {
+		dimCodeMapper.updateDimCode(paramMap);
 	}
 }
