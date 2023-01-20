@@ -69,24 +69,24 @@
                                             <th></th>
                                         </tr>
                                     </thead>
-                                    <tbody class="managingList">
+                                    <tbody>
                                         <c:forEach items="${dimDistrictList}" var="vo">
                                          	<tr>
-	                                        	<form action="/gjdm/updateDimDistrict.do" method="post">
-	                                        		<td><input name="districtId" value="${vo.districtId}" readonly></td>
+	                                        	<form action="/gjdm/updateDimDistrict.do" method="post" class="managingList">
+	                                        		<td><input name="districtId" class="districtInput" value="${vo.districtId}" readonly></td>
 	                                        		<td><select name="nationId" id="nationId${vo.nationId}" disabled>
 														<c:forEach items="${dimNationList}" var="nation">
 															<option <c:if test="${nation.nationId eq vo.nationId}">selected="selected"</c:if>
 															value="${nation.nationId}">${nation.nationNm}</option>
 														</c:forEach>
 													</select></td>
-	                                        		<td><input name="distLvl1" class="${vo.districtId}" value="${vo.distLvl1}" readonly></td>
-	                                        		<td><input name="distLvl2" class="${vo.districtId}" value="${vo.distLvl2}" readonly></td>
-	                                        		<td><input name="distLvl3" class="${vo.districtId}" value="${vo.distLvl3}" readonly></td>
+	                                        		<td><input name="distLvl1" class="${vo.districtId} districtInput" value="${vo.distLvl1}" readonly></td>
+	                                        		<td><input name="distLvl2" class="${vo.districtId} districtInput" value="${vo.distLvl2}" readonly></td>
+	                                        		<td><input name="distLvl3" class="${vo.districtId} districtInput" value="${vo.distLvl3}" readonly></td>
 	                                        		<td><input value="<fmt:formatDate value="${vo.rgtrDt}" pattern="yyyy-MM-dd HH:mm:ss"/>" readonly></td>
-	                                        		<td><input value="${vo.rgtrId}" readonly/></td>
+	                                        		<td><input value="${vo.rgtrId}" class="districtInput" readonly/></td>
 	                                        		<td><input value="<fmt:formatDate value="${vo.updtDt}" pattern="yyyy-MM-dd HH:mm:ss"/>" readonly></td>
-	                                        		<td><input name="updtId" id="updtId${vo.districtId}" value="${vo.updtId}" readonly></td>
+	                                        		<td><input name="updtId" id="updtId${vo.districtId}" class="districtInput" value="${vo.updtId}" readonly></td>
 	                                        		<td id="updateBtn${vo.districtId}"><input type="button" onClick="updateDistrict${vo.districtId}()" value="수정"></td>
 	                                        		<td id="submitBtn${vo.districtId}" hidden><button type="submit" onClick="updateDistrict${vo.districtId}()">수정</button></td>
 	                                        		<td><a href="/gjdm/deleteDimDistrict.do?districtId=${vo.districtId}">삭제</a></td>
@@ -95,10 +95,18 @@
                                         	<script>
 												function updateDistrict${vo.districtId}() {
 													$("#nationId${vo.nationId}").attr('disabled', false);
-													$(".${vo.districtId}").attr('readonly', false);
+													$(".${vo.districtId}").attr('readonly', false)
+																		  .css("border", "1px solid");
 													$("#updateBtn${vo.districtId}").hide();
 													$("#submitBtn${vo.districtId}").attr('hidden', false);
 												};
+												$(function(){
+													if($("input").is("[readonly]")) {													
+														$("input[readonly]").css("border", "none");
+													}
+														$(":focus-visible").css("outline", "red !important");
+													$(".districtInput").css("width", "100px");
+												})
 											</script>
                                         </c:forEach>
                                     </tbody>
