@@ -21,10 +21,21 @@ public class DimCodeController {
 	private DimCodeService dimCodeService;
 	
 
-	@GetMapping("/code.do")
-	public String selectDimCodeList(Model model) throws Exception {
-		List<DimCodeVO> list = dimCodeService.selectDimCodeList();
+	@RequestMapping("/code.do")
+	public String selectDimCodeList(Model model, @RequestParam Map<String, String> paramMap) throws Exception {
+		List<DimCodeVO> list = dimCodeService.selectDimCodeList(paramMap);
 		model.addAttribute("dimCodeList", list);
+		if(paramMap.get("codeId") != null && !paramMap.get("codeId").equals("")) {
+			model.addAttribute("codeId", paramMap.get("codeId"));
+		}
+		
+		if(paramMap.get("groupCode") != null && !paramMap.get("groupCode").equals("")) {
+			model.addAttribute("groupCode", paramMap.get("groupCode"));
+		}
+		
+		if(paramMap.get("code") != null && !paramMap.get("code").equals("")) {
+			model.addAttribute("code", paramMap.get("code"));
+		}
 		
 		return "standard_manage/code";
 	}

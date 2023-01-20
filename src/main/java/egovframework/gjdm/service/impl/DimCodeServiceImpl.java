@@ -19,8 +19,8 @@ public class DimCodeServiceImpl extends EgovAbstractServiceImpl
 	DimCodeMapper dimCodeMapper;
 	
 	@Override
-	public List<DimCodeVO> selectDimCodeList() throws Exception {
-		return dimCodeMapper.selectDimCodeList();
+	public List<DimCodeVO> selectDimCodeList(Map<String, String> paramMap) throws Exception {
+		return dimCodeMapper.selectDimCodeList(paramMap);
 	}
 
 	@Override

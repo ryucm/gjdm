@@ -4,7 +4,16 @@
 <mapper namespace="egovframework.gjdm.mapper.DimCodeMapper">
 
 	<select id="selectDimCodeList" resultType="dimCodeVO">
-		select * from dwdm.dim_code
+		select * from dwdm.dim_code where 1=1
+			<if test="codeId != null and codeId != ''">
+				and code_id=cast(#{codeId} as integer)
+			</if>
+			<if test="groupCode != null and groupCode != ''">
+				and (group_code like CONCAT('%', #{groupCode}, '%') or group_name like CONCAT('%', #{groupCode}, '%'))
+			</if>
+			<if test="code != null and code != ''">
+				and (code like CONCAT('%', #{code}, '%') or code_value like CONCAT('%', #{code}, '%'))
+			</if>
 	</select>
 
 	<delete id="deleteDimCode">

@@ -11,7 +11,7 @@ import egovframework.gjdm.vo.DimCodeVO;
 @Mapper("DimCodeMapper")
 public interface DimCodeMapper {
 
-	public List<DimCodeVO> selectDimCodeList() throws Exception;
+	public List<DimCodeVO> selectDimCodeList(Map<String, String> paramMap) throws Exception;
 
 	public void deleteDimCode(int codeId) throws Exception;
 	
