@@ -12,4 +12,6 @@ public interface DimNationMapper {
 	public List<DimNationVO> selectDimNationList() throws Exception;
 	
 	public List<DimNationVO> selectDimNationListByContinent(String Continent);
+	
+	public void deleteDimNation(int nationId);
 }

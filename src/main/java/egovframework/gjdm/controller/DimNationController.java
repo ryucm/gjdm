@@ -32,11 +32,22 @@ public class DimNationController {
 		if (paramMap.get("continent")==null || paramMap.get("continent").equals("")) {
 			list = dimNationService.selectDimNationList();
 		}else {
-			list = dimNationService.selectDimNationListByContinent(paramMap.get("continent")); 
+			list = dimNationService.selectDimNationListByContinent(paramMap.get("continent"));
+			model.addAttribute("continent", paramMap.get("continent"));
 		}
 		
 		model.addAttribute("dimNationList", list);
 		
 		return "standard_manage/nation";
+	}
+	
+	@RequestMapping(value="/deleteDimNation.do")
+	public String deleteDimNation(Model model,@RequestParam Map<String,String> map) throws Exception{
+		
+		dimNationService.deleteDimNation(map.get("nationId"));
+		
+		model.addAttribute(map.get("continent"));
+		
+		return "dimNationList.do";
 	}
 }

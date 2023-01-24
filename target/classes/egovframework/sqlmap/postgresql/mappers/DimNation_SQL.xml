@@ -16,4 +16,9 @@
 		from dwdm.dim_nation 
 		where continent = #{continent}
 	</select>
+	
+	<delete id="deleteDimNation" parameterType="int">
+		delete from dwdm.dim_nation
+		where nation_id = #{nationId}
+	</delete>
 </mapper>
