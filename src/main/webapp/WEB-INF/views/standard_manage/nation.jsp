@@ -26,11 +26,11 @@
 			alert('국가명(한글)은 한글만 입력가능합니다.');
 			return false;
 		}
-		if (NationNmEn == ""){
+		if (nationNmEn == ""){
 			alert('국가명(염문)은 필수로 입력해야합니다.');
 			return false;
 		}
-		if (!checkKor.test(nationNmEn)){
+		if (!checkEngA.test(nationNmEn)){
 			alert('국가명(영문)은 영문(대문자)만 입력가능합니다.');
 			return false;
 		}
