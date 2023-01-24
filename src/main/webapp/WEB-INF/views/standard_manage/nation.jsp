@@ -6,7 +6,7 @@
 	<%-- 유효성 검사 --%>
 	function checkData(formname){
 		
-		console.log(formname);
+		/* var continent = ${continent}; */
 		
 		var checkNum = /[0-9]/; //숫자 (ISON번호)
 		var checkEngA = /[A-Z]/; //영어 대문자 (국가명 영문, ISO코드, ISO3코드)
@@ -53,7 +53,8 @@
 	<%-- 삭제 버튼 --%>
 	function deleteDimNation(nationId){
 		if (confirm("정말 삭제하시겠습니까?")){
-			location = "deleteDimNation.do?nationId="+nationId;
+			location = "deleteDimNation.do?nationId="+nationId
+						+"&continent=${continent}";
 		}
 	}
 </script>
@@ -131,7 +132,7 @@
 	                               	
 	                               	<button type="submit">조회</button>
 	                               </form>
-	                               <button onclick="location.href='dimNationList.do'">전체보기</button>
+	                               <button onclick="dimNationList.do">전체보기</button>
 	                            </div>
                                 <table class="table">
                                     <thead>

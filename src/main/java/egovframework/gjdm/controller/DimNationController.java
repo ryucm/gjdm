@@ -42,12 +42,12 @@ public class DimNationController {
 	}
 	
 	@RequestMapping(value="/deleteDimNation.do")
-	public String deleteDimNation(Model model,@RequestParam Map<String,String> map) throws Exception{
+	public String deleteDimNation(Model model,@RequestParam Map<String,String> paramMap) throws Exception{
 		
-		dimNationService.deleteDimNation(map.get("nationId"));
+		dimNationService.deleteDimNation(paramMap.get("nationId"));
+		System.out.print(paramMap.get("continent"));
+		model.addAttribute("continent", paramMap.get("continent"));
 		
-		model.addAttribute(map.get("continent"));
-		
-		return "dimNationList.do";
+		return "redirect:dimNationList.do";
 	}
 }
