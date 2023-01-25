@@ -13,6 +13,7 @@
  
 		<typeAlias alias="dimCalendarVO" type="egovframework.gjdm.vo.DimCalendarVO"/>
 		<typeAlias alias="dimDistrictVO" type="egovframework.gjdm.vo.DimDistrictVO"/>
+		<typeAlias alias="etlBatchVO" type="egovframework.gjdm.vo.EtlBatchVO"/>
     </typeAliases>
    
     
