@@ -17,6 +17,24 @@
 		where continent = #{continent}
 	</select>
 	
+	<insert id="insertDimNation" parameterType="dimNationVO">
+		insert into dwdm.dim_nation(nation_nm, nation_nm_en, iso_cd, iso3_cd, iso_no, continent, rgtr_dt, rgtr_id, updt_dt, updt_id)
+		values(#{nationNm}, #{nationNmEn}, #{isoCd}, #{iso3Cd}, #{isoNo}, #{continent}, now(), #{rgtrId}, now(), #{updtId})
+	</insert>
+	
+	<update id="updateDimNation" parameterType="dimNationVO">
+		update dwdm.dim_nation
+		set nation_nm = #{nationNm},
+			nation_nm_en = #{nationNmEn},
+			iso_cd = #{isoCd},
+			iso3_cd = #{iso3Cd},
+			iso_no = #{isoNo},
+			continent = #{continent},
+			updt_dt = now(),
+			updt_id = #{updtId}
+		where nation_id = #{nationId}
+	</update>
+	
 	<delete id="deleteDimNation" parameterType="int">
 		delete from dwdm.dim_nation
 		where nation_id = #{nationId}

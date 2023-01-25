@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -29,11 +30,11 @@ public class DimNationController {
 		
 		List<DimNationVO> list = new ArrayList<DimNationVO>();
 		
-		if (paramMap.get("continent")==null || paramMap.get("continent").equals("")) {
+		if (paramMap.get("continentPage")==null || paramMap.get("continentPage").equals("")) {
 			list = dimNationService.selectDimNationList();
 		}else {
-			list = dimNationService.selectDimNationListByContinent(paramMap.get("continent"));
-			model.addAttribute("continent", paramMap.get("continent"));
+			list = dimNationService.selectDimNationListByContinent(paramMap.get("continentPage"));
+			model.addAttribute("continentPage", paramMap.get("continentPage"));
 		}
 		
 		model.addAttribute("dimNationList", list);
@@ -41,12 +42,31 @@ public class DimNationController {
 		return "standard_manage/nation";
 	}
 	
+	@RequestMapping(value="/insertDimNation.do")
+	public String insertDimNation(Model model, @ModelAttribute DimNationVO vo, @RequestParam Map<String,String> paramMap) throws Exception{
+		dimNationService.insertDimNation(vo);
+
+		model.addAttribute("continentPage", paramMap.get("continentPage"));
+		
+		return "redirect:dimNationList.do";
+		
+	}
+	
+	@RequestMapping(value="/updateDimNation.do")
+	public String updateDimNation(Model model, @ModelAttribute DimNationVO vo, @RequestParam Map<String,String> paramMap) throws Exception{
+		dimNationService.updateDimNation(vo);
+		
+		model.addAttribute("continentPage",paramMap.get("continentPage"));
+		
+		return "redirect:dimNationList.do";
+	}
+	
 	@RequestMapping(value="/deleteDimNation.do")
 	public String deleteDimNation(Model model,@RequestParam Map<String,String> paramMap) throws Exception{
 		
 		dimNationService.deleteDimNation(paramMap.get("nationId"));
-		System.out.print(paramMap.get("continent"));
-		model.addAttribute("continent", paramMap.get("continent"));
+		
+		model.addAttribute("continentPage", paramMap.get("continentPage"));
 		
 		return "redirect:dimNationList.do";
 	}

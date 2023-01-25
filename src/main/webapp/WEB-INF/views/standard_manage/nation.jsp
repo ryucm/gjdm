@@ -8,26 +8,19 @@
 		
 		/* var continent = ${continent}; */
 		
-		var checkNum = /[0-9]/; //숫자 (ISON번호)
-		var checkEngA = /[A-Z]/; //영어 대문자 (국가명 영문, ISO코드, ISO3코드)
-		var checkKor = /[가-힣]/; //한글 (국가명 한글)
+		var checkNum = /^[0-9]*$/; //숫자 (ISON번호)
+		var checkEngA = /^[A-Z]*$/; //영어 대문자 (국가명 영문, ISO코드, ISO3코드)
+		var checkKor = /^[가-힣]*$/; //한글 (국가명 한글)
 		
-		const nationNm = formname.nationNm.value;
-		const nationNmEn = formname.nationNmEn.value;
-		const isoCd = formname.isoCd.value;
-		const iso3Cd = formname.iso3Cd.value;
-		const isoNo = formname.isoNo.value;
+		var nationNm = formname.nationNm.value;
+		var nationNmEn = formname.nationNmEn.value;
+		var isoCd = formname.isoCd.value;
+		var iso3Cd = formname.iso3Cd.value;
+		var isoNo = formname.isoNo.value;
 		
-		if (nationNm == ""){
-			alert('국가명(한글)은 필수로 입력해야합니다.');
-			return false;
-		}
+		
 		if (!checkKor.test(nationNm)){
 			alert('국가명(한글)은 한글만 입력가능합니다.');
-			return false;
-		}
-		if (nationNmEn == ""){
-			alert('국가명(염문)은 필수로 입력해야합니다.');
 			return false;
 		}
 		if (!checkEngA.test(nationNmEn)){
@@ -54,7 +47,7 @@
 	function deleteDimNation(nationId){
 		if (confirm("정말 삭제하시겠습니까?")){
 			location = "deleteDimNation.do?nationId="+nationId
-						+"&continent=${continent}";
+						+"&continentPage=${continentPage}";
 		}
 	}
 </script>
@@ -65,9 +58,9 @@
                 <main>
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">국가관리</h1>
-                        <div class="card mb-4">
+                        <div class="card mb-4" style="overflow:scroll;">
                         	<div class="card-header">
-								<i class="fas fa-table me-1"></i> 국가 생성
+								<i class="fas fa-table me-1"></i> 국가생성
 							</div>
 								<form name="insertDimNation" method="post" action="insertDimNation.do" onsubmit="return checkData(insertDimNation)">
 								<table class="table">
@@ -84,10 +77,10 @@
 									<tbody>
 										<tr>
 											<td>
-												<input type="text" id="nationNm" size="12" maxlength="33" required>
+												<input type="text" name="nationNm" size="12" maxlength="33" required>
 											</td>
 											<td>
-												<input type="text" id="nationNmEn" size="12" maxlength="100" required>
+												<input type="text" name="nationNmEn" size="12" maxlength="100" required>
 											</td>
 											<td>
 												<select name="continent">
@@ -97,13 +90,19 @@
 												</select>
 											</td>
 											<td>
-												<input type="text" id="isoCd" size="12" maxlength="10">
+												<input type="text" name="isoCd" size="12" maxlength="10">
 											</td>
 											<td>
-												<input type="text" id="iso3Cd" size="12" maxlength="10">
+												<input type="text" name="iso3Cd" size="12" maxlength="10">
 											</td>
 											<td>
-												<input type="text" id="isoNo" size="12" maxlength="10"></td>
+												<input type="text" name="isoNo" size="12" maxlength="10"></td>
+												<!-- 차후 사용자 ID로 수정 -->
+												<input type="hidden" name="rgtrId" value="관리자">
+												<input type="hidden" name="updtId" value="관리자">
+												
+												<!-- 페이징 관련 -->
+												<input type="hidden" name="continentPage" value="${continentPage}">
 											<td>
 											<button type="submit">생성</button>
 											<button type="reset">취소</button>
@@ -115,16 +114,16 @@
                         		
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                국가 관리
+                                국가관리
                             </div>
                             <div class="card-body">
 	                            <div class="card-body">
 	                               <form method="post" action="dimNationList.do">
 	                               	대륙
-	                               	<select name="continent">
+	                               	<select name="continentPage">
 	                               		<c:forEach items="${continentList}" var="item">
 	                               			<option 
-	                               				<c:if test="${continent eq item}">selected="selected"</c:if>
+	                               				<c:if test="${continentPage eq item}">selected="selected"</c:if>
 	                               				value="${item}">${item}
 	                               			</option>
 	                               		</c:forEach>
@@ -176,7 +175,13 @@
 		                                        		<td><input name="rgtrDt" size="17" value="<fmt:formatDate value="${vo.rgtrDt}" pattern="yyyy-MM-dd HH:mm:ss"/>" readonly></td>
 		                                        		<td><input name="rgtrId" size="12" value="${vo.rgtrId}" readonly></td>
 		                                        		<td><input name="rgtrDt" size="17" value="<fmt:formatDate value="${vo.updtDt}" pattern="yyyy-MM-dd HH:mm:ss"/>" readonly></td>
-		                                        		<td><input name="updtId" size="12" value="${vo.updtId}" readonly></td>
+		                                        		<td>
+		                                        			<input name="updtIdOrg" size="12" value="${vo.updtId}" readonly>
+		                                        			<!-- 차후 사용자 ID로 수정 -->
+															<input type="hidden" name="updtId" value="관리자">
+															<!-- 페이징 관련 -->
+															<input type="hidden" name="continentPage" value="${continentPage}">
+		                                        		</td>
 		                                        		<td id="updateBtn${vo.nationId}">
 		                                        			<button type="button" onClick="location.href='javascript:updateDimNation${vo.nationId}()'">
 		                                        				수정

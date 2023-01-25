@@ -9,6 +9,10 @@ public interface DimNationService {
 	
 	public List<DimNationVO> selectDimNationListByContinent(String continent) throws Exception;
 	
+	public void insertDimNation(DimNationVO vo);
+	
+	public void updateDimNation(DimNationVO vo);
+	
 	public void deleteDimNation(String nationId);
 	
 }

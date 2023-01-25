@@ -13,5 +13,9 @@ public interface DimNationMapper {
 	
 	public List<DimNationVO> selectDimNationListByContinent(String Continent);
 	
+	public void insertDimNation(DimNationVO vo);
+	
+	public void updateDimNation(DimNationVO vo);
+	
 	public void deleteDimNation(int nationId);
 }

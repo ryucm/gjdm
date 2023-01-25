@@ -26,6 +26,19 @@ public class DimNationServiceImpl implements DimNationService{
 		
 		return dimNationMapper.selectDimNationListByContinent(continent);
 	}
+	
+	@Override
+	public void insertDimNation(DimNationVO vo) {
+		
+		dimNationMapper.insertDimNation(vo);
+		
+	}
+	
+	@Override
+	public void updateDimNation(DimNationVO vo) {
+		
+		dimNationMapper.updateDimNation(vo);
+	}
 
 	@Override
 	public void deleteDimNation(String nationId) {
