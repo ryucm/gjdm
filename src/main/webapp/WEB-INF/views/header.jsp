@@ -78,7 +78,7 @@
                             </a>
                             <div class="collapse" id="collapseLayouts2" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="#">ETL배치관리</a>
+                                    <a class="nav-link" href="etlBatchList.do">ETL배치관리</a>
                                     <a class="nav-link" href="#">사용자</a>
                                     <a class="nav-link" href="#">권한</a>
                                     <a class="nav-link" href="#">메뉴</a>

@@ -7,18 +7,16 @@
                         <h1 class="mt-4">달력관리</h1>
                         <div class="card mb-4">
                             <div class="card-header">
-                                <i class="fas fa-table me-1"></i>
-                                달력 관리
+                                <i class="fas fa-table me-1"></i> 달력 조회
                             </div>
-                            <div class="card-body">
-                            	<label>
-                                  연도
-                                  <input type="search" id="dateId">
-                     			  <button><strong>조회</strong></button>
-                                <table>
-                                	<caption>
-                                		<div>Total : ${selectDimCalendarList }</div>
-                                	</caption>
+                            <form action="dimCalendarList.do" method="post">
+							<label for="yearSearch"> 연도 <input type="text" name="keyword" value="${keyword}"></label>
+							<button type="submit">조회</button>
+							</form>
+                            <div class="card-haeder">
+                                   <i class="fas fa-table me-1"></i> 달력 내역   
+                            </div>            
+                                <table class="table">                                	
                                     <thead>
                                         <tr>
                                         	<th>날짜ID</th>
@@ -34,39 +32,43 @@
                                             <th>생성자</th>
                                             <th>변경일자</th>
                                             <th>변경자</th>
-
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <c:forEach items="${dimCalendarList}" var="vo">
-                                        	<tr>
-                                        		<td><c:out value="${vo.date_id}"/></td>
-                                        		<td><c:out value="${vo.yyyymmdd}"/></td>
-                                        		<td><c:out value="${vo.yyyymm}"/></td>
-                                        		<td><c:out value="${vo.hy}"/></td>
-                                        		<td><c:out value="${vo.qt}"/></td>
-                                        		<td><c:out value="${vo.mm}"/></td>
-                                        		<td><c:out value="${vo.wk}"/></td>
-                                        		<td><c:out value="${vo.dd}"/></td>
-                                        		<td><c:out value="${vo.day_nm}"/></td>
-                                        		<td><c:out value="${vo.rgtr_dt}"/></td>
-                                        		<td><c:out value="${vo.rgtr_dt}"/></td>
-                                        		<td><c:out value="${vo.updt_dt}"/></td>
-                                        		<td><c:out value="${vo.updt_id}"/></td>
-                                        	</tr>
-                                        </c:forEach>
+                       					<c:forEach items="${dimCalendarList}" var="vo">
+                                    	<tr>
+											﻿<form action="dimCalendarList.do" method="post">
+											<td><input name="dateId" value="${vo.dateId}" readonly
+												size="8%"></td>
+											<td><input name="yyyymmdd" class="${vo.dateId}"
+												value="${vo.yyyymmdd}" readonly size="8%"></td>
+											<td><input name="yyyyMm" class="${vo.dateId}"
+												value="${vo.yyyyMm}" readonly size="4"></td>
+											<td><input name="hy" class="${vo.dateId}"
+												value="${vo.hy}" readonly size="1"></td>
+											<td><input name="qt" class="${vo.dateId}"
+												value="${vo.qt}" readonly size="1"></td>
+											<td><input name="mm" class="${vo.dateId}"
+												value="${vo.mm}" readonly size="1"></td>
+											<td><input name="wk" class="${vo.dateId}"
+												value="${vo.wk}" readonly size="1"></td>
+											<td><input name="dd" class="${vo.dateId}"
+												value="${vo.dd}" readonly size="2%"></td>
+											<td><input name="dayNM" class="${vo.dateId}"
+												value="${vo.dayNM}" readonly size="2%"></td>
+											<td><input
+												value="<fmt:formatDate value="${vo.rgtrDt}" pattern="yyyy-MM-dd HH:mm:ss"/>"
+												disabled size="18.5%"></td>
+											<td><input name="rgtrId" class="${vo.rgtrId}"
+												value="${vo.rgtrId}" disabled size="8%"></td>
+											<td><input
+												value="<fmt:formatDate value="${vo.updtDt}" pattern="yyyy-MM-dd HH:mm:ss"/>"
+												disabled size="18.5%"></td>
+											<td><input class="${vo.dateId}"
+												value="${vo.updtId}" disabled size="8%"></td>
+                       					</c:forEach>				
                                     </tbody>
-                                </table>
-                                <div class="paging">
-  									<ui:pagination paginationInfo="${paginationInfo}" type="text" jsFunction="linkPage"/>
-								</div>
- 
-								<script type="text/javascript">
-									function linkPage(pageNo){
-										location.href = "/standard_manage/calendar.do?pageNo="+pageNo;
-									}	
-								</script>
-
+                                </table> 
                         </div>
                     </div>
                 </main>
