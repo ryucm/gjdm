@@ -4,14 +4,18 @@
 <%@ include file="../header.jsp"%>
 <script>
 function fn_submit() {
+	const regex = /^[A-Z0-9]*$/;
 	if(document.frm.groupCode.value == ""){
 		alert("코드 그룹을 입력해 주세요.")
 		document.frm.groupCode.focus();
 		return false
+	} else if (!regex.test(document.frm.groupCode.value)) {
+		alert("코드 그룹은 영어 대문자와 숫자만 입력 가능합니다.")
+		return false
 	}
-	if(document.frm.codeId.value == ""){
+	if(document.frm.groupName.value == ""){
 		alert("코드 그룹명을 입력해 주세요.")
-		document.frm.codeId.focus();
+		document.frm.groupCode.focus();
 		return false
 	}
 	if(document.frm.code.value == ""){
@@ -19,6 +23,15 @@ function fn_submit() {
 		document.frm.code.focus();
 		return false
 	}
+	if(document.frm.codeValue.value == ""){
+		alert("코드값를 입력해 주세요.")
+		document.frm.code.focus();
+		return false
+	}
+	if(document.frm.displayName.value == ""){
+		document.frm.displayName.value = document.frm.codeValue.value
+	} 
+	
 	document.frm.submit();
 }
 
@@ -44,7 +57,7 @@ function updateCode(codeId) {
 				<div class="card-header">
 					<i class="fas fa-table me-1"></i> 코드 생성
 				</div>
-				<form name="frm" method="get" action="code.do">
+				<form name="frm" method="get" action="insertCode.do">
 					<table class="table">
 						<thead>
 							<tr>
@@ -59,15 +72,17 @@ function updateCode(codeId) {
 						</thead>
 						<tbody>
 							<tr>
-								<td><input type="text" id="groupCode" size="12"></td>
-								<td><input type="text" id="groupName" size="12"></td>
-								<td><input type="text" id="code" size="12"></td>
-								<td><input type="text" id="codeValue" size="12"></td>
-								<td><input type="text" id="displayName" size="12"></td>
-								<td><select name="gid">
+								<td><input name = "groupCode" type="text" id="groupCode" size="12"></td>
+								<td><input name = "groupName" type="text" id="groupName" size="12"></td>
+								<td><input name = "code" type="text" id="code" size="12"></td>
+								<td><input name = "codeValue" type="text" id="codeValue" size="12"></td>
+								<td><input name = "displayName" type="text" id="displayName" size="12"></td>
+								<td><select name="useYN">
 										<option value="Y">Y</option>
 										<option value="N">N</option>
 								</select></td>
+								<input name = "rgtrId" type="hidden" value="test">
+	                            <input name = "updtId" type="hidden" value="test">
 								<td>
 									<button type="submit" onclick="fn_submit(); return false;">생성</button>
 									<button type="reset">취소</button>
