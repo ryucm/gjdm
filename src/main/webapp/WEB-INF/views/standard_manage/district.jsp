@@ -13,19 +13,43 @@
                             <div class="card-body">
                             	<form action="/gjdm/dimDistrictList.do" method="post">
 									<label for="nationSearch">국가</label>
-									<select name="nationId" id="nationSearch">
+									<select name="nationId" id="nationSearch" required>
+										<option value="" disabled selected>--선택해주세요--</option>
 										<c:forEach items="${dimNationList}" var="nation">
-											<option value="${nation.nationId}">${nation.nationNm}</option>
+											<option value="${nation.nationId}" <c:if test="${nationId eq nation.nationId}">selected</c:if>>${nation.nationNm}</option>
 										</c:forEach>
 									</select>
-	                            	<label>
-	                            		시도
-	                            		<input type="text" name="distLvl1" value="${distLvl1}">
-	                            	</label>
-	                            	<label>
-	                            		군구
-	                            		<input type="text" name="distLvl2" value="${distLvl2}">
-	                            	</label>
+	                            	<label for="distLvl1Search">시도</label>
+	                            	<select name="distLvl1" id="distLvl1Search" onchange="selectDistLvl1(value)">
+	                            		<option value="" disabled selected>--선택해주세요--</option>
+										<c:forEach items="${distLvl1List}" var="distLvl1List">
+											<option value="${distLvl1List.distLvl1}" <c:if test="${distLvl1 eq distLvl1List.distLvl1}">selected</c:if>>${distLvl1List.distLvl1}</option>
+										</c:forEach>
+									</select>
+									<script>
+										function selectDistLvl1(value) {
+											$.ajax({
+												url: '/gjdm/dimDistrictList.do',
+												type: 'get',
+												data: {
+													"distLvl1" : value
+												},
+												success: function() {
+													console.log("success");
+												},
+												error: function(e) {
+													console.log(e);
+												}
+											})
+										}
+									</script>
+	                            	<label for="distLvl2Search">군구</label>
+	                            	<select name="distLvl2" id="distLvl2Search">
+	                            		<option value="" disabled selected>--선택해주세요--</option>
+										<c:forEach items="${distLvl2}" var="distLvl2">
+											<option value="${distLvl2.distLvl2}">${distLvl2.distLvl2}</option>
+										</c:forEach>
+									</select>
 	                            	<button type="submit" class="districtBtn">조회</button>
                             	</form>
                             	<form action="/gjdm/insertDimDistrict.do" method="post">
@@ -47,8 +71,8 @@
 	                            		동
 	                            		<input type="text" name="distLvl3" required>
 	                            	</label>
-	                            	<input type="hidden" name="rgtr_id" value="test">
-	                            	<input type="hidden" name="updt_id" value="test">
+	                            	<input type="hidden" name="rgtrId" value="test">
+	                            	<input type="hidden" name="updtId" value="test">
 	                            	<button type="submit" class="districtBtn">추가</button>
 	                            </form>
                             </div>
@@ -62,8 +86,8 @@
                                 <table>
                                     <thead>
                                         <tr>
-                                            <th>지역ID</th>
                                             <th>국가ID</th>
+                                            <th>지역ID</th>
                                             <th>시도</th>
                                             <th>군구</th>
                                             <th>동</th>
@@ -79,13 +103,13 @@
                                         <c:forEach items="${dimDistrictList}" var="vo">
                                          	<tr>
 	                                        	<form action="/gjdm/updateDimDistrict.do" method="post">
-	                                        		<td><input name="districtId" class="districtInput" value="${vo.districtId}" readonly></td>
 	                                        		<td><select name="nationId" id="nationId${vo.districtId}" disabled>
 														<c:forEach items="${dimNationList}" var="nation">
-															<option <c:if test="${nation.nationId eq vo.nationId}">selected="selected"</c:if>
+															<option <c:if test="${nation.nationId eq vo.nationId}">selected</c:if>
 															value="${nation.nationId}">${nation.nationNm}</option>
 														</c:forEach>
 													</select></td>
+	                                        		<td><input name="districtId" class="districtInput" value="${vo.districtId}" readonly></td>
 	                                        		<td><input name="distLvl1" class="${vo.districtId} districtInput" value="${vo.distLvl1}" disabled required></td>
 	                                        		<td><input name="distLvl2" class="${vo.districtId} districtInput" value="${vo.distLvl2}" disabled required></td>
 	                                        		<td><input name="distLvl3" class="${vo.districtId} districtInput" value="${vo.distLvl3}" disabled required></td>
@@ -140,7 +164,7 @@
             		background-color: rgba(0, 0, 0, 0.03);
             	}
             	select {
-            		width: 120px;
+            		width: 150px;
             	}
             	select[disabled] {
 				    -webkit-appearance:none; /* 크롬 화살표 없애기 */
