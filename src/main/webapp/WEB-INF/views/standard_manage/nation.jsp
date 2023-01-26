@@ -131,7 +131,7 @@
 	                               	
 	                               	<button type="submit">조회</button>
 	                               </form>
-	                               <button onclick="dimNationList.do">전체보기</button>
+	                               <button onclick="location.href='dimNationList.do'">전체보기</button>
 	                            </div>
                                 <table class="table">
                                     <thead>
