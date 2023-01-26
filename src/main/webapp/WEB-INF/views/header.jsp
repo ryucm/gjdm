@@ -11,17 +11,18 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Dashboard - SB Admin</title>
+        <title>스마트 관광 BI</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="resources/css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="index.do"> 경주로ON 관광 빅데이터 대시보드 </a>
+            <a class="navbar-brand ps-3" href="index.do"> 스마트 관광 빅데이터 대시보드 </a>
             <!-- Navbar Search-->
             <div class="input-group">
             </div>
@@ -64,7 +65,7 @@
                             </a>
                             <div class="collapse" id="collapseLayouts1" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="#">달력</a>
+                                    <a class="nav-link" href="dimCalendarList.do">달력</a>
                                     <a class="nav-link" href="code.do">코드</a>
                                     <a class="nav-link" href="dimNationList.do">국가</a>
                                     <a class="nav-link" href="dimDistrictList.do">지역</a>
@@ -78,7 +79,7 @@
                             </a>
                             <div class="collapse" id="collapseLayouts2" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="#">ETL배치관리</a>
+                                    <a class="nav-link" href="etlBatchList.do">ETL배치관리</a>
                                     <a class="nav-link" href="#">사용자</a>
                                     <a class="nav-link" href="#">권한</a>
                                     <a class="nav-link" href="#">메뉴</a>
