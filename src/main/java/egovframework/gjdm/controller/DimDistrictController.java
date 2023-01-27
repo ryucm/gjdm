@@ -7,11 +7,11 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import egovframework.gjdm.service.DimDistrictService;
 import egovframework.gjdm.service.DimNationService;
@@ -56,32 +56,35 @@ public class DimDistrictController {
 		if(paramMap.get("distLvl2") != null && !paramMap.get("distLvl2").equals("")) {
 			model.addAttribute("distLvl2", paramMap.get("distLvl2"));
 		}
-		
+	 	
 		return "standard_manage/district";
 	}
 	
-	@RequestMapping("districtInsert.do")
-	public String districtInsert() throws Exception {
-		return "standard_manage/districtInsert";
-	}
-	
 	@RequestMapping(value="/selectDistLvl.do", method=RequestMethod.POST)
-	@ResponseBody
-	public DimDistrictVO selectDistLvl(String distLvl1) throws Exception {
+	public String selectDistLvl(String distLvl1) throws Exception {
 //		model.addAttribute("distLvl1", distLvl1);
 //		System.out.println(model.getAttribute("distLvl1"));
 		List<DimDistrictVO> distLvl2 = dimDistrictService.selectDimDistrictListGroupByLvl2(distLvl1);
-		DimDistrictVO districtVO = distLvl2.get(0);
+		DimDistrictVO districtVO = distLvl2.get(1);
 //		distLvl2.put("distLvl2List", "String");
-		System.out.println(districtVO);
-		return districtVO;
+		System.out.println(districtVO.getDistLvl1());
+		String[] string = new String[]{"hi", "hello", "hey"};
+		return "success";
+	}
+	
+	@RequestMapping("/districtInsert.do")
+	public String districtInsert(Model model) throws Exception {
+		List<DimNationVO> nationList = DimNationService.selectDimNationList();
+		model.addAttribute("dimNationList", nationList);
+		return "standard_manage/districtInsert";
 	}
 	
 	@RequestMapping("/insertDimDistrict.do")
 	public String insertDimDistrict(@RequestParam Map<String, String> paramMap) throws Exception {
+		System.out.println("insertttttttttttttttttttttttttttttttttttttt");
 		dimDistrictService.insertDimDistrict(paramMap);
 		
-		return "redirect:dimDistrictList.do";
+		return "redirect:districtInsert.do";
 	}
 	
 	@RequestMapping("/updateDimDistrict.do")
