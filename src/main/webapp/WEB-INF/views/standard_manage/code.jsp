@@ -16,6 +16,8 @@ function updateCode(codeId) {
 	$("."+codeId).attr("disabled", false);
 	$("#updateBtn"+codeId).hide();
 	$("#deleteBtn"+codeId).hide();
+	$("#useYN"+codeId).hide();
+	$("#useYNSelect"+codeId).attr('hidden', false);
 	$("#submitBtn"+codeId).attr('hidden', false);
 	$("#resetBtn"+codeId).attr('hidden', false);
 };
@@ -89,7 +91,8 @@ function inquireCode() {
 										<td><input name="code" class="${vo.codeId}" value="${vo.code}" disabled required size="8%"></td>
 										<td><input name="codeValue" class="${vo.codeId}" value="${vo.codeValue}" disabled required size="8%"></td>
 										<td><input name="displayName" class="${vo.codeId}" value="${vo.displayName}" readonly size="8%"></td>
-										<td><select name="useYN" class="${vo.codeId}" size="1%">
+										<td id="useYN${vo.codeId}"><input name="useYN"  value="${vo.useYN}" readonly></td>
+										<td id="useYNSelect${vo.codeId}" hidden><select name="useYN"  class="${vo.codeId}" size="1%" style="text-align-last:center">
 												<option
 													<c:if test="${vo.useYN eq 'Y'}">selected="selected"</c:if>
 													value="Y">Y</option>
