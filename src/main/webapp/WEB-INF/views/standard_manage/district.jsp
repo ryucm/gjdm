@@ -5,7 +5,7 @@
                 <main>
                     <div class="container-fluid px-4">
                         <div class="districtDiv">
-	                        <h1 class="mt-4">지역관리</h1>
+	                        <h1 class="mt-4">지역 관리</h1>
 	                        <button type="button" onClick="districtInsert()" class="districtBtn newDistrict">새 지역 등록</button>
                         </div>
                         <script>
@@ -217,7 +217,6 @@
 				}
 				.newDistrict {
 					margin: 10px 0;
-/* 					float: right; */
 				}
 				.districtBtn:hover {
 					background:linear-gradient(to bottom, #dfdfdf 5%, #ededed 100%);
