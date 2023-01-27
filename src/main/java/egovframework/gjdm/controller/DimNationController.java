@@ -70,4 +70,9 @@ public class DimNationController {
 		
 		return "redirect:dimNationList.do";
 	}
+	
+	@RequestMapping(value="/nationInsert.do")
+	public String nationInsert() {
+		return "standard_manage/nationInsert";
+	}
 }
