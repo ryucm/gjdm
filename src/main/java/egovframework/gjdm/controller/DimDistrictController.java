@@ -60,16 +60,22 @@ public class DimDistrictController {
 		return "standard_manage/district";
 	}
 	
-//	@ResponseBody
-//	@RequestMapping(value="/selectDistLvl.do", method=RequestMethod.POST)
-//	public List<DimDistrictVO> selectDistLvl(String distLvl1) throws Exception {
-////		model.addAttribute("distLvl1", distLvl1);
-////		System.out.println(model.getAttribute("distLvl1"));
-//		Map<String, String> distLvl2 = new HashMap<String,String>();
+	@RequestMapping("districtInsert.do")
+	public String districtInsert() throws Exception {
+		return "standard_manage/districtInsert";
+	}
+	
+	@RequestMapping(value="/selectDistLvl.do", method=RequestMethod.POST)
+	@ResponseBody
+	public DimDistrictVO selectDistLvl(String distLvl1) throws Exception {
+//		model.addAttribute("distLvl1", distLvl1);
+//		System.out.println(model.getAttribute("distLvl1"));
+		List<DimDistrictVO> distLvl2 = dimDistrictService.selectDimDistrictListGroupByLvl2(distLvl1);
+		DimDistrictVO districtVO = distLvl2.get(0);
 //		distLvl2.put("distLvl2List", "String");
-////		System.out.println(distLvl2);
-//		return distLvl2List;
-//	}
+		System.out.println(districtVO);
+		return districtVO;
+	}
 	
 	@RequestMapping("/insertDimDistrict.do")
 	public String insertDimDistrict(@RequestParam Map<String, String> paramMap) throws Exception {
