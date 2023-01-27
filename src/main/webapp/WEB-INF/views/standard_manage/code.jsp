@@ -45,7 +45,9 @@ function fn_delete(codeId){
 function updateCode(codeId) {
 	$("."+codeId).attr("readonly", false);
 	$("#updateBtn"+codeId).hide();
+	$("#deleteBtn"+codeId).hide();
 	$("#submitBtn"+codeId).attr('hidden', false);
+	$("#resetBtn"+codeId).attr('hidden', false);
 };
 
 </script>
@@ -155,15 +157,18 @@ function updateCode(codeId) {
 										disabled size="18.5%"></td>
 									<td><input class="${vo.codeId}"
 										value="${vo.updtId}" disabled size="8%"></td>
-									<td id="updateBtn${vo.updtId}">
+									<td id="updateBtn${vo.codeId}">
 										<button type="button" onClick="updateCode(${vo.codeId})"
 											>수정</button>
 									</td>
 									<td id="submitBtn${vo.codeId}" hidden>
 										<button type="submit">저장</button>
 									</td>
-									<td>
+									<td id="deleteBtn${vo.codeId}">
 										<button type="button" onclick="fn_delete(${vo.codeId})">삭제</button>
+									</td>
+									<td id="resetBtn${vo.codeId}" hidden>
+										<button type="reset">취소</button>
 									</td>
 								</form>
 							</tr>
