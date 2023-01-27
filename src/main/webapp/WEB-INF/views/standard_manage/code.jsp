@@ -3,14 +3,6 @@
 	pageEncoding="utf-8"%>
 <%@ include file="../header.jsp"%>
 <script>
-function inquireCode() {
-	const regex = /^[0-9]*$/;
-	if (!regex.test(document.inquireCode.codeId.value)) {
-		alert("코드 ID는 숫자만 입력 가능합니다.")
-		return false
-	}
-	document.inquireCode.submit();
-}
 
 function fn_delete(codeId){
 	
@@ -24,6 +16,8 @@ function updateCode(codeId) {
 	$("."+codeId).attr("disabled", false);
 	$("#updateBtn"+codeId).hide();
 	$("#deleteBtn"+codeId).hide();
+	$("#useYN"+codeId).hide();
+	$("#useYNSelect"+codeId).attr('hidden', false);
 	$("#submitBtn"+codeId).attr('hidden', false);
 	$("#resetBtn"+codeId).attr('hidden', false);
 };
@@ -37,7 +31,93 @@ function insertCode() {
 	window.open("codeInsert.do", null, 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);
 }
 
+function inquireCode() {
+	const regex = /^[0-9]*$/;
+	if (!regex.test(document.frm.codeId.value)) {
+		alert("코드 ID는 숫자만 입력 가능합니다.")
+		return false
+	}
+	document.frm.submit();
+}
 </script>
+
+<div id="layoutSidenav_content">
+	<main>
+		<div class="container-fluid px-4">
+			<div class="codeDiv">
+				<h1 class="mt-4">코드 관리</h1>
+				<button type="button" onClick="insertCode()" class="codeBtn newcode">새 코드 등록</button>
+			</div>
+			<div class="card mb-4">
+				<div class="card-body">
+					<form name="frm" action="code.do" method="post">
+						<label> 코드 ID </label>
+						<input type="text" name="codeId" id="codeId">
+						<label> 코드 그룹 </label>
+						<input type="text" name="groupCode" id="groupCode">
+						<label> 코드 </label>
+						<input type="text" name="code" id="code"> 
+						<button type="submit" onclick="inquireCode(); return false;" class="codeBtn">조회</button>
+					</form>
+				</div>
+			</div>
+			<div class="card mb-4 codeList">
+				<div class="card-body">
+					<table>
+						<thead>
+							<tr>
+								<th>코드ID</th>
+								<th>코드그룹</th>
+								<th>코드그룹명</th>
+								<th>코드</th>
+								<th>코드값</th>
+								<th>출력명</th>
+								<th>사용여부</th>
+								<th>등록일시</th>
+								<th>등록자</th>
+								<th>변경일시</th>
+								<th>변경자</th>
+								<th>수정</th>
+								<th>삭제</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach items="${dimCodeList}" var="vo">
+								<tr>
+									<form action="updateCode.do" method="post">
+										<td><input name="codeId" value="${vo.codeId}" readonly size="8%" class="codeInput"></td>
+										<td><input name="groupCode" class="${vo.codeId}" value="${vo.groupCode}" disabled required size="8%"></td>
+										<td><input name="groupName" class="${vo.codeId}" value="${vo.groupName}" disabled required size="8%"></td>
+										<td><input name="code" class="${vo.codeId}" value="${vo.code}" disabled required size="8%"></td>
+										<td><input name="codeValue" class="${vo.codeId}" value="${vo.codeValue}" disabled required size="8%"></td>
+										<td><input name="displayName" class="${vo.codeId}" value="${vo.displayName}" readonly size="8%"></td>
+										<td id="useYN${vo.codeId}"><input name="useYN"  value="${vo.useYN}" readonly></td>
+										<td id="useYNSelect${vo.codeId}" hidden><select name="useYN"  class="${vo.codeId}" size="1%" style="text-align-last:center">
+												<option
+													<c:if test="${vo.useYN eq 'Y'}">selected="selected"</c:if>
+													value="Y">Y</option>
+												<option
+													<c:if test="${vo.useYN eq 'N'}">selected="selected"</c:if>
+													value="N">N</option>
+										</select></td>
+										<td><input value="<fmt:formatDate value="${vo.rgtrDt}" pattern="yyyy-MM-dd HH:mm:ss"/>" disabled size="18.5%"></td>
+										<td><input name="rgtrId" class="codeIdInput" value="${vo.rgtrId}" disabled size="8%"></td>
+										<td><input value="<fmt:formatDate value="${vo.updtDt}" pattern="yyyy-MM-dd HH:mm:ss"/>" disabled size="18.5%"></td>
+										<td><input class="codeIdInput" value="${vo.updtId}" disabled size="8%"></td>
+										<td id="updateBtn${vo.codeId}"><button type="button" onClick="updateCode(${vo.codeId})" class="codeBtn">수정</button></td>
+										<td id="submitBtn${vo.codeId}" hidden><button type="submit" class="codeBtn">저장</button></td>
+										<td id="deleteBtn${vo.codeId}"><button type="button" onclick="fn_delete(${vo.codeId})" class="codeBtn">삭제</button></td>
+										<td id="resetBtn${vo.codeId}" hidden><button type="reset" class="codeBtn">취소</button></td>
+									</form>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</main>
+</div>
 <style>
 .codeList>.card-body {
 	padding: 0;
@@ -148,79 +228,4 @@ input[disabled], input[readonly] {
 	top: 1px;
 }
 </style>
-<div id="layoutSidenav_content">
-	<main>
-		<div class="container-fluid px-4">
-			<div class="codeDiv">
-				<h1 class="mt-4">코드 관리</h1>
-				<button type="button" onClick="insertCode()" class="codeBtn newcode">새 코드 등록</button>
-			</div>
-			<div class="card mb-4">
-				<div class="card-body">
-					<form action="code.do" method="post" name="inquireCode">
-						<label for="codeSearch"> 코드 ID </label>
-						<input type="text" name="codeId" value="${codeId}">
-						<label> 코드 그룹 </label>
-						<input type="text" name="groupCode" value="${groupCode}">
-						<label> 코드 <input type="text" name="code" value="${code}"> </label>
-						<button type="submit" class="codeBtn" onclick="inquireCode(); return false;">조회</button>
-					</form>
-				</div>
-			</div>
-			<div class="card mb-4 codeList">
-				<div class="card-body">
-					<table>
-						<thead>
-							<tr>
-								<th>코드ID</th>
-								<th>코드그룹</th>
-								<th>코드그룹명</th>
-								<th>코드</th>
-								<th>코드값</th>
-								<th>출력명</th>
-								<th>사용여부</th>
-								<th>등록일시</th>
-								<th>등록자</th>
-								<th>변경일시</th>
-								<th>변경자</th>
-								<th>수정</th>
-								<th>삭제</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach items="${dimCodeList}" var="vo">
-								<tr>
-									<form action="updateCode.do" method="post">
-										<td><input name="codeId" value="${vo.codeId}" readonly size="8%" class="codeInput"></td>
-										<td><input name="groupCode" class="${vo.codeId}" value="${vo.groupCode}" disabled required size="8%"></td>
-										<td><input name="groupName" class="${vo.codeId}" value="${vo.groupName}" disabled required size="8%"></td>
-										<td><input name="code" class="${vo.codeId}" value="${vo.code}" disabled required size="8%"></td>
-										<td><input name="codeValue" class="${vo.codeId}" value="${vo.codeValue}" disabled required size="8%"></td>
-										<td><input name="displayName" class="${vo.codeId}" value="${vo.displayName}" readonly size="8%"></td>
-										<td><select name="useYN" class="${vo.codeId}" size="1%">
-												<option
-													<c:if test="${vo.useYN eq 'Y'}">selected="selected"</c:if>
-													value="Y">Y</option>
-												<option
-													<c:if test="${vo.useYN eq 'N'}">selected="selected"</c:if>
-													value="N">N</option>
-										</select></td>
-										<td><input value="<fmt:formatDate value="${vo.rgtrDt}" pattern="yyyy-MM-dd HH:mm:ss"/>" disabled size="18.5%"></td>
-										<td><input name="rgtrId" class="codeIdInput" value="${vo.rgtrId}" disabled size="8%"></td>
-										<td><input value="<fmt:formatDate value="${vo.updtDt}" pattern="yyyy-MM-dd HH:mm:ss"/>" disabled size="18.5%"></td>
-										<td><input class="codeIdInput" value="${vo.updtId}" disabled size="8%"></td>
-										<td id="updateBtn${vo.codeId}"><button type="button" onClick="updateCode(${vo.codeId})" class="codeBtn">수정</button></td>
-										<td id="submitBtn${vo.codeId}" hidden><button type="submit" class="codeBtn">저장</button></td>
-										<td id="deleteBtn${vo.codeId}"><button type="button" onclick="fn_delete(${vo.codeId})" class="codeBtn">삭제</button></td>
-										<td id="resetBtn${vo.codeId}" hidden><button type="reset" class="codeBtn">취소</button></td>
-									</form>
-								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-	</main>
-</div>
 <%@ include file="../footer.jsp"%>
