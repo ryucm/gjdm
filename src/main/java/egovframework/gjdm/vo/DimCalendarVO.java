@@ -1,39 +1,39 @@
-package egovframework.gjdm.vo;
+﻿package egovframework.gjdm.vo;
 
 import java.util.Date;
 
 public class DimCalendarVO {
-	private int date_id;
-	private String yyyymmdd;
-	private String yyyymm;
+	private int dateId;
+	private Date yyyymmdd;
+	private String yyyyMm;
 	private String hy;
 	private String qt;
 	private String mm;
 	private String wk;
 	private String dd;
-	private String day_nm;
-	private Date rgtr_dt;
-	private String rgtr_id;
-	private Date updt_dt;
-	private String updt_id;
+	private String dayNM;
+	private Date rgtrDt;
+	private String rgtrId;
+	private Date updtDt;
+	private String updtId;
 	
-	public int getDate_id() {
-		return date_id;
+	public int getDateId() {
+		return dateId;
 	}
-	public void setDate_id(int date_id) {
-		this.date_id = date_id;
+	public void setDate_id(int dateId) {
+		this.dateId = dateId;
 	}
-	public String getYyyymmdd() {
+	public Date getYyyymmdd() {
 		return yyyymmdd;
 	}
-	public void setYyyymmdd(String yyyymmdd) {
+	public void setYyyymmdd(Date yyyymmdd) {
 		this.yyyymmdd = yyyymmdd;
 	}
-	public String getYyyymm() {
-		return yyyymm;
+	public String getYyyyMm() {
+		return yyyyMm;
 	}
-	public void setYyyymm(String yyyymm) {
-		this.yyyymm = yyyymm;
+	public void setYyyymm(String yyyyMm) {
+		this.yyyyMm = yyyyMm;
 	}
 	public String getHy() {
 		return hy;
@@ -65,34 +65,34 @@ public class DimCalendarVO {
 	public void setDd(String dd) {
 		this.dd = dd;
 	}
-	public String getDay_nm() {
-		return day_nm;
+	public String getDayNM() {
+		return dayNM;
 	}
-	public void setDay_nm(String day_nm) {
-		this.day_nm = day_nm;
+	public void setDayNM(String dayNM) {
+		this.dayNM = dayNM;
 	}
-	public Date getRgtr_dt() {
-		return rgtr_dt;
+	public Date getRgtrDt() {
+		return rgtrDt;
 	}
-	public void setRgtr_dt(Date rgtr_dt) {
-		this.rgtr_dt = rgtr_dt;
+	public void setRgtrDt(Date rgtrDt) {
+		this.rgtrDt = rgtrDt;
 	}
-	public String getRgtr_id() {
-		return rgtr_id;
+	public String getRgtrId() {
+		return rgtrId;
 	}
-	public void setRgtr_id(String rgtr_id) {
-		this.rgtr_id = rgtr_id;
+	public void setRgtrId(String rgtrId) {
+		this.rgtrId = rgtrId;
 	}
-	public Date getUpdt_dt() {
-		return updt_dt;
+	public Date getUpdtDt() {
+		return updtDt;
 	}
-	public void setUpdt_dt(Date updt_dt) {
-		this.updt_dt = updt_dt;
+	public void setUpdtDt(Date updtDt) {
+		this.updtDt = updtDt;
 	}
-	public String getUpdt_id() {
-		return updt_id;
+	public String getUpdtId() {
+		return updtId;
 	}
-	public void setUpdt_id(String updt_id) {
-		this.updt_id = updt_id;
+	public void setUpdtId(String updtId) {
+		this.updtId = updtId;
 	}
 }

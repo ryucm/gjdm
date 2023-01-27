@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="egovframework.gjdm.mapper.EtlBatchMapper">
+	
+	<select id="selectEtlBatchList" resultType="etlBatchVO">
+		select * from dwdm.mst_etlmgmt where 1=1
+		<if test="jobType != null and jobType != ''">
+				and job_type=cast(#{jobType})
+		</if>
+		<if test="etlName != null and etlName != ''">
+				and etl_name like CONCAT('%',#{etlName}, '%')
+		</if>
+		order by etl_id LIMIT 30
+	</select>
+	
+	<insert id="insertEtlBatch" parameterType="java.util.Map">
+		insert into dwdm.mst_etlmgmt (etl_id, job_type, etl_name, etl_desc, frq_base, etl_param, frq_num, src_system, tgt_system, rgtr_id, updt_id)
+			values (cast(#{etlId} as integer), #{jobType}, #{etlName}, #{etlDesc}, #{frqBase}, #{etlParam}, #{frqNum}, #{srcSystem}, #{tgtSystem}, #{rgtr_id}, #{updt_id})
+	</insert>
+	
+	<delete id="deleteEtlBatch" parameterType="int">
+		delete from dwdm.mst_etlmgmt where etl_id=cast(#{etlId} as integer)
+	</delete>
+	
+	<update id="updateEtlBatch" parameterType="java.util.Map">
+		update dwdm.mst_etlmgmt set etl_id= cast(#{etlId} as integer), job_type=#{jobType}, etl_name=#{etlName}, etl_desc=#{etlDesc}, frq_base=#{frqBase}, etl_param=#{etlParam}, frq_num=#{frqNum}, src_system=#{srcSystem}, tgt_system=#{tgtSystem}, updt_dt=now(), updt_id = 'change'
+		where etl_id=cast(#{etlId} as integer)
+	</update>
+</mapper>

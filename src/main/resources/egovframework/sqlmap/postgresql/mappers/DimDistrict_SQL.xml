@@ -9,17 +9,25 @@
 				and nation_id = cast(#{nationId} as integer)
 			</if>
 			<if test="distLvl1 != null and distLvl1 != ''">
-				and dist_lvl_1 like CONCAT('%', #{distLvl1}, '%')
+				and dist_lvl_1 = #{distLvl1}
 			</if>
 			<if test="distLvl2 != null and distLvl2 != ''">
-				and dist_lvl_2 like CONCAT('%', #{distLvl2}, '%')
+				and dist_lvl_2 = #{distLvl2}
 			</if>
-			order by district_id LIMIT 30
+			order by district_id DESC LIMIT 30
+	</select>
+	
+	<select id="selectDimDistrictListGroupByLvl1" resultType="dimDistrictVO">
+		select dist_lvl_1 from dwdm.dim_district group by dist_lvl_1 order by dist_lvl_1;
+	</select>
+	
+	<select id="selectDimDistrictListGroupByLvl2" parameterType="String" resultType="dimDistrictVO">
+		select dist_lvl_2 from dwdm.dim_district where dist_lvl_1 = #{distLvl1} group by dist_lvl_2 order by dist_lvl_2;
 	</select>
 	
 	<insert id="insertDimDistrict" parameterType="java.util.Map">
 		insert into dwdm.dim_district (nation_id, dist_lvl_1, dist_lvl_2, dist_lvl_3, rgtr_id, updt_id)
-			values (cast(#{nationId} as integer), #{distLvl1}, #{distLvl2}, #{distLvl3}, #{rgtr_id}, #{updt_id})
+			values (cast(#{nationId} as integer), #{distLvl1}, #{distLvl2}, #{distLvl3}, #{rgtrId}, #{updtId})
 	</insert>
 	
 	<update id="updateDimDistrict" parameterType="java.util.Map">

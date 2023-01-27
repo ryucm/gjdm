@@ -15,6 +15,11 @@
 				and (code like CONCAT('%', #{code}, '%') or code_value like CONCAT('%', #{code}, '%'))
 			</if>
 	</select>
+	
+	<insert id="insertDimCode">
+		insert into dwdm.dim_code (group_code, group_name, code, code_value, display_name, use_yn, rgtr_id, updt_id)
+			values (#{groupCode}, #{groupName}, #{code}, #{codeValue}, #{displayName}, #{useYN}, #{rgtrId}, #{updtId})
+	</insert>
 
 	<delete id="deleteDimCode">
 		delete from dwdm.dim_code where code_id=#{codeId}

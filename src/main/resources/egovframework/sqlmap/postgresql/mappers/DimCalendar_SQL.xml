@@ -1,26 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="egovframework.gjdm.mapper.DimCalendarMapper">
 	
-	<resultMap id="dimCalendarList" type="egovframework.gjdm.vo.DimCalendarVO">
-		<result property="date_id" column="date_id"/>
-		<result property="yyyymmdd" column="yyyymmdd"/>
-		<result property="yyyymm" column="yyyymm"/>
-		<result property="hy" column="hy"/>
-		<result property="qt" column="qt"/>
-		<result property="mm" column="mm"/>
-		<result property="wk" column="wk"/>
-		<result property="dd" column="dd"/>
-		<result property="day_nm" column="day_nm"/>
-		<result property="rgtr_dt" column="rgtr_dt"/>
-		<result property="rgtr_id" column="rgtr_id"/>
-		<result property="updt_dt" column="updt_dt"/>
-		<result property="updt_id" column="updt_id"/>
-	</resultMap>
-	
-	
-	<select id="selectDimCalendarList" resultMap="dimCalendarList">
-		select * from dwdm.dim_calendar
+	<select id="selectDimCalendarList" resultType="dimCalendarVO">
+		select * from dwdm.dim_calendar where 1=1
+		<if test="keyword != null and keyword != ''">
+				and yyyyMm like CONCAT('%',#{keyword}, '%')
+		</if>
+		order by date_id LIMIT 20
 	</select>
 </mapper>
