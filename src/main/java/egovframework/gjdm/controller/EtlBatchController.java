@@ -35,6 +35,10 @@ public class EtlBatchController {
 		
 		return "standard_manage/etlbatch";
 	}
+	@RequestMapping("etlbatchInsert.do")
+	public String districtInsert() throws Exception {
+		return "standard_manage/etlbatchInsert";
+	}
 	
 	@RequestMapping("/insertEtlBatch.do")
 	public String insertEtlBatch(@RequestParam Map<String, String> paramMap) throws Exception {

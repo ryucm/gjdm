@@ -1,6 +1,7 @@
 package egovframework.gjdm.controller;
 
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Map;
 
@@ -69,5 +70,10 @@ public class DimNationController {
 		model.addAttribute("continentPage", paramMap.get("continentPage"));
 		
 		return "redirect:dimNationList.do";
+	}
+	
+	@RequestMapping(value="/nationInsert.do")
+	public String nationInsert() {
+		return "standard_manage/nationInsert";
 	}
 }

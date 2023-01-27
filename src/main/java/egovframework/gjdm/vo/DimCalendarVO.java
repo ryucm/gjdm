@@ -1,10 +1,10 @@
-package egovframework.gjdm.vo;
+﻿package egovframework.gjdm.vo;
 
 import java.util.Date;
 
 public class DimCalendarVO {
 	private int dateId;
-	private String yyyymmdd;
+	private Date yyyymmdd;
 	private String yyyyMm;
 	private String hy;
 	private String qt;
@@ -23,10 +23,10 @@ public class DimCalendarVO {
 	public void setDate_id(int dateId) {
 		this.dateId = dateId;
 	}
-	public String getYyyymmdd() {
+	public Date getYyyymmdd() {
 		return yyyymmdd;
 	}
-	public void setYyyymmdd(String yyyymmdd) {
+	public void setYyyymmdd(Date yyyymmdd) {
 		this.yyyymmdd = yyyymmdd;
 	}
 	public String getYyyyMm() {

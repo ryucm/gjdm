@@ -12,9 +12,15 @@
 	</select>
 	
 	<select id="selectDimNationListByContinent" parameterType="String" resultMap="dimNationList">
-		select * 
-		from dwdm.dim_nation 
-		where continent = #{continent}
+		<if test="continentPage != null and continentPage != ''">
+			select * 
+			from dwdm.dim_nation 
+			where continent = #{continent}
+		</if>
+		<if test="continentPage == null or continentPage == ''">
+			select * 
+			from dwdm.dim_nation
+		</if>
 	</select>
 	
 	<insert id="insertDimNation" parameterType="dimNationVO">
