@@ -17,6 +17,12 @@ public class DimDistrictServiceImpl implements DimDistrictService {
 	DimDistrictMapper dimDistrictMapper;
 	
 	@Override
+	public List<DimDistrictVO> selectAll() throws Exception {
+		// TODO Auto-generated method stub
+		return dimDistrictMapper.selectAll();
+	}
+	
+	@Override
 	public List<DimDistrictVO> selectDimDistrictList(Map<String, String> paramMap) throws Exception {
 		// TODO Auto-generated method stub
 		return dimDistrictMapper.selectDimDistrictList(paramMap);
@@ -29,9 +35,9 @@ public class DimDistrictServiceImpl implements DimDistrictService {
 	}
 	
 	@Override
-	public List<DimDistrictVO> selectDimDistrictListGroupByLvl2(String distLvl1) throws Exception {
+	public List<DimDistrictVO> selectDimDistrictListGroupByLvl2() throws Exception {
 		// TODO Auto-generated method stub
-		return dimDistrictMapper.selectDimDistrictListGroupByLvl2(distLvl1);
+		return dimDistrictMapper.selectDimDistrictListGroupByLvl2();
 	}
 
 	@Override
