@@ -22,49 +22,43 @@
                             <div class="card-body">
                             	<form action="/gjdm/dimDistrictList.do" method="post">
 									<label for="nationSearch">국가</label>
-									<select name="nationId" id="nationSearch" required>
+									<select name="nationId" id="nationSearch" required  onchange="selectNation(value)">
 										<option value="" disabled selected>--선택해주세요--</option>
 										<c:forEach items="${dimNationList}" var="nation">
 											<option value="${nation.nationId}" <c:if test="${nationId eq nation.nationId}">selected</c:if>>${nation.nationNm}</option>
 										</c:forEach>
 									</select>
+									<script>
+										function selectNation(value) {
+											var distLvl1 = $("#distLvl1Search option:selected").val();
+											location = "/gjdm/selectDistLvl.do?nationId=" + value;
+										}
+									</script>
+									
 	                            	<label for="distLvl1Search">시도</label>
 	                            	<select name="distLvl1" id="distLvl1Search" onchange="selectDistLvl1(value)">
 	                            		<option value="" disabled selected>--선택해주세요--</option>
 										<c:forEach items="${distLvl1List}" var="distLvl1List">
-											<option value="${distLvl1List.distLvl1}" <c:if test="${distLvl1 eq distLvl1List.distLvl1}">selected</c:if>>${distLvl1List.distLvl1}</option>
+											<c:if test="${distLvl1List.nationId eq nationId}">
+												<option value="${distLvl1List.distLvl1}" <c:if test="${distLvl1 eq distLvl1List.distLvl1}">selected</c:if>>${distLvl1List.distLvl1}</option>
+											</c:if>
 										</c:forEach>
 									</select>
 									<script>
 										function selectDistLvl1(value) {
-											$.ajax({
-												url: './selectDistLvl.do',
-												type: 'post',
-												data: {
-													"distLvl1" : value
-												},
-												success: function(data) {
-													console.log("success");
-													console.log(data);
-													$("#distLvl2Search").attr('disabled', false);
-													var list =['hi', 'hello'];
-													for (var count = 0; count < list.length; count++) {
-														var option = $("<option value='" + list[count] + "'>" + list[count] + "</option>");
-														$("#distLvl2Search").append(option);
-													}
-												},
-												error: function(e) {
-													console.log(e);
-												}
-											})
+											var nationId = $("#nationSearch option:selected").val();
+											location = "/gjdm/selectDistLvl.do?nationId=" + nationId + "&distLvl1=" + value;
 										}
 									</script>
+									
 	                            	<label for="distLvl2Search">군구</label>
-	                            	<select name="distLvl2" id="distLvl2Search" disabled>
+	                            	<select name="distLvl2" id="distLvl2Search">
 	                            		<option value="" disabled selected>--선택해주세요--</option>
-<%-- 										<c:forEach items="${distLvl2}" var="distLvl2"> --%>
-<%-- 											<option value="${distLvl2.distLvl2}">${distLvl2.distLvl2}</option> --%>
-<%-- 										</c:forEach> --%>
+										<c:forEach items="${distLvl2List}" var="distLvl2List">
+											<c:if test="${distLvl2List.distLvl1 eq distLvl1}">
+												<option value="${distLvl2List.distLvl2}" <c:if test="${distLvl2 eq distLvl2List.distLvl2}">selected</c:if>>${distLvl2List.distLvl2}</option>
+											</c:if>
+										</c:forEach>
 									</select>
 	                            	<button type="submit" class="districtBtn">조회</button>
                             	</form>
