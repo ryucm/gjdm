@@ -91,7 +91,7 @@ function inquireCode() {
 				<div class="subtitle">
 					<h3>검색결과</h3>
 					<div>
-						<a href="#" class="btn btn-create">새 지역 등록</a>
+						<a id="codeModal" class="btn btn-create">새 코드 등록</a>
 					</div>
 				</div>
 				<!-- Subtitle -->
@@ -198,5 +198,110 @@ function inquireCode() {
 			</div>
 		</article>
 	</main>
+	<!----- Contents End ----->
 </div>
+<!---- Layer Popup ---->
+<div id="layer_area" style="display: none;">
+  <div class="layer_pop"></div>
+  <div class="layer_wrap" style="width:500px;">
+    <div class="layBox">
+      <p class="btn_close"><a href="#none" class="closeLy"><img src="resources/images/ico_pop_close.png" title="close" alt="close" /></a></p>
+      <h1>코드등록<span>스마트관광 빅데이터 플랫폼</span></h1>
+      <div class="layerCon">
+        <div class="pop_tableType1">
+          <table>
+          	<form name="insert" method="post" class="insertForm">
+          	<tr>
+              <td>
+                <p>코드 그룹</p>
+                <input type="text" class="inputArea" name="groupCode" style="width:100%;"></td>
+            </tr>
+            <tr>
+              <td>
+                <p>코드 그룹명</p>
+                <input type="text" class="inputArea" name="groupName" style="width:100%;"></td>
+            </tr>
+            <tr>
+              <td>
+                <p>코드</p>
+                <input type="text" class="inputArea" name="code" style="width:100%;"></td>
+            </tr>
+            <tr>
+              <td>
+                <p>코드값</p>
+                <input type="text" class="inputArea" name="codeValue" style="width:100%;"></td>
+            </tr>
+            <tr>
+              <td>
+                <p>출력값</p>
+                <input type="text" class="inputArea" name="displayName" style="width:100%;"></td>
+            </tr>
+            <tr>
+              <td>
+                <p>사용여부</p>
+                <select name="useYN" style="width:100%;">
+                  <option>Y</option>
+                  <option>N</option> 
+                </select></td>
+            </tr>
+            </form>
+          </table>
+        </div>
+        <div class="pop_btnArea">
+            <a href="#" onclick="fn_submit(); return false;" class="btn btnType01">추가</a><a class="btn btnType02 closely">취소</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!---- Layer Popup ---->
+  <script>
+  $('#codeModal').click(function(){
+		$('#layer_area').show();
+	});
+  
+  function fn_submit() {
+		const regex = /^[A-Z0-9]*$/;
+		if (document.insert.groupCode.value == "") {
+			alert("코드 그룹을 입력해 주세요.")
+			document.insert.groupCode.focus();
+			return false
+		} else if (!regex.test(document.insert.groupCode.value)) {
+			alert("코드 그룹은 영어 대문자와 숫자만 입력 가능합니다.")
+			return false
+		}
+		if (document.insert.groupName.value == "") {
+			alert("코드 그룹명을 입력해 주세요.")
+			document.insert.groupCode.focus();
+			return false
+		}
+		if (document.insert.code.value == "") {
+			alert("코드를 입력해 주세요.")
+			document.insert.code.focus();
+			return false
+		}
+		if (document.insert.codeValue.value == "") {
+			alert("코드값를 입력해 주세요.")
+			document.insert.code.focus();
+			return false
+		}
+		if (document.insert.displayName.value == "") {
+			document.insert.displayName.value = document.insert.codeValue.value
+		}
+		
+		var formData = $(".insertForm").serialize()
+		$.ajax({
+          type: "POST",
+          url: "/gjdm/insertCode.do",
+          data: formData,
+          success: function () {
+         		alert("등록 완료")
+         		window.opener.location.reload();
+             	window.close();
+          },
+      	error: function(e) {
+      		alert(e)
+      	}    
+		})
+	}
+  </script>
 <%@ include file="../footer.jsp"%>
