@@ -315,7 +315,8 @@
           </table>
         </div>
         <div class="pop_btnArea">
-            <a onclick="checkData(insertDimNation); return false;" class="btn btnType01">추가</a><a class="btn btnType02 closeLy">취소</a>
+            <a onclick="insertData(insertDimNation); return false;" class="btn btnType01">추가</a>
+            <a class="btn btnType02 closeLy">취소</a>
         </div>
       </div>
     </div>
@@ -325,5 +326,59 @@
   	$('#nationModal').click(function(){
   		$('#layer_area').show();
   	});
+  	
+  	<%-- 삽입 유효성 검사 --%>
+	function insertData(formname){
+		
+		/* var continent = ${continent}; */
+		
+		var checkNum = /^[0-9]*$/; //숫자 (ISO번호)
+		var checkEngA = /^[A-Z]*$/; //영어 대문자 (국가명 영문, ISO코드, ISO3코드)
+		var checkKor = /^[가-힣]*$/; //한글 (국가명 한글)
+		
+		var nationNm = formname.nationNm.value;
+		var nationNmEn = formname.nationNmEn.value;
+		var isoCd = formname.isoCd.value;
+		var iso3Cd = formname.iso3Cd.value;
+		var isoNo = formname.isoNo.value;
+		
+		
+		if (!checkKor.test(nationNm)){
+			alert('국가명(한글)은 한글만 입력가능합니다.');
+			return false;
+		}
+		if (!checkEngA.test(nationNmEn)){
+			alert('국가명(영문)은 영문(대문자)만 입력가능합니다.');
+			return false;
+		}
+		if (!checkEngA.test(isoCd)){
+			alert('ISO코드는 영문(대문자)만 입력가능합니다.');
+			return false;
+		}
+		if (!checkEngA.test(iso3Cd)){
+			alert('ISO3코드는 영문(대문자)만 입력가능합니다.');
+			return false;
+		}
+		if (!checkNum.test(isoNo)){
+			alert('ISO번호는 숫자만 입력가능합니다.');
+			return false;
+		}
+		
+		var formData = $(".insertForm").serialize()
+		
+		$.ajax({
+          type: "POST",
+          url: "/gjdm/insertDimNation.do",
+          data: formData,
+          success: function () {
+         		alert("등록 완료")
+         		window.opener.location.reload();
+             	window.close();
+          },
+      	error: function(e) {
+      		alert(e)
+      	}    
+		})
+	}
   </script> 
 <%@ include file="../footer.jsp"%>
