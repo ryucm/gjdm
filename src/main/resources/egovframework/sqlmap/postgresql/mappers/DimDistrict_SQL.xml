@@ -4,7 +4,7 @@
 <mapper namespace="egovframework.gjdm.mapper.DimDistrictMapper">
 	<select id="selectAll" resultType="dimDistrictVO">
 		select * from dwdm.dim_district 
-			order by district_id DESC LIMIT 30
+			order by nation_id, dist_lvl_1, dist_lvl_2, dist_lvl_3 LIMIT 30
 	</select>
 
 	<select id="selectDimDistrictList" parameterType="java.util.Map" resultType="dimDistrictVO">
@@ -18,7 +18,7 @@
 			<if test="distLvl2 != null and distLvl2 != ''">
 				and dist_lvl_2 = #{distLvl2}
 			</if>
-			order by district_id DESC LIMIT 30
+			order by nation_id, dist_lvl_1, dist_lvl_2, dist_lvl_3 LIMIT 30
 	</select>
 	
 	<select id="selectDimDistrictListGroupByLvl1" resultType="dimDistrictVO">
