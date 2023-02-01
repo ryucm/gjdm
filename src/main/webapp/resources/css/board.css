@@ -1,0 +1,116 @@
+/****************************************************************************/
+/**         Board Class												           **/
+/****************************************************************************/
+@charset "utf-8";
+
+/* --- grid ---  */	
+
+/* Table Type1 */
+.table_type1 {position:relative; margin-bottom:20px;}
+.table_type1 table {width:100%; border-collapse: collapse; border-bottom:1px solid #c1c6cb;}
+.table_type1 table th {padding:0 5px 0 5px; color:#292b2c; text-align:center; background:#d6dadf;  border-bottom:2px solid #c1c6cb; font-family:'Pretendard'; font-size:15px; text-transform:uppercase ; line-height:18px; height:45px;}
+.table_type1 table td {padding:0 5px 0 5px; text-align:center; font-size:14px; color:#666; line-height:16px;font-family:'Pretendard'; height:46px; font-weight: 600;}
+.table_type1 table tr:nth-child(odd){background:#fff;}
+.table_type1 table tr:nth-child(even){background:#eef0f2;}
+.table_type1 table td.right {text-align:right;}
+.table_type1 table td.left {text-align:left;}
+.table_type1 table td > a {text-decoration:underline; color:#666666;}
+.table_type1 table td > a:hover{color:#1428a0;}
+.table_type1 table input[type=checkbox] {display: none;}
+.table_type1 table input[type=checkbox] + label{ cursor: pointer; position: relative; font-size: 13px; color:#666666; padding-left:30px;}
+.table_type1 table input[type=checkbox]+ label:before {content:""; display:inline-block; width:16px; height:16px; margin-left:-10px; position:absolute; top:0; left:0; bottom: 1px; border:1px solid #bababa; background-color: #FFF; }
+.table_type1 table input[type=checkbox]:checked + label:before { content: "\2713"; /* check shape */ font-size:15px; font-weight:600; color:#4c84ff; background:#FFF; text-align:center; line-height:16px;}
+.table_type1 table td a.edit{display: inline-block; background: url(../images/ico_edit.png) no-repeat; width: 27px;height: 27px; margin-right:5px; text-indent: -5000px;}
+.table_type1 table td a.edit:hover{display: inline-block; background: url(../images/ico_edit_ov.png) no-repeat;}
+.table_type1 table td a.unlock{display: inline-block; background: url(../images/ico_unlock.png) no-repeat; width: 27px;height: 27px; margin-right:5px; text-indent: -5000px;}
+.table_type1 table td a.unlock:hover{display: inline-block; background: url(../images/ico_unlock_ov.png) no-repeat;}
+.table_type1 table td a.gridBtn {display: inline-block; font-family:'Pretendard'; font-size: 13px; font-weight: 600; height: 30px; line-height: 30px; text-transform: uppercase; white-space: nowrap;cursor: pointer; border-radius: 3px; letter-spacing:0; text-decoration: none;}
+.table_type1 table td a.btnEdit {background:#edf2fe url(../../resources/images/ico_edit.png) no-repeat 10px 7px; color: #555555; padding-left: 35px; padding-right: 15px;}
+.table_type1 table td a.btnEdit:hover{background: #598cfc url(../../resources/images/ico_edit_ov.png) no-repeat 10px 7px; color: #fff;}
+.table_type1 table td a.btnSave {background:#edf2fe url(../../resources/images/ico_save.png) no-repeat 10px 7px; color: #555555; padding-left: 35px; padding-right: 15px;}
+.table_type1 table td a.btnSave:hover{background: #598cfc url(../../resources/images/ico_save_ov.png) no-repeat 10px 7px; color: #fff;}
+.table_type1 table td a.btnDelete {background:#edf2fe url(../../resources/images/ico_delete.png) no-repeat 10px 7px; color: #555555; padding-left: 35px; padding-right: 15px;}
+.table_type1 table td a.btnDelete:hover{background: #598cfc url(../../resources/images/ico_delete_ov.png) no-repeat 10px 7px; color: #fff;}
+.table_type1 table td input[type=text].inputArea{border:1px solid #bebebe; font-family: 'Pretendard'; color:#333333;  border-radius: 5px; padding-left:10px; padding-top: 5px;  height:32px; background:#FFF;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;}
+.table_type1 table td select {border:1px solid #bebebe; font-family: 'Pretendard'; color:#333333;  border-radius: 5px; padding-left:10px; padding-top: 5px;  height: 32px; padding-bottom:1px; background:#FFF url(../../resources/images/ico_select.png) no-repeat right center; padding-right: 30px; } 
+.table_type1 table td select {vertical-align:middle;}
+.table_type1 table td select:focus {outline:0;}
+.table_type1 table td select::-ms-expand {display: none;}
+.table_type1 table td select{-webkit-appearance: none;
+        -moz-appearance: none;
+        -o-appearance: none;}
+
+.viewTable1 {position:relative; padding:14px 40px; border-top:1px solid #a8abb5;border-bottom:1px solid #d1d7de;  background:#fbfbfb; }
+.viewTable1 table {width:100%;  border-collapse:collapse;}
+.viewTable1 table th {font-weight:300; color:#1b242d; font-size:14px; text-align:left; }
+.viewTable1 table td {font-size:14px; color:#686f77; font-weight:100; font-size:14px; padding:7px 10px;}
+.viewTable1 table td input[type=text].inputArea{border:1px solid #c0c6cd; height:33px; padding-left:10px; font-weight:100;}
+.viewTable1 table td textarea{border:1px solid #c0c6cd; padding:5px; color:#777; font-size:14px; color:686f77; font-weight:100;}
+
+
+.searchTable1 {position:relative; padding:15px 20px; border:2px solid #cdd2df; border-radius: 10px; background: #f5f8ff;}
+.searchTable1 table {width:100%;  border-collapse:collapse; }
+.searchTable1 table th {color:#454545; font-size:15px; text-align:left; font-family:'Pretendard'; }
+.searchTable1 table td p{color:#454545; font-size:15px; text-align:left; font-family:'Pretendard'; padding-bottom: 10px; font-weight: 600; }
+.searchTable1 table td {font-size:14px; color:#686f77;font-size:14px; padding:7px 10px 7px 0;}
+.searchTable1 table td:last-of-type{padding-right: 0;}
+.searchTable1 table td input[type=text].inputArea{border:1px solid #bebebe; font-family: 'Pretendard'; color:#333333;  border-radius: 5px; padding-left:10px; padding-top: 5px;  height:36px; background:#FFF;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;}
+.searchTable1 table td input[type=text].inputDate{border:1px solid #bebebe; font-family: 'Pretendard'; color:#333333;  border-radius: 5px; padding-left:10px; padding-top: 5px; height:36px; background:#FFF url(../../resources/images/ico_calendar.png) no-repeat right 8px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;}
+.searchTable1 table td button.calendar{background:url(../images/ico_calendar.png) no-repeat; width:20px; height:20px; margin:4px 0 4px 10px;}
+.searchTable1 table td textarea{border:1px solid #c0c6cd; padding:5px; color:#777; font-size:14px; color:686f77;}
+.searchTable1 table td.border-left{border-left:1px solid #c0c6cd;}
+
+/* paging */
+.paging{ font-size:14px; position:relative; text-align:left;}
+.paging a, .paging strong{vertical-align:top; margin-right:1px; display:inline-block; }
+.paging a{color:#757b83; width:35px; border:1px solid #b7b7b7; line-height:36px; background:#FFF; text-align:center; font-family:'Pretendard'; font-weight: 500;}
+.paging a:hover{color:#1528a0; font-weight:200; border:1px solid #1528a0;}
+.paging strong{color:#FFF; line-height:36px; padding:0 16px; border:1px solid #1528a0; background:#1528a0; font-weight:200;}
+.paging a span, .paging strong span{position:absolute; width:0; height:0; overflow:hidden; }
+/*.paging a.board_prev, .paging a.board_next{border:none;overflow:hidden;}*/
+.paging a.board_prev:hover img, .paging a.board_next:hover img{margin-top:0px;}
+.paging a.board_prev, .paging a.board_next{margin-right:0px; height:36px; }
+/*.paging a:hover.board_prev, .paging a:hover.board_next{border:none;}*/
+.page_info{font-size:14px; color:#555555; margin-right:20px; display:inline-block; font-family:'Pretendard'; font-weight: 500;}
+
+
+/* Popup Table Type1 */
+.pop_tableType1 {position:relative; border:2px solid #dbdbdb; padding:20px 30px 20px 30px; background:#f5f8ff; margin-bottom:30px;border-radius: 10px; }
+.pop_tableType1 table {width:100%;  border-collapse:collapse;}
+.pop_tableType1 table th {font-weight:500; color:#666666; font-size:14px; text-align:left; font-family:'Pretendard';}
+.pop_tableType1 table td {font-size:15px; color:#303030; padding:7px 10px 10px 0; font-family:'Pretendard'; }
+.pop_tableType1 table td:last-of-type{padding-right: 0;}
+.pop_tableType1 table td p{font-size: 14px;color:#666666;font-family:'Pretendard'; font-weight: 600; margin-bottom: 5px; letter-spacing: 0.5px;}
+.pop_tableType1 table td p.subtitle{font-size: 17px;color:#454545;}
+.pop_tableType1 table td label{font-size: 15px;color:#6c6c6c;font-family:'Pretendard'; display:block; margin-bottom:10px;}
+.pop_tableType1 table td input[type=text].inputArea {border:1px solid #bebebe; font-family: 'Pretendard'; color:#333333;  border-radius: 5px; padding-left:10px; padding-top: 5px;  height:36px; background:#FFF;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;}
+.pop_tableType1 table td input[type=text].inputArea_rd {border:1px solid #bebebe; font-family: 'Pretendard'; color:#333333;  border-radius: 5px; padding-left:10px; padding-top: 5px;  height:36px; background:#e4e7ed;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;}
+.pop_tableType1 table td input[type=text].inputDate{border:1px solid #bebebe; font-family: 'Pretendard'; color:#333333;  border-radius: 5px; padding-left:10px; padding-top: 5px; height:36px; background:#FFF url(../../resources/images/ico_calendar.png) no-repeat right 8px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;}
+.pop_tableType1 table td textarea{border:1px solid #cecece; padding:10px 0 10px 10px; color:#303030; font-size:15px;  font-family:'Pretendard';}
+.pop_tableType1 table td.line{border-top:1px solid #d1d1d1;}
+.pop_tableType1 table td p.registerTxt{color:#1428a0; font-size:15px; font-weight:700; line-height:140%;  font-family: 'Pretendard'; padding-top:10px; }
+
+
+
+.pop_scr {padding:20px 20px 20px 30px !important; }
+.pop_scr table {width:95%; margin-right: 5px !important;}
+
+
