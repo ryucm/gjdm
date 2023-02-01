@@ -121,9 +121,10 @@
         <!-- Subtitle -->
         <div class="subtitle">
 	        <h3>검색결과</h3>
-	        <div><a href="nationInsert()" class="btn btn-create">새 지역 등록</a></div>
+	        <div><a id="nationModal"class="btn btn-create">새 지역 등록</a></div>
      	</div>
       <!-- Subtitle -->
+      <!-- Grid Area -->
       <div class="table_type1">
         <table summary="">
           <colgroup>
@@ -131,7 +132,7 @@
           <col width="15%" />
           <col width="15%" />
           <col width="4%" />
-          <col width="4%" />
+          <col width="5%" />
           <col width="4%" />
           <col width="4%" />
           <col width="8%" />
@@ -141,7 +142,7 @@
           <col width="8%" />
           <col />
           </colgroup>
-          <thead>
+          <thead
             <tr>
                 <th scope="col">국가ID</th>
                 <th scope="col">국가명(한글)</th>
@@ -157,11 +158,31 @@
                 <th scope="col"></th>
                	<th scope="col"></th>
 	        </tr>
+	       </thead>
 	       <tbody>
 	       	<c:forEach items="${dimNationList}" var="vo" varStatus="status">
 	       		<form name="updateDimNation${vo.nationId}" action="updateDimNation.do" method="post" onsubmit="return checkData(updateDimNation${vo.nationId})">
 	        	<tr>
-                    <td><input name="nationId" value="${vo.nationId}" class="nationInput" readonly></td>
+	        		<td>${vo.nationId}</td>
+	        		<td>${vo.nationNm}</td>
+	        		<td>${vo.nationNmEn}</td>
+	        		<td>${vo.isoCd}</td>
+	        		<td>${vo.iso3Cd}</td>
+	        		<td>${vo.isoNo}</td>
+	        		<td><select name="continent" id="nationId${vo.nationId}" disabled>
+               				<c:forEach items="${continentList}" var="item">
+                				<option
+                					<c:if test="${item eq vo.continent}">selected="selected"</c:if>
+                					value="${item}">${item}
+                				</option>
+                			</c:forEach>
+               			</select>
+               		</td>
+               		<td><fmt:formatDate value="${vo.rgtrDt}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+               		<td>${vo.rgtrId}</td>
+               		<td><fmt:formatDate value="${vo.updtDt}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+               		<td>${vo.updtId}</td>
+                    <%-- <td><input name="nationId" value="${vo.nationId}" class="nationInput" readonly></td>
                     <td><input name="nationNm" maxlength="33" value="${vo.nationNm}" class="${vo.nationId} nationInput" disabled required></td>
                     <td><input name="nationNmEn" maxlength="100" value="${vo.nationNmEn}" class="${vo.nationId} nationInput" disabled required></td>
                     <td><input name="isoCd" maxlength="10" value="${vo.isoCd}" class="${vo.nationId} nationInput" disabled></td>
@@ -181,25 +202,25 @@
                		<td><input name="rgtrDt" value="<fmt:formatDate value="${vo.rgtrDt}" pattern="yyyy-MM-dd HH:mm:ss"/>" disabled></td>
                		<td><input name="rgtrId" value="${vo.rgtrId}" class="nationIdInput" disabled></td>
                		<td><input name="rgtrDt" value="<fmt:formatDate value="${vo.updtDt}" pattern="yyyy-MM-dd HH:mm:ss"/>" disabled></td>
-               		<td><input name="updtIdOrg" value="${vo.updtId}" class="nationIdInput" disabled>
+               		<td><input name="updtIdOrg" value="${vo.updtId}" class="nationIdInput" disabled> --%>
                   		<!-- 차후 사용자 ID로 수정 -->
 						<input type="hidden" name="updtId" value="관리자">
 						<!-- 페이징 관련 -->
 						<input type="hidden" name="continentPage" value="${continentPage}">
                     </td>
                		<td id="updateBtn${vo.nationId}">
-               			<button type="button" onClick="location.href='javascript:updateDimNation(${vo.nationId})'" class="nationBtn">
+               			<a onClick="location.href='javascript:updateDimNation(${vo.nationId})'" class="gridBtn btnEdit">
                				수정
                			</button>
                		</td>
                		<td id="submitBtn${vo.nationId}" hidden>
-               			<button type="submit" class="nationBtn">
+               			<a type="submit" href="javascript:updateDimNation${vo.nationId}.submit();" class="gridBtn btnEdit">
                				저장
                			</button>
                		</td>
               		</form>
               			<td>
-               			<button onclick="deleteDimNation(${vo.nationId})" class="nationBtn">
+               			<a onclick="deleteDimNation(${vo.nationId})" class="gridBtn btnDelete">
                				삭제
                			</button>
                		</td>
@@ -248,97 +269,51 @@
     </main>
 	<!----- Contents End ----->
   </div>
-            <style>
-            	.nationList > .card-body {
-            		padding: 0;
-            	}
-            	table {
-            		margin: 0;
-            		width: 100%;
-            	}
-            	thead {
-            		border-bottom: 3px solid black;
-            		height: 40px;
-            	}
-            	th, td {
-            		text-align: center;
-            		padding: 0;
-            	}
-            	tr {
-            		padding: 3px;
-            		height: 35px;
-            	}
-            	tr:nth-child(even) {
-            		background-color: rgba(0, 0, 0, 0.03);
-            	}
-            	select {
-            		width: 150px;
-            	}
-            	td select[disabled] {
-				    -webkit-appearance:none; /* 크롬 화살표 없애기 */
-				    -moz-appearance:none; /* 파이어폭스 화살표 없애기 */
-				    appearance:none; /* 화살표 없애기 */
-				    border: none;
-				    text-align: center;
-				    background: none;
-				}
-				input {
-					background-color: #f1f1f1;
-					border: none;
-					border-bottom: 1px solid #777;
-				}
-            	input[disabled], input[readonly] {
-            		background: none;
-            		border: none;
-            		text-align: center;
-            	}
-            	:focus-visible {
-            		outline: none;
-            	}
-            	.nationDiv {
-            		display: flex;
-				    justify-content: space-between;
-				    align-items: flex-end;
-            	}
-             	.nationInput { 
-              		width: 120px;
-              		padding: 3px;
-              		border-radius: 0;
-              		align-content: center;
-             	} 
-             	.nationIdInput {
-             		width: 70px;
-             		text-align: center;
-             	}
-				.nationBtn {
-					box-shadow:inset 0px 1px 0px 0px #ffffff;
-					background:linear-gradient(to bottom, #ededed 5%, #dfdfdf 100%);
-					background-color:#ededed;
-					border-radius:6px;
-					border:1px solid #dcdcdc;
-					display:inline-block;
-					cursor:pointer;
-					color:#777777;
-					font-family:Arial;
-					font-size:13px;
-					font-weight:bold;
-					padding:4px 15px;
-					text-decoration:none;
-					text-shadow:0px 1px 0px #ffffff;
-					margin: 1px;
-				}
-				.newNation {
-					margin: 10px 0;
-/* 					float: right; */
-				}
-				.nationBtn:hover {
-					background:linear-gradient(to bottom, #dfdfdf 5%, #ededed 100%);
-					background-color:#dfdfdf;
-					color:#777777;
-				}
-				.nationBtn:active {
-					position:relative;
-					top:1px;
-				}
-            </style>
+  <!---- Layer Popup ---->
+<div id="layer_area" style="display: none;">
+  <div class="layer_pop"></div>
+  <div class="layer_wrap" style="width:500px;">
+    <div class="layBox">
+      <p class="btn_close"><a href="#none" class="closeLy"><img src="resources/images/ico_pop_close.png" title="close" alt="close" /></a></p>
+      <h1>국가등록<span>스마트관광 빅데이터 플랫폼</span></h1>
+      <div class="layerCon">
+        <div class="pop_tableType1">
+          <table>
+            <tr>
+              <td>
+                <p>국가</p>
+                <select id="" name="" style="width:100%;">
+                  <option>국가선택</option>
+                  <option>국가선택</option> 
+                </select></td>
+            </tr>
+            <tr>
+              <td>
+                <p>시도</p>
+                <input type="text" value="시도" class="inputArea" style="width:100%;"></td>
+            </tr>
+            <tr>
+              <td>
+                <p>군구</p>
+                <input type="text" value="군구" class="inputArea" style="width:100%;"></td>
+            </tr>
+            <tr>
+              <td>
+                <p>동</p>
+                <input type="text" value="동" class="inputArea" style="width:100%;"></td>
+            </tr>
+          </table>
+        </div>
+        <div class="pop_btnArea">
+            <a href="#" class="btn btnType01">추가</a><a class="btn btnType02 closely">취소</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!---- Layer Popup ---->
+  <script>
+  	$('#nationModal').click(function(){
+  		$('#layer_area').show();
+  	});
+  </script> 
 <%@ include file="../footer.jsp"%>
