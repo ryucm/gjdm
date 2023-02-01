@@ -64,15 +64,15 @@ function formSubmit() {
       <div class="table_type1">
         <table summary="">
           <colgroup>
-          <col width="8%" />
-          <col width="8%" />
           <col width="7%" />
-          <col width="3%" />
-          <col width="3%" />
-          <col width="3%" />
-          <col width="3%" />
-          <col width="6%" />
-          <col width="6%" />
+          <col width="7%" />
+          <col width="7%" />
+          <col width="4%" />
+          <col width="4%" />
+          <col width="4%" />
+          <col width="4%" />
+          <col width="4%" />
+          <col width="4%" />
           <col width="7%" />
           <col width="7%" />
           <col width="11%" />
