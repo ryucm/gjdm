@@ -20,7 +20,7 @@
 	</insert>
 	
 	<delete id="deleteEtlBatch" parameterType="int">
-		delete from dwdm.mst_etlmgmt where etl_id=cast(#{etlId} as integer)
+		delete from dwdm.mst_etlmgmt where etl_id=#{etlId}
 	</delete>
 	
 	<update id="updateEtlBatch" parameterType="java.util.Map">
