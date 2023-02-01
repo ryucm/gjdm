@@ -16,6 +16,110 @@
         <link href="resources/css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <style>
+        		#insertForm {
+            		display: flex;
+            		flex-direction: column;
+				    align-items: center;
+				    height: 50%;
+				    justify-content: space-around;
+            	}
+            	#insertForm > div {
+            		display: flex;
+            		width: 300px;
+            		justify-content: space-between;
+            	}
+            	.districtList > .card-body {
+            		padding: 0;
+            	}
+            	table {
+            		margin: 0;
+            		width: 100%;
+            	}
+            	thead {
+            		border-bottom: 3px solid black;
+            		height: 40px;
+            	}
+            	th, td {
+            		text-align: center;
+            		padding: 0;
+            	}
+            	tr {
+            		padding: 3px;
+            		height: 35px;
+            	}
+            	tr:nth-child(even) {
+            		background-color: rgba(0, 0, 0, 0.03);
+            	}
+            	select {
+            		width: 150px;
+            	}
+            	td select[disabled] {
+				    -webkit-appearance:none; /* 크롬 화살표 없애기 */
+				    -moz-appearance:none; /* 파이어폭스 화살표 없애기 */
+				    appearance:none; /* 화살표 없애기 */
+				    border: none;
+				    text-align: center;
+				    background: none;
+				}
+				input {
+					background-color: #f1f1f1;
+					border: none;
+					border-bottom: 1px solid #777;
+				}
+            	input[disabled], input[readonly] {
+            		background: none;
+            		border: none;
+            		text-align: center;
+            	}
+            	:focus-visible {
+            		outline: none;
+            	}
+            	.districtDiv {
+            		display: flex;
+				    justify-content: space-between;
+				    align-items: flex-end;
+            	}
+             	.districtInput { 
+              		width: 120px;
+              		padding: 3px;
+              		border-radius: 0;
+              		align-content: center;
+             	} 
+             	.districtIdInput {
+             		width: 70px;
+             		text-align: center;
+             	}
+				.districtBtn {
+					box-shadow:inset 0px 1px 0px 0px #ffffff;
+					background:linear-gradient(to bottom, #ededed 5%, #dfdfdf 100%);
+					background-color:#ededed;
+					border-radius:6px;
+					border:1px solid #dcdcdc;
+					display:inline-block;
+					cursor:pointer;
+					color:#777777;
+					font-family:Arial;
+					font-size:13px;
+					font-weight:bold;
+					padding:4px 15px;
+					text-decoration:none;
+					text-shadow:0px 1px 0px #ffffff;
+					margin: 1px;
+				}
+				.newDistrict {
+					margin: 10px 0;
+				}
+				.districtBtn:hover {
+					background:linear-gradient(to bottom, #dfdfdf 5%, #ededed 100%);
+					background-color:#dfdfdf;
+					color:#777777;
+				}
+				.districtBtn:active {
+					position:relative;
+					top:1px;
+				}
+            </style>
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">

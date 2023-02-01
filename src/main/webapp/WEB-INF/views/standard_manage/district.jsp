@@ -6,7 +6,68 @@
                     <div class="container-fluid px-4">
                         <div class="districtDiv">
 	                        <h1 class="mt-4">지역 관리</h1>
-	                        <button type="button" onClick="districtInsert()" class="districtBtn newDistrict">새 지역 등록</button>
+	                        <button type="button" class="districtBtn newDistrict" data-bs-toggle="modal" data-bs-target="#newId">새 지역 등록</button>
+<!-- 							<div data-bs-toggle="modal" data-bs-target="#newId">등록</div> -->
+	                        <!-- 모달시작 -->
+	                        <div class="modal" tabindex="-1" id="newId">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" style="font-size: 2rem;">지역 등록</h5>
+										</div>
+										<div class="modal-body">
+											<form method="post" id="insertForm">
+												<div>
+				                            		<label for="nationInsert">국가</label>
+													<select name="nationId" id="nationInsert">
+														<c:forEach items="${dimNationList}" var="nation">
+															<option value="${nation.nationId}">${nation.nationNm}</option>
+														</c:forEach>
+													</select>
+												</div>
+												<div>
+					                            	<label for="distLvl1">시도</label>
+				                            		<input type="text" name="distLvl1" id="distLvl1" required>
+					                            </div>
+					                            <div>
+					                            	<label for="distLvl2">군구</label>
+				                            		<input type="text" name="distLvl2" id="distLvl2" required>
+					                            </div>
+												<div>
+					                            	<label for="distLvl3">동</label>
+				                            		<input type="text" name="distLvl3" id="distLvl3" required>
+					                            </div>
+					                            	<input type="hidden" name="rgtrId" value="test">
+					                            	<input type="hidden" name="updtId" value="test">
+											</form>
+										</div>
+										<div class="modal-footer">
+											<div class="modal-footer-btn">
+				                            	<button type="button" data-bs-dismiss="modal" id="modalbtn" class="districtBtn">취소</button>
+				                            	<button type="button" data-bs-dismiss="modal" onclick="insertDistrict()" class="districtBtn">추가</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<script>
+							function insertDistrict() {
+                        		var formData = $("#insertForm").serialize();
+                        		$.ajax({
+                        			url: '/gjdm/insertDimDistrict.do',
+                        			type: 'post',
+                        			data: formData,
+                        			success: function() {
+                        				console.log("success");
+                        				location.reload();
+                        			},
+                        			error: function(e) {
+										console.log(e);
+									}
+                        		})
+                        	}
+							</script>
+							<!-- 모달끝 -->
                         </div>
                         <script>
                         	function districtInsert() {
@@ -61,6 +122,15 @@
 										</c:forEach>
 									</select>
 	                            	<button type="submit" class="districtBtn">조회</button>
+	                            	<button type="button" class="districtBtn" onclick="resetValues()">조회조건 초기화</button>
+	                            	<script>
+	                            		function resetValues() {
+	                            			$("#nationSearch").val("");
+	                            			$("#distLvl1Search").val("");
+	                            			$("#distLvl2Search").val("");
+	                            			location = "/gjdm/selectDistLvl.do";
+	                            		}
+	                            	</script>
                             	</form>
                             </div>
                         </div>
@@ -69,7 +139,7 @@
                                 <table>
                                     <thead>
                                         <tr>
-                                            <th>국가ID</th>
+                                            <th>국가</th>
                                             <th>지역ID</th>
                                             <th>시도</th>
                                             <th>군구</th>
@@ -111,6 +181,12 @@
                                     </tbody>
                                 </table>
                                 <script>
+	                                window.onkeydown = function(e) {
+	                                	var kcode = event.keyCode;
+	                                	if(kcode == 116 || kcode == 82 && e.ctrlKey) {
+	                                		history.replaceState({}, null, location.pathname);
+	                                	}
+	                                };
 									function updateDistrict(districtId) {
 										if(confirm("지역 ID '" + districtId + "' 를 수정하시겠습니까?")) {
 											$("#nationId" + districtId).attr('disabled', false);
@@ -130,96 +206,5 @@
                     </div>
                 </main>
             </div>
-            <style>
-            	.districtList > .card-body {
-            		padding: 0;
-            	}
-            	table {
-            		margin: 0;
-            		width: 100%;
-            	}
-            	thead {
-            		border-bottom: 3px solid black;
-            		height: 40px;
-            	}
-            	th, td {
-            		text-align: center;
-            		padding: 0;
-            	}
-            	tr {
-            		padding: 3px;
-            		height: 35px;
-            	}
-            	tr:nth-child(even) {
-            		background-color: rgba(0, 0, 0, 0.03);
-            	}
-            	select {
-            		width: 150px;
-            	}
-            	td select[disabled] {
-				    -webkit-appearance:none; /* 크롬 화살표 없애기 */
-				    -moz-appearance:none; /* 파이어폭스 화살표 없애기 */
-				    appearance:none; /* 화살표 없애기 */
-				    border: none;
-				    text-align: center;
-				    background: none;
-				}
-				input {
-					background-color: #f1f1f1;
-					border: none;
-					border-bottom: 1px solid #777;
-				}
-            	input[disabled], input[readonly] {
-            		background: none;
-            		border: none;
-            		text-align: center;
-            	}
-            	:focus-visible {
-            		outline: none;
-            	}
-            	.districtDiv {
-            		display: flex;
-				    justify-content: space-between;
-				    align-items: flex-end;
-            	}
-             	.districtInput { 
-              		width: 120px;
-              		padding: 3px;
-              		border-radius: 0;
-              		align-content: center;
-             	} 
-             	.districtIdInput {
-             		width: 70px;
-             		text-align: center;
-             	}
-				.districtBtn {
-					box-shadow:inset 0px 1px 0px 0px #ffffff;
-					background:linear-gradient(to bottom, #ededed 5%, #dfdfdf 100%);
-					background-color:#ededed;
-					border-radius:6px;
-					border:1px solid #dcdcdc;
-					display:inline-block;
-					cursor:pointer;
-					color:#777777;
-					font-family:Arial;
-					font-size:13px;
-					font-weight:bold;
-					padding:4px 15px;
-					text-decoration:none;
-					text-shadow:0px 1px 0px #ffffff;
-					margin: 1px;
-				}
-				.newDistrict {
-					margin: 10px 0;
-				}
-				.districtBtn:hover {
-					background:linear-gradient(to bottom, #dfdfdf 5%, #ededed 100%);
-					background-color:#dfdfdf;
-					color:#777777;
-				}
-				.districtBtn:active {
-					position:relative;
-					top:1px;
-				}
-            </style>
+            
 <%@ include file="../footer.jsp"%>
