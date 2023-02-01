@@ -72,7 +72,7 @@
       <!-- Subtitle -->
       <div class="subtitle">
         <h3>검색결과</h3>
-        <div><a href="JavaScript:districtInsert()" class="btn btn-create">새 지역 등록</a></div>
+        <div><a id="districtModal" href="JavaScript:districtInsert()" class="btn btn-create">새 지역 등록</a></div>
       </div>
       <!-- Subtitle -->
       <!-- Grid Area -->
@@ -106,26 +106,30 @@
           </thead>
           <tbody>
           	<c:forEach items="${dimDistrictList}" var="vo">
-	            <tr>
-	              <form action="/gjdm/updateDimDistrict.do" method="post" id="editForm">
-	                  <c:forEach items="${dimNationList}" var="nation">
-	                	<c:if test="${nation.nationId eq vo.nationId}">
-	              			<td>${nation.nationNm}<span name="nationId" hidden>${nation.nationId}</span></td>
-	                	</c:if>
-	                  </c:forEach>
-		              <td name="districtId">${vo.districtId}</td>
-		              <td contenteditable="true" name="distLvl1">${vo.distLvl1}</td>
-		              <td contenteditable="true" name="distLvl2">${vo.distLvl2}</td>
-		              <td contenteditable="true" name="distLvl3">${vo.distLvl3}</td>
-		              <td><fmt:formatDate value="${vo.rgtrDt}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-		              <td>${vo.rgtrId}</td>
-		              <td><fmt:formatDate value="${vo.updtDt}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-		              <td name="updtId">${vo.updtId}</td>
-		              <td>
-		              	<a href="JavaScript:updateDistrict(${vo.districtId})" class="gridBtn btnEdit">수정</a>
+	            <tr id="editForm${vo.districtId}">
+                  <c:forEach items="${dimNationList}" var="nation">
+                	<c:if test="${nation.nationId eq vo.nationId}">
+              			<td>${nation.nationNm}<span name="nationId" hidden>${nation.nationId}</span></td>
+                	</c:if>
+                  </c:forEach>
+	              <td name="districtId">${vo.districtId}</td>
+	              <td name="distLvl1" id="distLvl1${vo.districtId}">${vo.distLvl1}</td>
+	              <td name="distLvl2" id="distLvl2${vo.districtId}">${vo.distLvl2}</td>
+	              <td name="distLvl3" id="distLvl3${vo.districtId}">${vo.distLvl3}</td>
+	              <td><fmt:formatDate value="${vo.rgtrDt}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+	              <td>${vo.rgtrId}</td>
+	              <td><fmt:formatDate value="${vo.updtDt}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+	              <td name="updtId">${vo.updtId}</td>
+	              <td>
+	              	<div id="editBtns${vo.districtId}">
+		              	<a href="JavaScript:changeUpdateBtn(${vo.districtId})" class="gridBtn btnEdit">수정</a>
 		              	<a href="JavaScript:deleteDistrict(${vo.districtId})" class="gridBtn btnDelete">삭제</a>
-		              </td>
-	              </form>
+	              	</div>
+	              	<div id="updateBtns${vo.districtId}" hidden>
+		              	<a href="JavaScript:updateDistrict(${vo.districtId})" class="gridBtn btnEdit">저장</a>
+		              	<a href="JavaScript:deleteDistrict(${vo.districtId})" class="gridBtn btnDelete">취소</a>
+	              	</div>
+	              </td>
 	            </tr>
             </c:forEach>
           </tbody>
@@ -159,6 +163,59 @@
     </main>
     <!----- Contents End ----->
   </div>
+  <!---- Layer Popup ---->
+  <div id="layer_area" style="display: none;">
+	  <div class="layer_pop"></div>
+	  <div class="layer_wrap" style="width:500px;">
+	    <div class="layBox">
+	      <p class="btn_close"><a href="#none" class="closeLy"><img src="resources/images/ico_pop_close.png" title="close" alt="close" /></a></p>
+	      <h1>지역등록<span>스마트관광 빅데이터 플랫폼</span></h1>
+	      <div class="layerCon">
+	        <div class="pop_tableType1">
+	          <form method="post" id="insertForm">
+		          <table>
+		            <tr>
+		              <td>
+		                <p>국가</p>
+		                <select id="nationInsert" name="nationId" style="width:100%;">
+		                  <option value="" disabled selected>-------선택하세요-------</option>
+		                  <c:forEach items="${dimNationList}" var="nation">
+							<option value="${nation.nationId}">${nation.nationNm}</option>
+						  </c:forEach> 
+		                </select></td>
+		            </tr>
+		            <tr>
+		              <td>
+		                <p>시도</p>
+		                <input type="text" placeholder="시도" class="inputArea" name="distLvl1" required style="width:100%;"></td>
+		            </tr>
+		            <tr>
+		              <td>
+		                <p>군구</p>
+		                <input type="text" placeholder="군구" class="inputArea" name="distLvl2" required style="width:100%;"></td>
+		            </tr>
+		            <tr>
+		              <td>
+		                <p>동</p>
+		                <input type="text" placeholder="동" class="inputArea" name="distLvl3" required style="width:100%;"></td>
+		            </tr>
+		            <tr hidden="true">
+		              <td>
+			            <input name="rgtrId" value="test">
+					    <input name="updtId" value="test">
+					  <td>
+				    </tr>
+		          </table>
+	          </form>
+	        </div>
+	        <div class="pop_btnArea">
+	            <a href="JavaScript:insertDistrict()" class="btn btnType01">추가</a><a href="#none" class="btn btnType02 close">취소</a>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+  <!---- Layer Popup ---->
   <script>
     /* 국가 선택시 시도 리스트 호출 */
     function selectNation(value) {
@@ -185,19 +242,19 @@
   	  }
     };
     
-    /* district Insert 창 팝업 */
-    function districtInsert() {
-		var popupWidth = 500;
-		var popupHeight = 565;
-	
-		var popupX = Math.round(window.screenX + (window.outerWidth / 2) - (popupWidth / 2));
-		var popupY = Math.round(window.screenY + (window.outerHeight / 2) - (popupHeight / 2));
-		window.open("districtInsert.do", null, 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);
-	}
+    function changeUpdateBtn(districtId) {
+    	if (confirm("지역 ID '" + districtId + "' 를 수정하시겠습니까?")) {
+    		$('td[id="distLvl1' + districtId + '"]').attr('contenteditable', true);
+    		$('td[id="distLvl2' + districtId + '"]').attr('contenteditable', true);
+    		$('td[id="distLvl3' + districtId + '"]').attr('contenteditable', true);
+    		$('#editBtns' + districtId).hide();
+    		$('#updateBtns' + districtId).show();
+		};
+    }
     
     /* district row 수정 */
 	function updateDistrict(districtId) {
-		if (confirm("지역 ID '" + districtId + "' 를 수정하시겠습니까?")) {
+		if (confirm("변경사항을 저장하시겠습니까?")) {
 			$("#editForm").submit();
 		};
 	};
@@ -210,11 +267,6 @@
 		var distLvl1 = $('td[name="distLvl1"]').html();
 		var distLvl2 = $('td[name="distLvl2"]').html();
 		var distLvl3 = $('td[name="distLvl3"]').html();
-		console.log(nationId);
-		console.log(districtId);
-		console.log(distLvl1);
-		console.log(distLvl2);
-		console.log(distLvl3);
 		$.ajax({
 			method: 'POST',
 			url: '/gjdm/updateDimDistrict.do',
@@ -224,6 +276,9 @@
 				distLvl1,
 				distLvl2,
 				distLvl3,
+			},
+			success: function() {
+				location.reload();
 			}
 		})
 	});
@@ -233,6 +288,29 @@
 		if (confirm("지역 ID '" + districtId + "' 를 삭제하시겠습니까?")) {
 			location = "deleteDimDistrict.do?districtId=" + districtId;
 		};
+	};
+	
+	/* district Insert Modal */
+	$('#districtModal').click(function(){
+  		$('#layer_area').show();
+  	});
+	
+	/* district Insert */
+	function insertDistrict() {
+		var formData = $("#insertForm").serialize();
+		$.ajax({
+			url: '/gjdm/insertDimDistrict.do',
+			type: 'post',
+			data: formData,
+			success: function() {
+				console.log("success");
+				location.reload();
+				alert("등록되었습니다.");
+			},
+			error: function(e) {
+				console.log(e);
+			}
+		})
 	};
   </script>
   <%@ include file="../footer.jsp"%>
