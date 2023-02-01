@@ -12,6 +12,8 @@ public class DimCalendarVO {
 	private String wk;
 	private String dd;
 	private String dayNM;
+	private String cmmn2WK;
+	private String cmmn3MT;
 	private Date rgtrDt;
 	private String rgtrId;
 	private Date updtDt;
@@ -70,6 +72,18 @@ public class DimCalendarVO {
 	}
 	public void setDayNM(String dayNM) {
 		this.dayNM = dayNM;
+	}
+	public String getCmmn2WK() {
+		return cmmn2WK;
+	}
+	public void setCmmn2WK(String cmmn2wk) {
+		cmmn2WK = cmmn2wk;
+	}
+	public String getCmmn3MT() {
+		return cmmn3MT;
+	}
+	public void setCmmn3MT(String cmmn3mt) {
+		cmmn3MT = cmmn3mt;
 	}
 	public Date getRgtrDt() {
 		return rgtrDt;
