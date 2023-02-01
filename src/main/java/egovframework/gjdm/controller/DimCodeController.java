@@ -20,7 +20,7 @@ public class DimCodeController {
 	private DimCodeService dimCodeService;
 	
 
-	@RequestMapping("/code.do")
+	@RequestMapping("/dimCodeList.do")
 	public String selectDimCodeList(Model model, @RequestParam Map<String, String> paramMap) throws Exception {
 		List<DimCodeVO> list = dimCodeService.selectDimCodeList(paramMap);
 		model.addAttribute("dimCodeList", list);
@@ -53,12 +53,12 @@ public class DimCodeController {
 	@RequestMapping("/deleteCode.do")
 	public String deleteCode(int codeId) throws Exception{
 		dimCodeService.deleteDimCode(codeId);
-		return "redirect:code.do";
+		return "redirect:dimCodeList.do";
 	}
 	
 	@RequestMapping("/updateCode.do")
 	public String updateCode(@RequestParam Map<String, String> paramMap) throws Exception {
 		dimCodeService.updateDimCode(paramMap);
-		return "redirect:code.do";
+		return "redirect:dimCodeList.do";
 	}
 }
