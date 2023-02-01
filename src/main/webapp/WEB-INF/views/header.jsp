@@ -4,115 +4,88 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>스마트 관광 BI</title>
-        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
-        <link href="resources/css/styles.css" rel="stylesheet" />
-        <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    </head>
-    <body class="sb-nav-fixed">
-        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-            <!-- Sidebar Toggle-->
-            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
-            <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="index.do"> 스마트 관광 빅데이터 대시보드 </a>
-            <!-- Navbar Search-->
-            <div class="input-group">
-            </div>
-            <!-- Navbar-->
-            <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">Settings</a></li>
-                        <li><a class="dropdown-item" href="#!">Activity Log</a></li>
-                        <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="views/login.jsp">Login</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </nav>
-        <div id="layoutSidenav">
-            <div id="layoutSidenav_nav">
-                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-                    <div class="sb-sidenav-menu">
-                        <div class="nav">
-                            <div class="sb-sidenav-menu-heading">메뉴</div>
-                            <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="true" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                대시보드
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse show" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="#">관광통계 분석</a>
-                                    <a class="nav-link" href="#">관광객 분석</a>
-                                    <a class="nav-link" href="#">관광소비 분석</a>
-                                </nav>
-                            </div>
-                            
-                            <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts1" aria-expanded="true" aria-controls="collapseLayouts1">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                기준관리
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse show" id="collapseLayouts1" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="dimCalendarList.do">달력</a>
-                                    <a class="nav-link" href="code.do">코드</a>
-                                    <a class="nav-link" href="dimNationList.do">국가</a>
-                                    <a class="nav-link" href="dimDistrictList.do">지역</a>
-                                </nav>
-                            </div>
-                            
-                            <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts2" aria-expanded="true" aria-controls="collapseLayouts2">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                시스템관리
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse show" id="collapseLayouts2" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="etlBatchList.do">ETL배치관리</a>
-                                    <a class="nav-link" href="#">사용자</a>
-                                    <a class="nav-link" href="#">권한</a>
-                                    <a class="nav-link" href="#">메뉴</a>
-                                </nav>
-                            </div>
-                            
-                            <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                                        Authentication
-                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                    </a>
-                                    <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                        <nav class="sb-sidenav-menu-nested nav">
-                                            <a class="nav-link" href="login.html">Login</a>
-                                            <a class="nav-link" href="register.html">Register</a>
-                                            <a class="nav-link" href="password.html">Forgot Password</a>
-                                        </nav>
+<!DOCTYPE html>
+<html>
+<head>
+<title>스마트관광 빅데이터 플랫폼</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="title" content="스마트관광 빅데이터 플랫폼" />
+<meta name="Author" content="스마트관광 빅데이터 플랫폼" />
+<meta name="description" content="스마트관광 빅데이터 플랫폼" />
+<meta name="keywords" content="스마트관광 빅데이터 플랫폼" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1"/>
+<!-- layout css -->
+<link rel="stylesheet" type="text/css" href="resources/css/styles.css">
+<link rel="stylesheet" type="text/css" href="resources/css/select.min.css">
+<link rel="stylesheet" type="text/css" href="resources/css/jquery-ui.css" />
+<link rel="stylesheet" type="text/css" href="resources/css/jquery.scrollbar.css" />
+<!-- Main scripts -->
+<script type="text/javascript" language="javascript" src="resources/js/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" language="javascript" src="resources/js/ui.js"></script>
+<script src="resources/js/jquery.scrollbar.js"></script>
+</head>
+
+<body>
+<!-- wrap start -->
+  <nav class="sideBarWrap">
+      <h1><a href="#" title="스마트관광 빅데이터 플랫폼">스마트관광 빅데이터 플랫폼</a></h1>
+      <!-- user info -->
+      <div class="userInfo">
+        <img src="resources/images/ico_user.png" />
+        <dl>
+          <dt>홍길동</dt>
+          <dd><a href="#" class="logout"><span>Transformation Group</span></a></dd>
+        </dl>
+        <a href="#"><div style="display:none;" class="logoutBox">LOGOUT</div></a>
+      </div>
+      <!-- user info -->
+      <!-- side bar start -->
+      <div class="wrapper scrollbar-dynamic">
+            <!--<div class="page-content"-->
+                  <div class="side-content">
+                    <script type="text/javascript">
+                          jQuery(document).ready(function(){
+                              jQuery('.scrollbar-macosx').scrollbar();
+                          });
+                      </script>
+                      <div class="scrollbarArea">
+                          <div class="scrollbar-macosx" >
+                            <div class="side-bar">
+                              <h2>Admin System</h2>
+                                <div class="menu">
+                                  <div class="item">
+                                    <a class="sub-btn on"><span class="ico_api">Dashboard</span>Dashboard</a>
+                                    <div class="sub-menu">
+                                      <a href="#" class="sub-item">관광통계 분석</a>
+                                      <a href="#" class="sub-item">관광객 분석</a>
+                                      <a href="#" class="sub-item">관광소비 분석</a>
                                     </div>
-                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
-                                        Error
-                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                    </a>
-                                    <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                        <nav class="sb-sidenav-menu-nested nav">
-                                            <a class="nav-link" href="401.html">401 Page</a>
-                                            <a class="nav-link" href="404.html">404 Page</a>
-                                            <a class="nav-link" href="500.html">500 Page</a>
-                                        </nav>
+                                  </div>
+                                  <div class="item">
+                                    <a class="sub-btn"><span class="ico_log">기준관리</span>기준관리</a>
+                                    <div class="sub-menu">
+                                      <a href="dimCalendarList.do" class="sub-item">달력</a>
+                                      <a href="dimCodeList.do" class="sub-item">코드</a>
+                                      <a href="dimNationList.do" class="sub-item">국가</a>
+                                      <a href="dimDistrictList.do" class="sub-item">지역</a>
                                     </div>
-                                </nav>
-                            </div>
-                        </div>
-                    </div>
-                </nav>
-            </div>
+                                  </div>
+                                  <div class="item">
+                                    <a class="sub-btn"><span class="ico_admin">시스템관리</span>시스템관리</a>
+                                    <div class="sub-menu">
+                                      <a href="etlBatchList.do" class="sub-item">ETL 배치관리</a>
+                                      <a href="#" class="sub-item">사용자</a>
+                                      <a href="#" class="sub-item">권한</a>
+                                      <a href="#" class="sub-item">메뉴</a>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                          </div>
+                      </div>
+
+                  </div>
+          <!--</div>-->
+      </div>
+      <!-- side bar end -->
+  </nav>

@@ -1,12 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">지역등록</h1>
+                        <h1 class="mt-4">지역 등록</h1>
                         <div class="card mb-4">
                             <div class="card-body">
-                            	<form action="/gjdm/insertDimDistrict.do" method="post" class="insertForm">
+                            	<form method="post" id="insertForm">
 	                            	<div>
 	                            		<label for="nationInsert">국가</label>
 										<select name="nationId" id="nationInsert">
@@ -35,22 +39,40 @@
 		                            </div>
 		                            	<input type="hidden" name="rgtrId" value="test">
 		                            	<input type="hidden" name="updtId" value="test">
-	                            	<button type="submit" class="districtBtn">추가</button>
+	                            	<button type="submit" onclick="insertDistrict()" class="districtBtn">추가</button>
 	                            </form>
+	                            <script>
+	                            	function insertDistrict() {
+	                            		var formData = $("#insertForm").serialize();
+	                            		$.ajax({
+	                            			url: '/gjdm/insertDimDistrict.do',
+	                            			type: 'post',
+	                            			data: formData,
+	                            			success: function() {
+	                            				console.log("success");
+			                            	    window.opener.location.reload();
+			                            	    window.close();
+	                            			},
+	                            			error: function(e) {
+												console.log(e);
+											}
+	                            		})
+	                            	}
+	                            </script>
                             </div>
                         </div>
                     </div>
                 </main>
             </div>
             <style>
-            	.insertForm {
+            	#insertForm {
             		display: flex;
             		flex-direction: column;
 				    align-items: center;
 				    height: 50%;
 				    justify-content: space-around;
             	}
-            	.insertForm > div {
+            	#insertForm > div {
             		display: flex;
             		justify-content: space-between;
             	}
