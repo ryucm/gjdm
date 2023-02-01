@@ -110,7 +110,7 @@ $(document).ready(function(e) {
 	  $('.layer_wrap').css({
 		position:'absolute',
 		left: ($(window).width() - $('.layer_wrap').outerWidth())/2,
-		top: ($(window).height() - $('.layer_wrap').outerHeight())/2-10
+		top: ($(window).height() - $('.layer_wrap').outerHeight())/5
 	  });
 	}).resize();
 });
