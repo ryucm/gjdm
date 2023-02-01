@@ -24,7 +24,7 @@
 
 <body>
 <!---- Layer Popup ---->
-<div id="layer_area" style="display:;">
+<div id="layer_area" style="display: none;">
   <div class="layer_pop"></div>
   <div class="layer_wrap" style="width:500px;">
     <div class="layBox">
@@ -74,6 +74,7 @@
       </div>
     </div>
   </div>
+</div>
   <!---- Layer Popup ----> 
 </body>
 <script>
