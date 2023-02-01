@@ -31,7 +31,7 @@
               <td>
                 <p>국가</p>
                 <select id="nationSearch" name="nationId" required  onchange="selectNation(value)" style="width:100%;">
-                  <option value="" disabled selected>--선택해주세요--</option>
+                  <option value="" disabled selected>-------선택하세요-------</option>
                   <c:forEach items="${dimNationList}" var="nation">
                     <option value="${nation.nationId}" <c:if test="${nationId eq nation.nationId}">selected</c:if>>${nation.nationNm}</option>
                   </c:forEach> 
@@ -40,7 +40,7 @@
               <td>
                 <p>시도</p>
                 <select id="distLvl1Search" name="distLvl1" onchange="selectDistLvl1(value)" style="width:100%;">
-                  <option value="" disabled selected>--선택해주세요--</option>
+                  <option value="" disabled selected>-------선택하세요-------</option>
                   <c:forEach items="${distLvl1List}" var="distLvl1List">
                     <c:if test="${distLvl1List.nationId eq nationId}">
                       <option value="${distLvl1List.distLvl1}" <c:if test="${distLvl1 eq distLvl1List.distLvl1}">selected</c:if>>${distLvl1List.distLvl1}</option>
@@ -51,7 +51,7 @@
               <td>
               <p>군구선택</p>
                 <select id="distLvl2Search" name="distLvl2" style="width:100%;">
-                  <option value="" disabled selected>--선택해주세요--</option>
+                  <option value="" disabled selected>-------선택하세요-------</option>
                   <c:forEach items="${distLvl2List}" var="distLvl2List">
                     <c:if test="${distLvl2List.distLvl1 eq distLvl1}">
                       <option value="${distLvl2List.distLvl2}" <c:if test="${distLvl2 eq distLvl2List.distLvl2}">selected</c:if>>${distLvl2List.distLvl2}</option>
@@ -72,7 +72,7 @@
       <!-- Subtitle -->
       <div class="subtitle">
         <h3>검색결과</h3>
-        <div><a href="#" class="btn btn-create">새 지역 등록</a></div>
+        <div><a href="JavaScript:districtInsert()" class="btn btn-create">새 지역 등록</a></div>
       </div>
       <!-- Subtitle -->
       <!-- Grid Area -->
@@ -184,6 +184,16 @@
   		history.replaceState({}, null, location.pathname);
   	  }
     };
+    
+    /* district Insert 창 팝업 */
+    function districtInsert() {
+		var popupWidth = 500;
+		var popupHeight = 565;
+	
+		var popupX = Math.round(window.screenX + (window.outerWidth / 2) - (popupWidth / 2));
+		var popupY = Math.round(window.screenY + (window.outerHeight / 2) - (popupHeight / 2));
+		window.open("districtInsert.do", null, 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);
+	}
     
     /* district row 수정 */
 	function updateDistrict(districtId) {

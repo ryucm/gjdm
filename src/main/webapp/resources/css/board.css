@@ -11,7 +11,7 @@
 .table_type1 table th {padding:0 5px 0 5px; color:#292b2c; text-align:center; background:#d6dadf;  border-bottom:2px solid #c1c6cb; font-family:'Pretendard'; font-size:15px; text-transform:uppercase ; line-height:18px; height:45px;}
 .table_type1 table td {padding:0 5px 0 5px; text-align:center; font-size:14px; color:#666; line-height:16px;font-family:'Pretendard'; height:46px; font-weight: 600;}
 .table_type1 table tr:nth-child(odd){background:#fff;}
-.table_type1 table tr:nth-child(even){background:#eef0f2;}
+.table_type1 table tr:nth-child(even){background: #f0f2f4;}
 .table_type1 table td.right {text-align:right;}
 .table_type1 table td.left {text-align:left;}
 .table_type1 table td > a {text-decoration:underline; color:#666666;}
@@ -24,7 +24,7 @@
 .table_type1 table td a.edit:hover{display: inline-block; background: url(../images/ico_edit_ov.png) no-repeat;}
 .table_type1 table td a.unlock{display: inline-block; background: url(../images/ico_unlock.png) no-repeat; width: 27px;height: 27px; margin-right:5px; text-indent: -5000px;}
 .table_type1 table td a.unlock:hover{display: inline-block; background: url(../images/ico_unlock_ov.png) no-repeat;}
-.table_type1 table td a.gridBtn {display: inline-block; font-family:'Pretendard'; font-size: 13px; font-weight: 600; height: 30px; line-height: 30px; text-transform: uppercase; white-space: nowrap;cursor: pointer; border-radius: 3px; letter-spacing:0; text-decoration: none;}
+.table_type1 table td a.gridBtn {display: inline-block; font-family:'Pretendard'; font-size: 13px; font-weight: 600; height: 30px; line-height: 30px; text-transform: uppercase; white-space: nowrap;cursor: pointer; border-radius: 3px; letter-spacing:0; text-decoration: none; border: 1px solid #d2d5de;}
 .table_type1 table td a.btnEdit {background:#edf2fe url(../../resources/images/ico_edit.png) no-repeat 10px 7px; color: #555555; padding-left: 35px; padding-right: 15px;}
 .table_type1 table td a.btnEdit:hover{background: #598cfc url(../../resources/images/ico_edit_ov.png) no-repeat 10px 7px; color: #fff;}
 .table_type1 table td a.btnSave {background:#edf2fe url(../../resources/images/ico_save.png) no-repeat 10px 7px; color: #555555; padding-left: 35px; padding-right: 15px;}
