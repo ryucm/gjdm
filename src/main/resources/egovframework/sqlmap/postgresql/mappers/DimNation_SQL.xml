@@ -8,7 +8,8 @@
 	
 	<select id="selectDimNationList" resultMap="dimNationList">
 		select * 
-		from dwdm.dim_nation
+		from dwdm.dim_nation 
+		order by nation_nm asc
 	</select>
 	
 	<select id="selectDimNationListByContinent" parameterType="String" resultMap="dimNationList">
@@ -16,10 +17,12 @@
 			select * 
 			from dwdm.dim_nation 
 			where continent = #{continent}
+			order by nation_nm asc
 		</if>
 		<if test="continentPage == null or continentPage == ''">
 			select * 
-			from dwdm.dim_nation
+			from dwdm.dim_nation 
+			order by nation_nm asc
 		</if>
 	</select>
 	
