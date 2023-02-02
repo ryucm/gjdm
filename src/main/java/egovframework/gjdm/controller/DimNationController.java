@@ -1,7 +1,7 @@
 package egovframework.gjdm.controller;
 
-import java.util.ArrayList;
-
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -29,15 +29,42 @@ public class DimNationController {
 	@RequestMapping(value="/dimNationList.do")
 	public String selectDimNationList(Model model, @RequestParam Map<String,String> paramMap) throws Exception {
 		
-		List<DimNationVO> list = new ArrayList<DimNationVO>();
+//    	Iterator<String> iter = paramMap.keySet().iterator();
+//        
+//        while(iter.hasNext()) {
+//            String key = iter.next();
+//            String value = paramMap.get(key);
+//            
+//            System.out.println(key + " : " + value);
+//        }
 		
-		if (paramMap.get("continentPage")==null || paramMap.get("continentPage").equals("")) {
-			list = dimNationService.selectDimNationList();
-		}else {
-			list = dimNationService.selectDimNationListByContinent(paramMap.get("continentPage"));
-			model.addAttribute("continentPage", paramMap.get("continentPage"));
+		//처음 국가페이지 들어올때 페이징 관련 초기값 설정
+		if (paramMap.get("currentPage")==null || paramMap.get("currentPage").equals("")) {
+			paramMap.put("currentPage", "1");
+			paramMap.put("contentLimit", "10");
 		}
+		//총 데이터 개수
+		int totalContentCount = dimNationService.selectDimNationListCount(paramMap);
+		//총 페이지 버튼 개수
+		int totalButtonCount = (int)(totalContentCount/Integer.parseInt(paramMap.get("contentLimit"))) + 1;
+		//구간당 버튼 개수 -> 5개
+		int buttonPerSection = 5;
+		//시작 버튼 번호
+		int divStartButtonNo = Integer.parseInt(paramMap.get("currentPage"))%buttonPerSection==0?Integer.parseInt(paramMap.get("currentPage"))/buttonPerSection-1
+				:Integer.parseInt(paramMap.get("currentPage"))/buttonPerSection;
+		int startButtonNo = divStartButtonNo*buttonPerSection + 1;
+		//끝 버튼 번호
+		int endButtonNo = startButtonNo+4>totalButtonCount?totalButtonCount:startButtonNo+4;
+				
+		List<DimNationVO> list = dimNationService.selectDimNationList(paramMap);
 		
+		paramMap.put("totalContentCount", String.valueOf(totalContentCount));
+		paramMap.put("totalButtonCount", String.valueOf(totalButtonCount));
+		paramMap.put("buttonPerSection", String.valueOf(buttonPerSection));
+		paramMap.put("startButtonNo", String.valueOf(startButtonNo));
+		paramMap.put("endButtonNo", String.valueOf(endButtonNo));
+		
+		model.addAllAttributes(paramMap);
 		model.addAttribute("dimNationList", list);
 		
 		return "standard_manage/nation";

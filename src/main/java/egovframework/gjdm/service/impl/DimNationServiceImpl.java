@@ -1,6 +1,7 @@
 package egovframework.gjdm.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,16 +16,23 @@ public class DimNationServiceImpl implements DimNationService{
 	@Autowired
 	DimNationMapper dimNationMapper;
 	
+	//DimDistrict 전용
 	@Override
-	public List<DimNationVO> selectDimNationList() throws Exception {
-
-		return dimNationMapper.selectDimNationList();
-	}
-
-	@Override
-	public List<DimNationVO> selectDimNationListByContinent(String continent) throws Exception {
+	public List<DimNationVO> selectDimNationListForDistrict() throws Exception {
 		
-		return dimNationMapper.selectDimNationListByContinent(continent);
+		return dimNationMapper.selectDimNationListForDistrict();
+	}
+	
+	@Override
+	public List<DimNationVO> selectDimNationList(Map<String,String> paramMap) throws Exception {
+		
+		return dimNationMapper.selectDimNationList(paramMap);
+	}
+	
+	@Override
+	public int selectDimNationListCount(Map<String, String> paramMap) throws Exception {
+		
+		return dimNationMapper.selectDimNationListCount(paramMap);
 	}
 	
 	@Override
@@ -46,4 +54,5 @@ public class DimNationServiceImpl implements DimNationService{
 		dimNationMapper.deleteDimNation(Integer.parseInt(nationId));
 		
 	}
+
 }

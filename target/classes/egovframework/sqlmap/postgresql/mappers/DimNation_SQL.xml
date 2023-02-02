@@ -6,24 +6,32 @@
 	<resultMap id="dimNationList" type="egovframework.gjdm.vo.DimNationVO">
 	</resultMap>
 	
-	<select id="selectDimNationList" resultMap="dimNationList">
+	<select id="selectDimNationListForDistrict" resultMap="dimNationList">
 		select * 
 		from dwdm.dim_nation 
 		order by nation_nm asc
 	</select>
 	
-	<select id="selectDimNationListByContinent" parameterType="String" resultMap="dimNationList">
+	<select id="selectDimNationListCount" parameterType="java.util.Map" resultType="int">
+		select count(*) 
+		from dwdm.dim_nation 
+		where 1=1
 		<if test="continentPage != null and continentPage != ''">
-			select * 
-			from dwdm.dim_nation 
-			where continent = #{continent}
-			order by nation_nm asc
+			and continent = #{continentPage}
 		</if>
-		<if test="continentPage == null or continentPage == ''">
-			select * 
-			from dwdm.dim_nation 
-			order by nation_nm asc
+	</select>
+	
+	<select id="selectDimNationList" parameterType="java.util.Map" resultMap="dimNationList">
+		select * 
+		from dwdm.dim_nation 
+		
+		where 1=1
+		<if test="continentPage != null and continentPage != ''">
+			and continent = #{continentPage}
 		</if>
+		order by nation_nm asc
+		limit #{contentLimit}::int
+		offset (#{currentPage}::int-1)*#{contentLimit}::int
 	</select>
 	
 	<insert id="insertDimNation" parameterType="dimNationVO">
