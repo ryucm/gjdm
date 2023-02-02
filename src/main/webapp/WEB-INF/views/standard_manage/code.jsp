@@ -13,12 +13,16 @@ function fn_delete(codeId){
 function updateCode(codeId) {
 	if (confirm("코드 ID '" + codeId + "' 를 수정하시겠습니까?")) {
 		var codeId = $("#"+codeId+' td[name="codeId"]').text();
-		var groupCode = $("#"+codeId+' td[name="groupCode"]').text();
-		var groupName = $("#"+codeId+' td[name="groupName"]').text();
-		var code = $("#"+codeId+' td[name="code"]').text();
-		var codeValue = $("#"+codeId+' td[name="codeValue"]').text();
-		var displayName = $("#"+codeId+' td[name="displayName"]').text();
-		var useYN = $("#"+codeId+' select[name="useYN"] option:selected').text()
+		var groupCode = $("#"+codeId+' input[name="groupCode"]').val();
+		var groupName = $("#"+codeId+' input[name="groupName"]').val();
+		var code = $("#"+codeId+' input[name="code"]').val();
+		var codeValue = $("#"+codeId+' input[name="codeValue"]').val();
+		var displayName = $("#"+codeId+' input[name="displayName"]').val();
+		var useYN = $("#"+codeId+' select[name="useYN"] option:selected').text();
+		
+		if (displayName == ""){
+			displayName = codeValue;
+		}
 		$.ajax({
 		method: 'POST',
 		url: '/gjdm/updateCode.do',
@@ -38,13 +42,19 @@ function updateCode(codeId) {
 	}
 };
 
-function modifyCode(codeId) {
-	$("."+codeId).attr('contenteditable', true);
-	$("#modifyBtn"+codeId).hide();
-	$("#useYN"+codeId).hide();
-	$("#useYNSelect"+codeId).attr('hidden', false);
-	$("#submitBtn"+codeId).attr('hidden', false);
-};
+$(document).ready(function() {
+    /* 수정버튼, 취소버튼 클릭시 로우 토글 */
+	$('.btnEdit').click(function() {
+		$(this).parent().parent().css('display', 'none');
+		$(this).parent().parent().next().next().css('display', 'table-row');
+	});
+	$('.btnCancel').click(function() {
+		if (confirm("변경된 내용이 저장되지 않습니다.\n그래도 취소하시겠습니까?")) {
+			$(this).parent().parent().css('display', 'none');
+    		$(this).parent().parent().prev().prev().css('display', 'table-row');
+		}
+	})
+})
 
 function insertCode() {
 
@@ -153,15 +163,35 @@ function inquireCode() {
 						</thead>
 						<tbody>
 							<c:forEach items="${dimCodeList}" var="vo">
-								<tr id="${vo.codeId}">
+								<tr class="nonEdit">
+									<td>${vo.codeId}</td>
+									<td>${vo.groupCode}</td>
+									<td>${vo.groupName}</td>
+									<td>${vo.code}</td>
+									<td>${vo.codeValue}</td>
+									<td>${vo.displayName}</td>
+									<td>${vo.useYN}</td>
+									<td><fmt:formatDate value="${vo.rgtrDt}"
+											pattern="yyyy-MM-dd HH:mm:ss" /></td>
+									<td>${vo.rgtrId}</td>
+									<td><fmt:formatDate value="${vo.updtDt}"
+											pattern="yyyy-MM-dd HH:mm:ss" /></td>
+									<td name="updtId">${vo.updtId}</td>
+									<td id="modifyBtn${vo.codeId}"><a
+										href="JavaScript:modifyCode(${vo.codeId})"
+										class="gridBtn btnEdit">수정</a> <a
+										href="JavaScript:fn_delete(${vo.codeId})"
+										class="gridBtn btnDelete">삭제</a></td>
+								</tr>
+								<tr></tr>
+								<tr id="${vo.codeId}" class="editable" style="display: none">
 									<td name="codeId">${vo.codeId}</td>
-									<td name="groupCode" class="${vo.codeId}">${vo.groupCode}</td>
-									<td name="groupName" class="${vo.codeId}">${vo.groupName}</td>
-									<td name="code" class="${vo.codeId}">${vo.code}</td>
-									<td name="codeValue" class="${vo.codeId}">${vo.codeValue}</td>
-									<td name="displayName" class="${vo.codeId}">${vo.displayName}</td>
-									<td id="useYN${vo.codeId}">${vo.useYN}</td>
-									<td id="useYNSelect${vo.codeId}" hidden><select
+									<td><input type="text" name="groupCode" style="width: 90%;" class="inputArea" required value="${vo.groupCode}"></td>
+									<td><input type="text" name="groupName" style="width: 90%;" class="inputArea" required value="${vo.groupName}"></td>
+									<td><input type="text" name="code" style="width: 90%;" class="inputArea" required value="${vo.code}"></td>
+									<td><input type="text" name="codeValue" style="width: 90%;" class="inputArea" required value="${vo.codeValue}"></td>
+									<td><input type="text" name="displayName" style="width: 90%;" class="inputArea" value="${vo.displayName}"></td>
+									<td id="useYNSelect${vo.codeId}"><select
 										name="useYN" style="text-align-last: center">
 											<option
 												<c:if test="${vo.useYN eq 'Y'}">selected="selected"</c:if>
@@ -176,14 +206,9 @@ function inquireCode() {
 									<td><fmt:formatDate value="${vo.updtDt}"
 											pattern="yyyy-MM-dd HH:mm:ss" /></td>
 									<td name="updtId">${vo.updtId}</td>
-									<td id="modifyBtn${vo.codeId}"><a
-										href="JavaScript:modifyCode(${vo.codeId})"
-										class="gridBtn btnEdit">수정</a> <a
-										href="JavaScript:fn_delete(${vo.codeId})"
-										class="gridBtn btnDelete">삭제</a></td>
-									<td id="submitBtn${vo.codeId}" hidden><a href="#"
-										onclick="updateCode(${vo.codeId})" class="gridBtn btnSave">저장</a>
-										<a href="dimCodeList.do" class="gridBtn btnCancel">취소</a></td>
+									<td id="submitBtn${vo.codeId}">
+										<a href="#" onclick="updateCode(${vo.codeId})" class="gridBtn btnSave">저장</a>
+										<a href="#" class="gridBtn btnCancel">취소</a></td>
 								</tr>
 							</c:forEach>
 						</tbody>
