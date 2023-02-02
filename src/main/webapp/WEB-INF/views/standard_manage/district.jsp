@@ -139,7 +139,7 @@
 	              <td><fmt:formatDate value="${vo.rgtrDt}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 	              <td>${vo.rgtrId}</td>
 	              <td><fmt:formatDate value="${vo.updtDt}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-	              <td name="updtId${vo.districtId}">${vo.updtId}</td>
+	              <td>${vo.updtId}</td>
 	              <td>
 	              	<a href="JavaScript:updateDistrict(${vo.districtId})" class="gridBtn btnSave">저장</a>
 	              	<a href="#" class="gridBtn btnCancel">취소</a>
@@ -256,43 +256,42 @@
   	  }
     };
     
-    $(document).ready(function() {
+    $(function() {
 	    /* 수정버튼, 취소버튼 클릭시 로우 토글 */
     	$('.btnEdit').click(function() {
     		$(this).parent().parent().css('display', 'none');
     		$(this).parent().parent().next().next().css('display', 'table-row');
     	});
+	    
     	$('.btnCancel').click(function() {
-    		if (confirm("변경된 내용이 저장되지 않습니다.\n그래도 취소하시겠습니까?")) {
-    			$(this).parent().parent().css('display', 'none');
-	    		$(this).parent().parent().prev().prev().css('display', 'table-row');
-    		}
+   			$(this).parent().parent().css('display', 'none');
+    		$(this).parent().parent().prev().prev().css('display', 'table-row');
     	})
     })
     
     /* district row 수정 */
 	function updateDistrict(districtId) {
 		if (confirm("지역 ID '" + districtId + "' 를 수정하시겠습니까?")) {
-		var nationId = $('select[name="nationId' + districtId + '"] option:selected').val();
-		var districtId = $('td[name="districtId' + districtId + '"]').html();
-		var distLvl1 = $('input[name="distLvl1' + districtId + '"]').val();
-		var distLvl2 = $('input[name="distLvl2' + districtId + '"]').val();
-		var distLvl3 = $('input[name="distLvl3' + districtId + '"]').val();
-		$.ajax({
-			method: 'POST',
-			url: '/gjdm/updateDimDistrict.do',
-			data: {
-				nationId,
-				districtId,
-				distLvl1,
-				distLvl2,
-				distLvl3,
-			},
-			success: function() {
-				history.replaceState({}, null, location.pathname);
-				location.reload();
-			}
-		})
+			var nationId = $('select[name="nationId' + districtId + '"] option:selected').val();
+			var districtId = $('td[name="districtId' + districtId + '"]').html();
+			var distLvl1 = $('input[name="distLvl1' + districtId + '"]').val();
+			var distLvl2 = $('input[name="distLvl2' + districtId + '"]').val();
+			var distLvl3 = $('input[name="distLvl3' + districtId + '"]').val();
+			$.ajax({
+				method: 'POST',
+				url: '/gjdm/updateDimDistrict.do',
+				data: {
+					nationId,
+					districtId,
+					distLvl1,
+					distLvl2,
+					distLvl3,
+				},
+				success: function() {
+					history.replaceState({}, null, location.pathname);
+					location.reload();
+				}
+			})
 		};
 	};
 	
@@ -325,5 +324,8 @@
 			}
 		})
 	};
+	function linkPage(pageNo){
+		location.href = "/gjdm/dimDistrictList.do?pageNo="+pageNo;
+	}
   </script>
   <%@ include file="../footer.jsp"%>

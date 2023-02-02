@@ -26,7 +26,7 @@
 	</select>
 	
 	<select id="selectDimDistrictListGroupByLvl2" resultType="dimDistrictVO">
-		select nation_id, dist_lvl_1, dist_lvl_2 from dwdm.dim_district group by dist_lvl_2, dist_lvl_1, nation_id order by nation_id, dist_lvl_1, dist_lvl_2;
+		select dist_lvl_1, dist_lvl_2 from dwdm.dim_district group by dist_lvl_2, dist_lvl_1 order by dist_lvl_1, dist_lvl_2;
 	</select>
 	
 	<insert id="insertDimDistrict" parameterType="java.util.Map">

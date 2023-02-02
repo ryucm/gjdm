@@ -18,6 +18,14 @@
   			$('a[href*="District"]').addClass('active');
   		}
 	}
+	if(window.location.href.includes('etl')) {
+		$('.sub-btn').eq(2).addClass('on');
+  		$('.sub-btn').eq(2).next('.sub-menu').show();
+  		
+  		if(window.location.href.includes('Batch')) {
+  			$('a[href*="Batch"]').addClass('active');
+  		}
+	}
     //jquery for toggle sub menus
     $('.sub-btn').click(function(){
       $(this).toggleClass('on');
