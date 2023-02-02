@@ -5,9 +5,7 @@
 <script>
 	<%-- 유효성 검사 --%>
 	function checkData(formname){
-		
-		/* var continent = ${continent}; */
-		
+
 		var checkNum = /^[0-9]*$/; //숫자 (ISO번호)
 		var checkEngA = /^[A-Z]*$/; //영어 대문자 (국가명 영문, ISO코드, ISO3코드)
 		var checkKor = /^[가-힣]*$/; //한글 (국가명 한글)
@@ -115,7 +113,7 @@
      	</div>
       <!-- Subtitle -->
       <!-- Grid Area -->
-      <div class="table_type1">
+      <div id="resultTable" class="table_type1">
         <table summary="">
           <colgroup>
           <col width="8%" />
@@ -232,23 +230,37 @@
 	</div>
 	
 	<!-- Grid Area -->
-    <div class="gridFooter">
-      <div class="page_info">Showing 1 to 5 of 150 entries</div> 
+    <div class="gridFooter" id="pagingButton">
+      <div class="page_info">Showing ${(currentPage-1)*contentLimit+1} to ${(currentPage-1)*contentLimit+contentLimit} of ${totalContentCount} entries</div> 
       <div>
       <!-- Paging -->
+      	${currentPage} : ${buttonPerSection}
         <div class="paging">
-          <a href="#" class="board_prev"><img src="resources/images/ico_board_prev_end.png" alt="First" /></a>
-          <a href="#" class="board_prev"><img src="resources/images/ico_board_prev.png" alt="Previous" /></a>
-          <strong>1</strong> <a href="#">2</a> <a href="#">3</a> <a href="#">4</a>
-          <a href="#">5</a>
-          <a class="board_next" href="#"><img src="resources/images/ico_board_next.png" alt="Next" /></a>
-          <a class="board_next" href="#"><img src="resources/images/ico_board_next_end.png" alt="Next End" /></a>
-          <select class="select-select" data-placeholder="10">
-            <option>10</option>
-            <option>10</option>
-            <option>20</option>
-            <option>50</option>
-            <option>100</option>
+        	<c:if test="${currentPage > buttonPerSection}">
+          		<a onclick="pageClick(1)" class="board_prev"><img src="resources/images/ico_board_prev_end.png" alt="First" /></a>
+          		<a onclick="pageClick(${startButtonNo-1})" class="board_prev"><img src="resources/images/ico_board_prev.png" alt="Previous" /></a>
+          	</c:if>
+		    <c:forEach var="pageNo" begin="${startButtonNo}" end="${endButtonNo}" step="1">
+		    	<a onclick="pageClick(${pageNo})">
+		    		<c:if test="${currentPage == pageNo}">
+		    			<strong>
+		    		</c:if>
+		    		${pageNo}
+		    		<c:if test="${currentPage == pageNo}">
+		    			</strong>
+		    		</c:if>	
+		    	</a>
+		    </c:forEach>
+          	<c:if test="${currentPage < totalButtonCount-buttonPerSection+1}">
+          		<a onclick="pageClick(${endButtonNo+1})" class="board_next"><img src="resources/images/ico_board_next.png" alt="Next" /></a>
+          		<a onclick="pageClick(${totalButtonCount})" href="#"><img src="resources/images/ico_board_next_end.png" alt="Next End" /></a>
+          	</c:if>
+          	
+          <select id="contentLimit" class="select-select" data-placeholder="10">
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
           </select>
         </div>
         <!-- Paging -->    
@@ -327,11 +339,9 @@
   		$('#layer_area').show();
   	});
   	
-  	<%-- 삽입 유효성 검사 --%>
+  	/* Insert 유효성 검사 */
 	function insertData(formname){
-		
-		/* var continent = ${continent}; */
-		
+
 		var checkNum = /^[0-9]*$/; //숫자 (ISO번호)
 		var checkEngA = /^[A-Z]*$/; //영어 대문자 (국가명 영문, ISO코드, ISO3코드)
 		var checkKor = /^[가-힣]*$/; //한글 (국가명 한글)
@@ -343,11 +353,11 @@
 		var isoNo = formname.isoNo.value;
 		
 		
-		if (!checkKor.test(nationNm)){
+		if (!checkKor.test(nationNm) || nationNm == '' || nationNm == null){
 			alert('국가명(한글)은 한글만 입력가능합니다.');
 			return false;
 		}
-		if (!checkEngA.test(nationNmEn)){
+		if (!checkEngA.test(nationNmEn) || nationNmEn == '' || nationNmEn == null){
 			alert('국가명(영문)은 영문(대문자)만 입력가능합니다.');
 			return false;
 		}
@@ -372,13 +382,51 @@
           data: formData,
           success: function () {
          		alert("등록 완료")
-         		window.opener.location.reload();
-             	window.close();
+         		location.reload();
           },
       	error: function(e) {
       		alert(e)
       	}    
 		})
+	}
+	
+	/* Pagination 버튼 클릭 */
+	function pageClick(pageNo){
+		//text to html
+		const parser = new DOMParser();
+		
+		var contentLimit = $('#contentLimit option:selected').val();
+		var currentPage = ${currentPage};
+		
+		var continentPage = '${continentPage}';
+		
+		$.ajax({
+			type : 'POST',
+			url : '/gjdm/dimNationList.do',
+			data : {
+				'contentLimit' : contentLimit,
+				'continentPage' : continentPage,
+				'currentPage' : pageNo
+			},
+			dataType : 'html',
+			success : function(data){
+				//text to html
+				data = parser.parseFromString(data, 'text/html');
+				
+				//change table
+				var resultTable = data.getElementById('resultTable');
+				$('#resultTable').empty();
+				$('#resultTable').html(resultTable);
+				
+				//change paging button
+				var pagingButton = data.getElementById('pagingButton');
+				$('#pagingButton').empty();
+				$('#pagingButton').html(pagingButton);
+			},
+			error : function(e){
+				console.log(e);
+			}
+		});
 	}
   </script> 
 <%@ include file="../footer.jsp"%>

@@ -27,7 +27,7 @@ public class DimDistrictController {
 	
 	@RequestMapping("/dimDistrictList.do")
 	public String selectDimDistrictList(Model model, @RequestParam Map<String, String> paramMap) throws Exception {
-		List<DimNationVO> nationList = DimNationService.selectDimNationList();
+		List<DimNationVO> nationList = DimNationService.selectDimNationListForDistrict();
 		List<DimDistrictVO> districtList = dimDistrictService.selectDimDistrictList(paramMap);
 		List<DimDistrictVO> distLvl1List = dimDistrictService.selectDimDistrictListGroupByLvl1();
 		List<DimDistrictVO> distLvl2List = dimDistrictService.selectDimDistrictListGroupByLvl2();
@@ -54,7 +54,7 @@ public class DimDistrictController {
 	
 	@RequestMapping("/selectDistLvl.do")
 	public String selectDistLvl(Model model, @RequestParam Map<String, String> paramMap) throws Exception {
-		List<DimNationVO> nationList = DimNationService.selectDimNationList();
+		List<DimNationVO> nationList = DimNationService.selectDimNationListForDistrict();
 		List<DimDistrictVO> districtList = dimDistrictService.selectAll();
 		List<DimDistrictVO> distLvl1List = dimDistrictService.selectDimDistrictListGroupByLvl1();
 		List<DimDistrictVO> distLvl2List = dimDistrictService.selectDimDistrictListGroupByLvl2();

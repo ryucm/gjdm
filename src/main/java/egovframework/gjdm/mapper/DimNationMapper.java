@@ -9,9 +9,11 @@ import egovframework.gjdm.vo.DimNationVO;
 
 @Mapper("DimNationMapper")
 public interface DimNationMapper {
-	public List<DimNationVO> selectDimNationList() throws Exception;
+	public List<DimNationVO> selectDimNationListForDistrict() throws Exception;
 	
-	public List<DimNationVO> selectDimNationListByContinent(String Continent);
+	public List<DimNationVO> selectDimNationList(Map<String,String> paramMap) throws Exception;
+	
+	public int selectDimNationListCount(Map<String,String> paramMap) throws Exception;
 	
 	public void insertDimNation(DimNationVO vo);
 	
