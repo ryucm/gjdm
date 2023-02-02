@@ -230,8 +230,8 @@
 	</div>
 	
 	<!-- Grid Area -->
-    <div class="gridFooter">
-      <div class="page_info" id="pagingButton">Showing ${(currentPage-1)*contentLimit+1} to ${(currentPage-1)*contentLimit+contentLimit>totalContentCount?totalContentCount:(currentPage-1)*contentLimit+contentLimit} of ${totalContentCount} entries</div> 
+    <div class="gridFooter" id="pagingButton">
+      <div class="page_info">Showing ${(currentPage-1)*contentLimit+1} to ${(currentPage-1)*contentLimit+contentLimit>totalContentCount?totalContentCount:(currentPage-1)*contentLimit+contentLimit} of ${totalContentCount} entries</div> 
       <div>
       <!-- Paging -->
         <div class="paging">
