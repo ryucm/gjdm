@@ -1,16 +1,16 @@
 //Tab
 $(function () {
 
-    $(".tab_content").hide();
-    $(".tab_content:first").show();
+    $(".sub-menu").hide();
+    //$(".sub-menu:first").show();
 
-    $("ul.tab01 li").click(function () {
-        $("ul.tab01 li").removeClass("on").css({ "color":"#96989a","font-weight": "400"});
-        //$(this).addClass("active").css({"color": "darkred","font-weight": "bolder"});
-        $(this).addClass("on").css({"color": "#000","font-weight": "600"});
-        $(".tab_content").hide()
+    $("sub-btn").click(function () {
+        $("sub-btn").addClass("on");
+        $(this).addClass("active");
+        $(this).addClass("on");
+        $(".sub-menu").hide();
         var activeTab = $(this).attr("rel");
-        $("#" + activeTab).fadeIn()
+        $("#" + activeTab).fadeIn();
     });
 });
   
@@ -23,7 +23,7 @@ $(function () {
 
     $("ul.tab02 li").click(function () {
         $("ul.tab02 li").removeClass("on").css({ "color":"#96989a","font-weight": "300"});
-        //$(this).addClass("active").css({"color": "darkred","font-weight": "bolder"});
+        $(this).addClass("active").css({"color": "darkred","font-weight": "bolder"});
         $(this).addClass("on").css({"color": "#000","font-weight": "500"});
         $(".tab_content").hide()
         var activeTab = $(this).attr("rel");
@@ -114,11 +114,6 @@ $(document).ready(function(e) {
 	  });
 	}).resize();
 });
-
-var hamburger = document.querySelector(".hamburger");
-hamburger.addEventListener("click", function(){
- document.querySelector("body").classList.toggle("active");
-})
 
 
 jQuery(function($){

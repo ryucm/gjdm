@@ -26,16 +26,18 @@ footer {background: #FFF;height: 5vh; }
 .side-bar .menu .item  {position: relative;cursor: pointer; }
 .side-bar .menu .item a {font-family: 'Pretendard'; color: #fff; font-size: 16px; font-weight: 500; text-decoration: none; display: block; padding: 0 20px; line-height: 55px; }
 .side-bar .menu .item a:hover{background: #0c0f1a; border-left: 4px solid #1a74d9; padding: 0 16px;}
-/* .side-bar .menu .item .on{background: #0c0f1a; border-left: 4px solid #1a74d9; padding: 0 16px} */
+.side-bar .menu .item a:active{background: #0c0f1a; border-left: 4px solid #1a74d9; padding: 0 16px;}
+.side-bar .menu .item .on{background: #0c0f1a; border-left: 4px solid #1a74d9; padding: 0 16px}
 .side-bar .menu .item span {margin-right: 10px; display:inline-block; width: 28px; height: 50px;  text-indent: -5000px;}
 .side-bar .menu .item span.ico_api{background: url(../../resources/images/ico_api.png) no-repeat 0 16px; }
 .side-bar .menu .item span.ico_log{background: url(../../resources/images/ico_log.png) no-repeat 0 16px; }
 .side-bar .menu .item span.ico_master{background: url(../../resources/images/ico_master.png) no-repeat 0 15px; }
 .side-bar .menu .item span.ico_admin{background: url(../../resources/images/ico_admin.png) no-repeat 0 16px; }
 .side-bar .menu .item a .dropdown { position: absolute; right: 0;margin: 20px;transition: 0.3s ease; }
-.side-bar .menu .item .sub-menu { background: #1a295c; padding: 10px 0;}
+.side-bar .menu .item .sub-menu { background: #1a295c;display: none; padding: 10px 0;}
 .side-bar .menu .item .sub-menu a {padding-left: 67px; font-family: 'Pretendard'; color: #fff; font-size: 14px; font-weight: 400; line-height: 35px;}
 .side-bar .menu .item .sub-menu a:hover{border-left:none; background: #1a295c; color: #5aa8ff;}
+.side-bar .menu .item .sub-menu a.active{border-left:none; background: #1a295c; color: #5aa8ff;}
 a .logoutBox{position:absolute; top:145px; left: 200px; text-align: center; border: 2px solid #616988; background:#000000; color:#FFF; width: 100px; height: 35px; line-height: 38px; font-family: 'Pretendard';font-size: 14px;}
 a:hover .logoutBox{background:#000000; color: #FFF; border: 2px solid #FFF; }
 
