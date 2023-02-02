@@ -231,12 +231,11 @@
 	
 	<!-- Grid Area -->
     <div class="gridFooter" id="pagingButton">
-      <div class="page_info">Showing ${(currentPage-1)*contentLimit+1} to ${(currentPage-1)*contentLimit+contentLimit} of ${totalContentCount} entries</div> 
+      <div class="page_info">Showing ${(currentPage-1)*contentLimit+1} to ${(currentPage-1)*contentLimit+contentLimit>totalContentCount?totalContentCount:(currentPage-1)*contentLimit+contentLimit} of ${totalContentCount} entries</div> 
       <div>
       <!-- Paging -->
-      	${currentPage} : ${buttonPerSection}
         <div class="paging">
-        	<c:if test="${currentPage > buttonPerSection}">
+        	<c:if test="${currentPage+0 > buttonPerSection+0}">
           		<a onclick="pageClick(1)" class="board_prev"><img src="resources/images/ico_board_prev_end.png" alt="First" /></a>
           		<a onclick="pageClick(${startButtonNo-1})" class="board_prev"><img src="resources/images/ico_board_prev.png" alt="Previous" /></a>
           	</c:if>
@@ -251,9 +250,9 @@
 		    		</c:if>	
 		    	</a>
 		    </c:forEach>
-          	<c:if test="${currentPage < totalButtonCount-buttonPerSection+1}">
+          	<c:if test="${currentPage+0 < totalButtonCount-buttonPerSection+1}">
           		<a onclick="pageClick(${endButtonNo+1})" class="board_next"><img src="resources/images/ico_board_next.png" alt="Next" /></a>
-          		<a onclick="pageClick(${totalButtonCount})" href="#"><img src="resources/images/ico_board_next_end.png" alt="Next End" /></a>
+          		<a onclick="pageClick(${totalButtonCount})" class="board_next"><img src="resources/images/ico_board_next_end.png" alt="Next End" /></a>
           	</c:if>
           	
           <select id="contentLimit" class="select-select" data-placeholder="10">
@@ -264,6 +263,7 @@
           </select>
         </div>
         <!-- Paging -->    
+        </div>
         </div>
       </div>
     </article>
