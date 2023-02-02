@@ -16,8 +16,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1"/>
 <!-- layout css -->
 <link rel="stylesheet" type="text/css" href="resources/css/styles.css">
-<link rel="stylesheet" type="text/css" href="resources/css/select.min.css">
-<link rel="stylesheet" type="text/css" href="resources/css/jquery-ui.css" />
 <link rel="stylesheet" type="text/css" href="resources/css/jquery.scrollbar.css" />
 <!-- Main scripts -->
 <script type="text/javascript" language="javascript" src="resources/js/jquery-3.6.0.min.js"></script>
@@ -54,7 +52,7 @@
                               <h2>Admin System</h2>
                                 <div class="menu">
                                   <div class="item">
-                                    <a class="sub-btn on"><span class="ico_api">Dashboard</span>Dashboard</a>
+                                    <a class="sub-btn"><span class="ico_api">Dashboard</span>Dashboard</a>
                                     <div class="sub-menu">
                                       <a href="#" class="sub-item">관광통계 분석</a>
                                       <a href="#" class="sub-item">관광객 분석</a>

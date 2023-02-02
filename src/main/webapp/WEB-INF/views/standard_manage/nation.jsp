@@ -50,16 +50,6 @@
 						+"&continentPage=${continentPage}";
 		}
 	}
-	
-	<%--팝업창--%>
-	function nationInsert() {
-		var popupWidth = 800;
-        var popupHeight = 600;
-
-        var popupX = Math.round(window.screenX + (window.outerWidth / 2) - (popupWidth / 2));
-        var popupY = Math.round(window.screenY + (window.outerHeight / 2) - (popupHeight / 2));
-		window.open("nationInsert.do", null, 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);
-	}
 </script>
 
 <c:set var="continentList" value="${fn:split('아시아,유럽,오세아니아,북아메리카,남아메리카,아프리카',',')}"/>
@@ -121,7 +111,7 @@
         <!-- Subtitle -->
         <div class="subtitle">
 	        <h3>검색결과</h3>
-	        <div><a id="nationModal"class="btn btn-create">새 지역 등록</a></div>
+	        <div><a id="nationModal" class="btn btn-create">새 지역 등록</a></div>
      	</div>
       <!-- Subtitle -->
       <!-- Grid Area -->
@@ -279,33 +269,54 @@
       <div class="layerCon">
         <div class="pop_tableType1">
           <table>
+          <form name="insertDimNation" method="post" class="insertForm">
             <tr>
               <td>
-                <p>국가</p>
-                <select id="" name="" style="width:100%;">
-                  <option>국가선택</option>
-                  <option>국가선택</option> 
-                </select></td>
+                <p>국가명(한글)</p>
+               	<input type="text" name="nationNm" class="inputArea" style="width:100%;" required>
             </tr>
             <tr>
               <td>
-                <p>시도</p>
-                <input type="text" value="시도" class="inputArea" style="width:100%;"></td>
+                <p>국가명(영문)</p>
+                <input type="text" name="nationNmEn" class="inputArea" style="width:100%;" required></td>
             </tr>
             <tr>
               <td>
-                <p>군구</p>
-                <input type="text" value="군구" class="inputArea" style="width:100%;"></td>
+                <p>대륙명</p>
+                <select name="continent" id="continentInsert" style="width:100%;">
+					<c:forEach items="${continentList}" var="item">
+						<option value="${item}">${item}</option>
+					</c:forEach>
+				</select>
+              </td>
             </tr>
             <tr>
               <td>
-                <p>동</p>
-                <input type="text" value="동" class="inputArea" style="width:100%;"></td>
+                <p>ISO코드</p>
+                <input type="text" name="isoCd" class="inputArea" style="width:100%;">
+               </td>
             </tr>
+            <tr>
+              <td>
+                <p>ISO3코드</p>
+                <input type="text" name="iso3Cd" class="inputArea" style="width:100%;">
+               </td>
+            </tr>
+            <tr>
+              <td>
+                <p>ISO번호</p>
+                <input type="text" name="isoNo" class="inputArea" style="width:100%;">
+               </td>
+            </tr>
+            <!-- 차후 사용자 ID로 수정 -->
+			<input type="hidden" name="rgtrId" value="관리자">
+			<input type="hidden" name="updtId" value="관리자">
+		  </form>
           </table>
         </div>
         <div class="pop_btnArea">
-            <a href="#" class="btn btnType01">추가</a><a class="btn btnType02 closely">취소</a>
+            <a onclick="insertData(insertDimNation); return false;" class="btn btnType01">추가</a>
+            <a class="btn btnType02 closeLy">취소</a>
         </div>
       </div>
     </div>
@@ -315,5 +326,59 @@
   	$('#nationModal').click(function(){
   		$('#layer_area').show();
   	});
+  	
+  	<%-- 삽입 유효성 검사 --%>
+	function insertData(formname){
+		
+		/* var continent = ${continent}; */
+		
+		var checkNum = /^[0-9]*$/; //숫자 (ISO번호)
+		var checkEngA = /^[A-Z]*$/; //영어 대문자 (국가명 영문, ISO코드, ISO3코드)
+		var checkKor = /^[가-힣]*$/; //한글 (국가명 한글)
+		
+		var nationNm = formname.nationNm.value;
+		var nationNmEn = formname.nationNmEn.value;
+		var isoCd = formname.isoCd.value;
+		var iso3Cd = formname.iso3Cd.value;
+		var isoNo = formname.isoNo.value;
+		
+		
+		if (!checkKor.test(nationNm)){
+			alert('국가명(한글)은 한글만 입력가능합니다.');
+			return false;
+		}
+		if (!checkEngA.test(nationNmEn)){
+			alert('국가명(영문)은 영문(대문자)만 입력가능합니다.');
+			return false;
+		}
+		if (!checkEngA.test(isoCd)){
+			alert('ISO코드는 영문(대문자)만 입력가능합니다.');
+			return false;
+		}
+		if (!checkEngA.test(iso3Cd)){
+			alert('ISO3코드는 영문(대문자)만 입력가능합니다.');
+			return false;
+		}
+		if (!checkNum.test(isoNo)){
+			alert('ISO번호는 숫자만 입력가능합니다.');
+			return false;
+		}
+		
+		var formData = $(".insertForm").serialize()
+		
+		$.ajax({
+          type: "POST",
+          url: "/gjdm/insertDimNation.do",
+          data: formData,
+          success: function () {
+         		alert("등록 완료")
+         		window.opener.location.reload();
+             	window.close();
+          },
+      	error: function(e) {
+      		alert(e)
+      	}    
+		})
+	}
   </script> 
 <%@ include file="../footer.jsp"%>

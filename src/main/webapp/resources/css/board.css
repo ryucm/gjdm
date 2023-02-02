@@ -29,6 +29,8 @@
 .table_type1 table td a.btnEdit:hover{background: #598cfc url(../../resources/images/ico_edit_ov.png) no-repeat 10px 7px; color: #fff;}
 .table_type1 table td a.btnSave {background:#edf2fe url(../../resources/images/ico_save.png) no-repeat 10px 7px; color: #555555; padding-left: 35px; padding-right: 15px;}
 .table_type1 table td a.btnSave:hover{background: #598cfc url(../../resources/images/ico_save_ov.png) no-repeat 10px 7px; color: #fff;}
+.table_type1 table td a.btnCancel {background:#edf2fe url(../../resources/images/ico_cancel.png) no-repeat 10px 7px; color: #555555; padding-left: 35px; padding-right: 15px;}
+.table_type1 table td a.btnCancel:hover{background: #598cfc url(../../resources/images/ico_cancel_ov.png) no-repeat 10px 7px; color: #fff;}
 .table_type1 table td a.btnDelete {background:#edf2fe url(../../resources/images/ico_delete.png) no-repeat 10px 7px; color: #555555; padding-left: 35px; padding-right: 15px;}
 .table_type1 table td a.btnDelete:hover{background: #598cfc url(../../resources/images/ico_delete_ov.png) no-repeat 10px 7px; color: #fff;}
 .table_type1 table td input[type=text].inputArea{border:1px solid #bebebe; font-family: 'Pretendard'; color:#333333;  border-radius: 5px; padding-left:10px; padding-top: 5px;  height:32px; background:#FFF;
