@@ -2,6 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="egovframework.gjdm.mapper.DimDistrictMapper">
+	<select id="selectAll" resultType="dimDistrictVO">
+		select * from dwdm.dim_district 
+			order by nation_id, dist_lvl_1, dist_lvl_2, dist_lvl_3 LIMIT 30
+	</select>
 
 	<select id="selectDimDistrictList" parameterType="java.util.Map" resultType="dimDistrictVO">
 		select * from dwdm.dim_district where 1=1
@@ -14,15 +18,15 @@
 			<if test="distLvl2 != null and distLvl2 != ''">
 				and dist_lvl_2 = #{distLvl2}
 			</if>
-			order by district_id DESC LIMIT 30
+			order by nation_id, dist_lvl_1, dist_lvl_2, dist_lvl_3 LIMIT 30
 	</select>
 	
 	<select id="selectDimDistrictListGroupByLvl1" resultType="dimDistrictVO">
-		select dist_lvl_1 from dwdm.dim_district group by dist_lvl_1 order by dist_lvl_1;
+		select nation_id, dist_lvl_1 from dwdm.dim_district group by dist_lvl_1, nation_id order by nation_id, dist_lvl_1;
 	</select>
 	
-	<select id="selectDimDistrictListGroupByLvl2" parameterType="String" resultType="dimDistrictVO">
-		select dist_lvl_2 from dwdm.dim_district where dist_lvl_1 = #{distLvl1} group by dist_lvl_2 order by dist_lvl_2;
+	<select id="selectDimDistrictListGroupByLvl2" resultType="dimDistrictVO">
+		select nation_id, dist_lvl_1, dist_lvl_2 from dwdm.dim_district group by dist_lvl_2, dist_lvl_1, nation_id order by nation_id, dist_lvl_1, dist_lvl_2;
 	</select>
 	
 	<insert id="insertDimDistrict" parameterType="java.util.Map">

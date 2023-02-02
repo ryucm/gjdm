@@ -1,10 +1,38 @@
-</div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="resources/js/scripts.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="resources/assets/demo/chart-area-demo.js"></script>
-        <script src="resources/assets/demo/chart-bar-demo.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-        <script src="resources/js/datatables-simple-demo.js"></script>
-    </body>
+<script type="text/javascript">
+  $(document).ready(function(){
+	//navbar active
+	if(window.location.href.includes('dim')) {
+		$('.sub-btn').eq(1).addClass('on');
+  		$('.sub-btn').eq(1).next('.sub-menu').show();
+  		
+  		if(window.location.href.includes('Calendar')) {
+  			$('a[href*="Calendar"]').addClass('active');
+  		}
+  		if(window.location.href.includes('Code')) {
+  			$('a[href*="Code"]').addClass('active');
+  		}
+  		if(window.location.href.includes('Nation')) {
+  			$('a[href*="Nation"]').addClass('active');
+  		}
+  		if(window.location.href.includes('District')) {
+  			$('a[href*="District"]').addClass('active');
+  		}
+	}
+    //jquery for toggle sub menus
+    $('.sub-btn').click(function(){
+      $(this).toggleClass('on');
+      $(this).next('.sub-menu').slideToggle();
+      $(this).find('.dropdown').toggleClass('rotate');
+      $('#scrollArea').slimscroll();
+    });
+  });
+  </script>
+  <script>
+    var hamburger = document.querySelector(".hamburger");
+	hamburger.addEventListener("click", function(){
+ 		document.querySelector("body").classList.toggle("active");
+	})
+  </script>
+
+</body>
 </html>

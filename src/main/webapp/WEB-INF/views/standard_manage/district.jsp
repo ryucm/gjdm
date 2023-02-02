@@ -1,231 +1,329 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
-<%@ include file="../header.jsp"%>
-            <div id="layoutSidenav_content">
-                <main>
-                    <div class="container-fluid px-4">
-                        <div class="districtDiv">
-	                        <h1 class="mt-4">지역 관리</h1>
-	                        <button type="button" onClick="districtInsert()" class="districtBtn newDistrict">새 지역 등록</button>
-                        </div>
-                        <script>
-                        	function districtInsert() {
-                        		var popupWidth = 800;
-                                var popupHeight = 600;
-
-                                var popupX = Math.round(window.screenX + (window.outerWidth / 2) - (popupWidth / 2));
-                                var popupY = Math.round(window.screenY + (window.outerHeight / 2) - (popupHeight / 2));
-                        		window.open("districtInsert.do", null, 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);
-                        	}
-                        </script>
-                        <div class="card mb-4">
-                            <div class="card-body">
-                            	<form action="/gjdm/dimDistrictList.do" method="post">
-									<label for="nationSearch">국가</label>
-									<select name="nationId" id="nationSearch" required>
-										<option value="" disabled selected>--선택해주세요--</option>
-										<c:forEach items="${dimNationList}" var="nation">
-											<option value="${nation.nationId}" <c:if test="${nationId eq nation.nationId}">selected</c:if>>${nation.nationNm}</option>
-										</c:forEach>
-									</select>
-	                            	<label for="distLvl1Search">시도</label>
-	                            	<select name="distLvl1" id="distLvl1Search" onchange="selectDistLvl1(value)">
-	                            		<option value="" disabled selected>--선택해주세요--</option>
-										<c:forEach items="${distLvl1List}" var="distLvl1List">
-											<option value="${distLvl1List.distLvl1}" <c:if test="${distLvl1 eq distLvl1List.distLvl1}">selected</c:if>>${distLvl1List.distLvl1}</option>
-										</c:forEach>
-									</select>
-									<script>
-										function selectDistLvl1(value) {
-											$.ajax({
-												url: './selectDistLvl.do',
-												type: 'post',
-												data: {
-													"distLvl1" : value
-												},
-												success: function(data) {
-													console.log("success");
-													console.log(data);
-													$("#distLvl2Search").attr('disabled', false);
-													var list =['hi', 'hello'];
-													for (var count = 0; count < list.length; count++) {
-														var option = $("<option value='" + list[count] + "'>" + list[count] + "</option>");
-														$("#distLvl2Search").append(option);
-													}
-												},
-												error: function(e) {
-													console.log(e);
-												}
-											})
-										}
-									</script>
-	                            	<label for="distLvl2Search">군구</label>
-	                            	<select name="distLvl2" id="distLvl2Search" disabled>
-	                            		<option value="" disabled selected>--선택해주세요--</option>
-<%-- 										<c:forEach items="${distLvl2}" var="distLvl2"> --%>
-<%-- 											<option value="${distLvl2.distLvl2}">${distLvl2.distLvl2}</option> --%>
-<%-- 										</c:forEach> --%>
-									</select>
-	                            	<button type="submit" class="districtBtn">조회</button>
-                            	</form>
-                            </div>
-                        </div>
-                        <div class="card mb-4 districtList">
-                            <div class="card-body">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>국가ID</th>
-                                            <th>지역ID</th>
-                                            <th>시도</th>
-                                            <th>군구</th>
-                                            <th>동</th>
-                                            <th>등록일시</th>
-                                            <th>등록자</th>
-                                            <th>변경일시</th>
-                                            <th>변경자</th>
-                                            <th></th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <c:forEach items="${dimDistrictList}" var="vo">
-                                         	<tr>
-	                                        	<form action="/gjdm/updateDimDistrict.do" method="post">
-	                                        		<td><select name="nationId" id="nationId${vo.districtId}" disabled>
-														<c:forEach items="${dimNationList}" var="nation">
-
-															<option <c:if test="${nation.nationId eq vo.nationId}">selected</c:if>
-
-															value="${nation.nationId}">${nation.nationNm}</option>
-														</c:forEach>
-													</select></td>
-	                                        		<td><input name="districtId" class="districtInput" value="${vo.districtId}" readonly></td>
-	                                        		<td><input name="distLvl1" class="${vo.districtId} districtInput" value="${vo.distLvl1}" disabled required></td>
-	                                        		<td><input name="distLvl2" class="${vo.districtId} districtInput" value="${vo.distLvl2}" disabled required></td>
-	                                        		<td><input name="distLvl3" class="${vo.districtId} districtInput" value="${vo.distLvl3}" disabled required></td>
-	                                        		<td><input value="<fmt:formatDate value="${vo.rgtrDt}" pattern="yyyy-MM-dd HH:mm:ss"/>" disabled></td>
-	                                        		<td><input value="${vo.rgtrId}" class="districtIdInput" disabled/></td>
-	                                        		<td><input value="<fmt:formatDate value="${vo.updtDt}" pattern="yyyy-MM-dd HH:mm:ss"/>" disabled></td>
-	                                        		<td><input name="updtId" id="updtId${vo.districtId}" class="districtIdInput" value="${vo.updtId}" disabled></td>
-	                                        		<td id="updateBtn${vo.districtId}"><input type="button" onClick="updateDistrict(${vo.districtId})" class="districtBtn" value="수정"></td>
-	                                        		<td id="submitBtn${vo.districtId}" hidden><button type="submit" class="districtBtn">저장</button></td>
-	                                        		<td><button type="button" onClick="deleteDistrict(${vo.districtId})" class="districtBtn">삭제</button></td>
-	                                        	</form>
-                                         	</tr>
-                                        </c:forEach>
-                                    </tbody>
-                                </table>
-                                <script>
-									function updateDistrict(districtId) {
-										if(confirm("지역 ID '" + districtId + "' 를 수정하시겠습니까?")) {
-											$("#nationId" + districtId).attr('disabled', false);
-											$("." + districtId).attr('disabled', false);
-											$("#updateBtn" + districtId).hide();
-											$("#submitBtn" + districtId).attr('hidden', false);											
-										}
-									};
-									function deleteDistrict(districtId) {
-										if (confirm("지역 ID '" + districtId + "' 를 삭제하시겠습니까?")) {
-											location = "deleteDimDistrict.do?districtId=" + districtId;
-										};
-									};
-								</script>
-                            </div>
-                        </div>
-                    </div>
-                </main>
-            </div>
-            <style>
-            	.districtList > .card-body {
-            		padding: 0;
-            	}
-            	table {
-            		margin: 0;
-            		width: 100%;
-            	}
-            	thead {
-            		border-bottom: 3px solid black;
-            		height: 40px;
-            	}
-            	th, td {
-            		text-align: center;
-            		padding: 0;
-            	}
-            	tr {
-            		padding: 3px;
-            		height: 35px;
-            	}
-            	tr:nth-child(even) {
-            		background-color: rgba(0, 0, 0, 0.03);
-            	}
-            	select {
-            		width: 150px;
-            	}
-            	td select[disabled] {
-				    -webkit-appearance:none; /* 크롬 화살표 없애기 */
-				    -moz-appearance:none; /* 파이어폭스 화살표 없애기 */
-				    appearance:none; /* 화살표 없애기 */
-				    border: none;
-				    text-align: center;
-				    background: none;
-				}
-				input {
-					background-color: #f1f1f1;
-					border: none;
-					border-bottom: 1px solid #777;
-				}
-            	input[disabled], input[readonly] {
-            		background: none;
-            		border: none;
-            		text-align: center;
-            	}
-            	:focus-visible {
-            		outline: none;
-            	}
-            	.districtDiv {
-            		display: flex;
-				    justify-content: space-between;
-				    align-items: flex-end;
-            	}
-             	.districtInput { 
-              		width: 120px;
-              		padding: 3px;
-              		border-radius: 0;
-              		align-content: center;
-             	} 
-             	.districtIdInput {
-             		width: 70px;
-             		text-align: center;
-             	}
-				.districtBtn {
-					box-shadow:inset 0px 1px 0px 0px #ffffff;
-					background:linear-gradient(to bottom, #ededed 5%, #dfdfdf 100%);
-					background-color:#ededed;
-					border-radius:6px;
-					border:1px solid #dcdcdc;
-					display:inline-block;
-					cursor:pointer;
-					color:#777777;
-					font-family:Arial;
-					font-size:13px;
-					font-weight:bold;
-					padding:4px 15px;
-					text-decoration:none;
-					text-shadow:0px 1px 0px #ffffff;
-					margin: 1px;
-				}
-				.newDistrict {
-					margin: 10px 0;
-				}
-				.districtBtn:hover {
-					background:linear-gradient(to bottom, #dfdfdf 5%, #ededed 100%);
-					background-color:#dfdfdf;
-					color:#777777;
-				}
-				.districtBtn:active {
-					position:relative;
-					top:1px;
-				}
-            </style>
-<%@ include file="../footer.jsp"%>
+<%@ include file="../header.jsp"%> 
+ <div class="col-2">
+  	<header>    
+      <div class="top_navbar">
+        <div class="hamburger">
+            <a href="#">
+                menu
+            </a>
+        </div>
+      </div>
+      <div class="title">지역관리</div>
+    </header>
+    <!----- Contents Start ----->
+    <main class="content">
+    <article>
+      <div class="contentArea">
+      <!-- Search -->
+      <div class="searchTable1 mB15">
+        <table>
+          <colgroup>
+          <col width="20%" />
+          <col width="20%" />
+          <col width="20%" />
+          <col width="20%" />
+          <col />
+          </colgroup>
+          <tr>
+            <form action="/gjdm/dimDistrictList.do" method="post" id="searchForm">
+              <td>
+                <p>국가</p>
+                <select id="nationSearch" name="nationId" required  onchange="selectNation(value)" style="width:100%;">
+                  <option value="" disabled selected>-------선택하세요-------</option>
+                  <c:forEach items="${dimNationList}" var="nation">
+                    <option value="${nation.nationId}" <c:if test="${nationId eq nation.nationId}">selected</c:if>>${nation.nationNm}</option>
+                  </c:forEach> 
+              </select>
+              </td>
+              <td>
+                <p>시도</p>
+                <select id="distLvl1Search" name="distLvl1" onchange="selectDistLvl1(value)" style="width:100%;">
+                  <option value="" disabled selected>-------선택하세요-------</option>
+                  <c:forEach items="${distLvl1List}" var="distLvl1List">
+                    <c:if test="${distLvl1List.nationId eq nationId}">
+                      <option value="${distLvl1List.distLvl1}" <c:if test="${distLvl1 eq distLvl1List.distLvl1}">selected</c:if>>${distLvl1List.distLvl1}</option>
+                    </c:if>
+                  </c:forEach>
+              </select>
+              </td>
+              <td>
+              <p>군구선택</p>
+                <select id="distLvl2Search" name="distLvl2" style="width:100%;">
+                  <option value="" disabled selected>-------선택하세요-------</option>
+                  <c:forEach items="${distLvl2List}" var="distLvl2List">
+                    <c:if test="${distLvl2List.nationId eq nationId and distLvl2List.distLvl1 eq distLvl1}">
+                      <option value="${distLvl2List.distLvl2}" <c:if test="${distLvl2 eq distLvl2List.distLvl2}">selected</c:if>>${distLvl2List.distLvl2}</option>
+                    </c:if>
+                  </c:forEach>
+              </select>
+              </td>
+              <td>
+                <div class="btnArea">
+                <a href="JavaScript:formSubmit()" class="btn btnType01">조회</a>
+                </div>
+              </td>
+            </form>
+          </tr>
+        </table>
+      </div>
+      <!-- Search --> 
+      <!-- Subtitle -->
+      <div class="subtitle">
+        <h3>검색결과(${dimDistrictList.size()})</h3>
+        <div><a id="districtModal" href="#" class="btn btn-create">새 지역 등록</a></div>
+      </div>
+      <!-- Subtitle -->
+      <!-- Grid Area -->
+      <div class="table_type1">
+        <table summary="">
+          <colgroup>
+          <col width="10%" />
+          <col width="8%" />
+          <col width="10%" />
+          <col width="10%" />
+          <col width="10%" />
+          <col width="11%" />
+          <col width="7%" />
+          <col width="11%" />
+          <col width="7%" />
+          <col />
+          </colgroup>
+          <thead>
+            <tr>
+              <th scope="col">국가</th>
+              <th scope="col">지역 ID</th>
+              <th scope="col">시도</th>
+              <th scope="col">군구</th>
+              <th scope="col">동</th>
+              <th scope="col">등록일시</th>
+              <th scope="col">등록자</th>
+              <th scope="col">변경일시</th>
+              <th scope="col">변경자</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+          	<c:forEach items="${dimDistrictList}" var="vo">
+	            <tr class="nonEdit">
+                  <c:forEach items="${dimNationList}" var="nation">
+                	<c:if test="${nation.nationId eq vo.nationId}">
+              			<td>${nation.nationNm}</td>
+                	</c:if>
+                  </c:forEach>
+	              <td>${vo.districtId}</td>
+	              <td>${vo.distLvl1}</td>
+	              <td>${vo.distLvl2}</td>
+	              <td>${vo.distLvl3}</td>
+	              <td><fmt:formatDate value="${vo.rgtrDt}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+	              <td>${vo.rgtrId}</td>
+	              <td><fmt:formatDate value="${vo.updtDt}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+	              <td>${vo.updtId}</td>
+	              <td>
+	              	<a href="#" class="gridBtn btnEdit">수정</a>
+	              	<a href="JavaScript:deleteDistrict(${vo.districtId})" class="gridBtn btnDelete">삭제</a>
+	              </td>
+	            <tr></tr>
+	            <tr style="display: none" class="editable">
+	              <td><select name="nationId${vo.districtId}" style="width:90%;">
+	            	<c:forEach items="${dimNationList}" var="nation">
+                	  <option <c:if test="${nation.nationId eq vo.nationId}">selected</c:if>
+              			value="${nation.nationId}">${nation.nationNm}</option>
+                    </c:forEach>
+                  </select></td>
+	              <td name="districtId${vo.districtId}">${vo.districtId}</td>
+	              <td><input type="text" class="inputArea" style="width: 90%;" name="distLvl1${vo.districtId}" value="${vo.distLvl1}" required></td>
+	              <td><input type="text" class="inputArea" style="width: 90%;" name="distLvl2${vo.districtId}" value="${vo.distLvl2}" required></td>
+	              <td><input type="text" class="inputArea" style="width: 90%;" name="distLvl3${vo.districtId}" value="${vo.distLvl3}" required></td>
+	              <td><fmt:formatDate value="${vo.rgtrDt}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+	              <td>${vo.rgtrId}</td>
+	              <td><fmt:formatDate value="${vo.updtDt}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+	              <td name="updtId${vo.districtId}">${vo.updtId}</td>
+	              <td>
+	              	<a href="JavaScript:updateDistrict(${vo.districtId})" class="gridBtn btnSave">저장</a>
+	              	<a href="#" class="gridBtn btnCancel">취소</a>
+	              </td>
+	             </tr>
+            </c:forEach>
+          </tbody>
+        </table>
+      </div>
+      <!-- Grid Area -->
+      <div class="gridFooter">
+        <div class="page_info">Showing 1 to 5 of 150 entries</div> 
+        <div>
+        <!-- Paging -->
+          <div class="paging">
+            <a href="#" class="board_prev"><img src="resources/images/ico_board_prev_end.png" alt="First" /></a>
+            <a href="#" class="board_prev"><img src="resources/images/ico_board_prev.png" alt="Previous" /></a>
+            <strong>1</strong> <a href="#">2</a> <a href="#">3</a> <a href="#">4</a>
+            <a href="#">5</a>
+            <a class="board_next" href="#"><img src="resources/images/ico_board_next.png" alt="Next" /></a>
+            <a class="board_next" href="#"><img src="resources/images/ico_board_next_end.png" alt="Next End" /></a>
+            <select class="select-select" data-placeholder="10">
+              <option>10</option>
+              <option>10</option>
+              <option>20</option>
+              <option>50</option>
+              <option>100</option>
+            </select>
+          </div>
+        <!-- Paging -->    
+        </div>
+      </div>
+    </article>
+    </div>
+    </main>
+    <!----- Contents End ----->
+  </div>
+  <!---- Layer Popup ---->
+  <div id="layer_area" style="display: none;">
+	  <div class="layer_pop"></div>
+	  <div class="layer_wrap" style="width:500px;">
+	    <div class="layBox">
+	      <p class="btn_close"><a href="#none" class="closeLy"><img src="resources/images/ico_pop_close.png" title="close" alt="close" /></a></p>
+	      <h1>지역등록<span>스마트관광 빅데이터 플랫폼</span></h1>
+	      <div class="layerCon">
+	        <div class="pop_tableType1">
+	          <form method="post" id="insertForm">
+		          <table>
+		            <tr>
+		              <td>
+		                <p>국가</p>
+		                <select id="nationInsert" name="nationId" style="width:100%;">
+		                  <option value="" disabled selected>-------선택하세요-------</option>
+		                  <c:forEach items="${dimNationList}" var="nation">
+							<option value="${nation.nationId}">${nation.nationNm}</option>
+						  </c:forEach> 
+		                </select></td>
+		            </tr>
+		            <tr>
+		              <td>
+		                <p>시도</p>
+		                <input type="text" placeholder="시도" class="inputArea" name="distLvl1" required style="width:100%;"></td>
+		            </tr>
+		            <tr>
+		              <td>
+		                <p>군구</p>
+		                <input type="text" placeholder="군구" class="inputArea" name="distLvl2" required style="width:100%;"></td>
+		            </tr>
+		            <tr>
+		              <td>
+		                <p>동</p>
+		                <input type="text" placeholder="동" class="inputArea" name="distLvl3" required style="width:100%;"></td>
+		            </tr>
+		            <tr hidden="true">
+		              <td>
+			            <input name="rgtrId" value="test">
+					    <input name="updtId" value="test">
+					  <td>
+				    </tr>
+		          </table>
+	          </form>
+	        </div>
+	        <div class="pop_btnArea">
+	            <a href="JavaScript:insertDistrict()" class="btn btnType01">추가</a><a href="#none" class="btn btnType02 close">취소</a>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+  <!---- Layer Popup ---->
+  <script>
+    /* 국가 선택시 시도 리스트 호출 */
+    function selectNation(value) {
+      var distLvl1 = $("#distLvl1Search option:selected").val();
+      location = "/gjdm/selectDistLvl.do?nationId=" + value;
+    };
+    
+    /* 시도 선택시 군구 리스트 호출 */
+    function selectDistLvl1(value) {
+      var nationId = $("#nationSearch option:selected").val();
+      location = "/gjdm/selectDistLvl.do?nationId=" + nationId + "&distLvl1=" + value;
+    };
+    
+    /* 조회 */
+    function formSubmit() {
+	  $("#searchForm").submit();
+    };
+    
+    /* 페이지 새로고침 시 GET parameter 초기화 */
+    window.onkeydown = function(e) {
+  	  var kcode = event.keyCode;
+  	  if(kcode == 116 || kcode == 82 && e.ctrlKey) {
+  		history.replaceState({}, null, location.pathname);
+  	  }
+    };
+    
+    $(document).ready(function() {
+	    /* 수정버튼, 취소버튼 클릭시 로우 토글 */
+    	$('.btnEdit').click(function() {
+    		$(this).parent().parent().css('display', 'none');
+    		$(this).parent().parent().next().next().css('display', 'table-row');
+    	});
+    	$('.btnCancel').click(function() {
+    		if (confirm("변경된 내용이 저장되지 않습니다.\n그래도 취소하시겠습니까?")) {
+    			$(this).parent().parent().css('display', 'none');
+	    		$(this).parent().parent().prev().prev().css('display', 'table-row');
+    		}
+    	})
+    })
+    
+    /* district row 수정 */
+	function updateDistrict(districtId) {
+		if (confirm("지역 ID '" + districtId + "' 를 수정하시겠습니까?")) {
+		var nationId = $('select[name="nationId' + districtId + '"] option:selected').val();
+		var districtId = $('td[name="districtId' + districtId + '"]').html();
+		var distLvl1 = $('input[name="distLvl1' + districtId + '"]').val();
+		var distLvl2 = $('input[name="distLvl2' + districtId + '"]').val();
+		var distLvl3 = $('input[name="distLvl3' + districtId + '"]').val();
+		$.ajax({
+			method: 'POST',
+			url: '/gjdm/updateDimDistrict.do',
+			data: {
+				nationId,
+				districtId,
+				distLvl1,
+				distLvl2,
+				distLvl3,
+			},
+			success: function() {
+				history.replaceState({}, null, location.pathname);
+				location.reload();
+			}
+		})
+		};
+	};
+	
+	/* district row 삭제 */
+	function deleteDistrict(districtId) {
+		if (confirm("지역 ID '" + districtId + "' 를 삭제하시겠습니까?")) {
+			location = "deleteDimDistrict.do?districtId=" + districtId;
+		};
+	};
+	
+	/* district Insert Modal */
+	$('#districtModal').click(function(){
+  		$('#layer_area').show();
+  	});
+	
+	/* district Insert */
+	function insertDistrict() {
+		var formData = $("#insertForm").serialize();
+		$.ajax({
+			url: '/gjdm/insertDimDistrict.do',
+			type: 'post',
+			data: formData,
+			success: function() {
+				console.log("success");
+				location.reload();
+				alert("등록되었습니다.");
+			},
+			error: function(e) {
+				console.log(e);
+			}
+		})
+	};
+  </script>
+  <%@ include file="../footer.jsp"%>
