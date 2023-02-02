@@ -53,7 +53,7 @@
                 <select id="distLvl2Search" name="distLvl2" style="width:100%;">
                   <option value="" disabled selected>-------선택하세요-------</option>
                   <c:forEach items="${distLvl2List}" var="distLvl2List">
-                    <c:if test="${distLvl2List.distLvl1 eq distLvl1}">
+                    <c:if test="${distLvl2List.nationId eq nationId and distLvl2List.distLvl1 eq distLvl1}">
                       <option value="${distLvl2List.distLvl2}" <c:if test="${distLvl2 eq distLvl2List.distLvl2}">selected</c:if>>${distLvl2List.distLvl2}</option>
                     </c:if>
                   </c:forEach>
@@ -71,8 +71,8 @@
       <!-- Search --> 
       <!-- Subtitle -->
       <div class="subtitle">
-        <h3>검색결과</h3>
-        <div><a id="districtModal" href="JavaScript:districtInsert()" class="btn btn-create">새 지역 등록</a></div>
+        <h3>검색결과(${dimDistrictList.size()})</h3>
+        <div><a id="districtModal" href="#" class="btn btn-create">새 지역 등록</a></div>
       </div>
       <!-- Subtitle -->
       <!-- Grid Area -->
@@ -106,31 +106,45 @@
           </thead>
           <tbody>
           	<c:forEach items="${dimDistrictList}" var="vo">
-	            <tr id="editForm${vo.districtId}">
+	            <tr class="nonEdit">
                   <c:forEach items="${dimNationList}" var="nation">
                 	<c:if test="${nation.nationId eq vo.nationId}">
-              			<td>${nation.nationNm}<span name="nationId" hidden>${nation.nationId}</span></td>
+              			<td>${nation.nationNm}</td>
                 	</c:if>
                   </c:forEach>
-	              <td name="districtId">${vo.districtId}</td>
-	              <td name="distLvl1" id="distLvl1${vo.districtId}">${vo.distLvl1}</td>
-	              <td name="distLvl2" id="distLvl2${vo.districtId}">${vo.distLvl2}</td>
-	              <td name="distLvl3" id="distLvl3${vo.districtId}">${vo.distLvl3}</td>
+	              <td>${vo.districtId}</td>
+	              <td>${vo.distLvl1}</td>
+	              <td>${vo.distLvl2}</td>
+	              <td>${vo.distLvl3}</td>
 	              <td><fmt:formatDate value="${vo.rgtrDt}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 	              <td>${vo.rgtrId}</td>
 	              <td><fmt:formatDate value="${vo.updtDt}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-	              <td name="updtId">${vo.updtId}</td>
+	              <td>${vo.updtId}</td>
 	              <td>
-	              	<div id="editBtns${vo.districtId}">
-		              	<a href="JavaScript:changeUpdateBtn(${vo.districtId})" class="gridBtn btnEdit">수정</a>
-		              	<a href="JavaScript:deleteDistrict(${vo.districtId})" class="gridBtn btnDelete">삭제</a>
-	              	</div>
-	              	<div id="updateBtns${vo.districtId}" hidden>
-		              	<a href="JavaScript:updateDistrict(${vo.districtId})" class="gridBtn btnEdit">저장</a>
-		              	<a href="JavaScript:deleteDistrict(${vo.districtId})" class="gridBtn btnDelete">취소</a>
-	              	</div>
+	              	<a href="#" class="gridBtn btnEdit">수정</a>
+	              	<a href="JavaScript:deleteDistrict(${vo.districtId})" class="gridBtn btnDelete">삭제</a>
 	              </td>
-	            </tr>
+	            <tr></tr>
+	            <tr style="display: none" class="editable">
+	              <td><select name="nationId${vo.districtId}" style="width:90%;">
+	            	<c:forEach items="${dimNationList}" var="nation">
+                	  <option <c:if test="${nation.nationId eq vo.nationId}">selected</c:if>
+              			value="${nation.nationId}">${nation.nationNm}</option>
+                    </c:forEach>
+                  </select></td>
+	              <td name="districtId${vo.districtId}">${vo.districtId}</td>
+	              <td><input type="text" class="inputArea" style="width: 90%;" name="distLvl1${vo.districtId}" value="${vo.distLvl1}" required></td>
+	              <td><input type="text" class="inputArea" style="width: 90%;" name="distLvl2${vo.districtId}" value="${vo.distLvl2}" required></td>
+	              <td><input type="text" class="inputArea" style="width: 90%;" name="distLvl3${vo.districtId}" value="${vo.distLvl3}" required></td>
+	              <td><fmt:formatDate value="${vo.rgtrDt}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+	              <td>${vo.rgtrId}</td>
+	              <td><fmt:formatDate value="${vo.updtDt}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+	              <td name="updtId${vo.districtId}">${vo.updtId}</td>
+	              <td>
+	              	<a href="JavaScript:updateDistrict(${vo.districtId})" class="gridBtn btnSave">저장</a>
+	              	<a href="#" class="gridBtn btnCancel">취소</a>
+	              </td>
+	             </tr>
             </c:forEach>
           </tbody>
         </table>
@@ -242,31 +256,28 @@
   	  }
     };
     
-    function changeUpdateBtn(districtId) {
-    	if (confirm("지역 ID '" + districtId + "' 를 수정하시겠습니까?")) {
-    		$('td[id="distLvl1' + districtId + '"]').attr('contenteditable', true);
-    		$('td[id="distLvl2' + districtId + '"]').attr('contenteditable', true);
-    		$('td[id="distLvl3' + districtId + '"]').attr('contenteditable', true);
-    		$('#editBtns' + districtId).hide();
-    		$('#updateBtns' + districtId).show();
-		};
-    }
+    $(document).ready(function() {
+	    /* 수정버튼, 취소버튼 클릭시 로우 토글 */
+    	$('.btnEdit').click(function() {
+    		$(this).parent().parent().css('display', 'none');
+    		$(this).parent().parent().next().next().css('display', 'table-row');
+    	});
+    	$('.btnCancel').click(function() {
+    		if (confirm("변경된 내용이 저장되지 않습니다.\n그래도 취소하시겠습니까?")) {
+    			$(this).parent().parent().css('display', 'none');
+	    		$(this).parent().parent().prev().prev().css('display', 'table-row');
+    		}
+    	})
+    })
     
     /* district row 수정 */
 	function updateDistrict(districtId) {
-		if (confirm("변경사항을 저장하시겠습니까?")) {
-			$("#editForm").submit();
-		};
-	};
-	
-	/* district row 수정 시 ajax */
-	$("#editForm").submit(function(e) {
-		e.preventDefault();
-		var nationId = $('span[name="nationId"]').html();
-		var districtId = $('td[name="districtId"]').html();
-		var distLvl1 = $('td[name="distLvl1"]').html();
-		var distLvl2 = $('td[name="distLvl2"]').html();
-		var distLvl3 = $('td[name="distLvl3"]').html();
+		if (confirm("지역 ID '" + districtId + "' 를 수정하시겠습니까?")) {
+		var nationId = $('select[name="nationId' + districtId + '"] option:selected').val();
+		var districtId = $('td[name="districtId' + districtId + '"]').html();
+		var distLvl1 = $('input[name="distLvl1' + districtId + '"]').val();
+		var distLvl2 = $('input[name="distLvl2' + districtId + '"]').val();
+		var distLvl3 = $('input[name="distLvl3' + districtId + '"]').val();
 		$.ajax({
 			method: 'POST',
 			url: '/gjdm/updateDimDistrict.do',
@@ -278,10 +289,12 @@
 				distLvl3,
 			},
 			success: function() {
+				history.replaceState({}, null, location.pathname);
 				location.reload();
 			}
 		})
-	});
+		};
+	};
 	
 	/* district row 삭제 */
 	function deleteDistrict(districtId) {

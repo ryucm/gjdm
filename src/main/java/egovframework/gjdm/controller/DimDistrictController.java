@@ -75,18 +75,11 @@ public class DimDistrictController {
 		return "standard_manage/district";
 	}
 	
-	@RequestMapping("/districtInsert.do")
-	public String districtInsert(Model model) throws Exception {
-		List<DimNationVO> nationList = DimNationService.selectDimNationListForDistrict();
-		model.addAttribute("dimNationList", nationList);
-		return "standard_manage/districtInsert";
-	}
-	
 	@RequestMapping("/insertDimDistrict.do")
 	public String insertDimDistrict(@RequestParam Map<String, String> paramMap) throws Exception {
 		dimDistrictService.insertDimDistrict(paramMap);
 		
-		return "redirect:districtInsert.do";
+		return "redirect:dimDistrictList.do";
 	}
 	
 	@RequestMapping("/updateDimDistrict.do")
