@@ -11,12 +11,35 @@ function fn_delete(codeId){
 }
 
 function updateCode(codeId) {
-	if (confirm("지역 ID '" + codeId + "' 를 수정하시겠습니까?")) {
-		$("#editForm").submit();
-	};
+	if (confirm("코드 ID '" + codeId + "' 를 수정하시겠습니까?")) {
+		var codeId = $("#"+codeId+' td[name="codeId"]').text();
+		var groupCode = $("#"+codeId+' td[name="groupCode"]').text();
+		var groupName = $("#"+codeId+' td[name="groupName"]').text();
+		var code = $("#"+codeId+' td[name="code"]').text();
+		var codeValue = $("#"+codeId+' td[name="codeValue"]').text();
+		var displayName = $("#"+codeId+' td[name="displayName"]').text();
+		var useYN = $("#"+codeId+' select[name="useYN"] option:selected').text()
+		$.ajax({
+		method: 'POST',
+		url: '/gjdm/updateCode.do',
+		data: {
+			codeId,
+			groupCode,
+			groupName,
+			code,
+			codeValue,
+			displayName,
+			useYN
+			},
+		success: function () {
+       		location.reload();
+       	}
+		});
+	}
 };
 
 function modifyCode(codeId) {
+	$("."+codeId).attr('contenteditable', true);
 	$("#modifyBtn"+codeId).hide();
 	$("#useYN"+codeId).hide();
 	$("#useYNSelect"+codeId).attr('hidden', false);
@@ -24,9 +47,9 @@ function modifyCode(codeId) {
 };
 
 function insertCode() {
+
 	var popupWidth = 800;
     var popupHeight = 600;
-
     var popupX = Math.round(window.screenX + (window.outerWidth / 2) - (popupWidth / 2));
     var popupY = Math.round(window.screenY + (window.outerHeight / 2) - (popupHeight / 2));
 	window.open("codeInsert.do", null, 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);
@@ -34,11 +57,11 @@ function insertCode() {
 
 function inquireCode() {
 	const regex = /^[0-9]*$/;
-	if (!regex.test(document.frm.codeId.value)) {
+	if (!regex.test(document.inquire.codeId.value)) {
 		alert("코드 ID는 숫자만 입력 가능합니다.")
 		return false
 	}
-	document.frm.submit();
+	document.inquire.submit();
 }
 </script>
 
@@ -57,16 +80,16 @@ function inquireCode() {
 			<div class="contentArea">
 				<!-- Search -->
 				<div class="searchTable1 mB15">
-					<table>
-						<colgroup>
-							<col width="20%" />
-							<col width="20%" />
-							<col width="20%" />
-							<col width="20%" />
-							<col />
-						</colgroup>
-						<tr>
-							<form name="frm" action="dimCodeLIst.do" method="post">
+					<form name="inquire" action="dimCodeList.do" method="post">
+						<table>
+							<colgroup>
+								<col width="20%" />
+								<col width="20%" />
+								<col width="20%" />
+								<col width="20%" />
+								<col />
+							</colgroup>
+							<tr>
 								<td>
 									<p>코드 ID</p> <input type="text" name="codeId" id="codeId">
 								</td>
@@ -78,13 +101,14 @@ function inquireCode() {
 								</td>
 								<td>
 									<div class="btnArea">
-										<a href="JavaScript:inquireCode(); return false;"
+										<a href="#" onclick="inquireCode(); return false;"
 											class="btn btnType01">조회</a>
 									</div>
 								</td>
-							</form>
-						</tr>
-					</table>
+
+							</tr>
+						</table>
+					</form>
 				</div>
 				<!-- Search -->
 				<!-- Subtitle -->
@@ -98,18 +122,18 @@ function inquireCode() {
 				<div class="table_type1">
 					<table summary="">
 						<colgroup>
-							<col width="8%" />
-							<col width="8%" />
-							<col width="8%" />
-							<col width="8%" />
-							<col width="8%" />
-							<col width="8%" />
-							<col width="1%" />
-							<col width="16.5%" />
-							<col width="8%" />
-							<col width="16.5%" />
-							<col width="8%" />
-							<col width="20" />
+							<col width="6%" />
+							<col width="6%" />
+							<col width="6%" />
+							<col width="6%" />
+							<col width="6%" />
+							<col width="6%" />
+							<col width="4%" />
+							<col width="15%" />
+							<col width="6%" />
+							<col width="15%" />
+							<col width="6%" />
+							<col />
 						</colgroup>
 						<thead>
 							<tr>
@@ -129,42 +153,37 @@ function inquireCode() {
 						</thead>
 						<tbody>
 							<c:forEach items="${dimCodeList}" var="vo">
-								<tr>
-									<form action="updateCode.do" method="post" id="editForm">
-										<td name="codeId">${vo.codeId}</td>
-										<td contenteditable="true" name="groupCode">${vo.groupCode}</td>
-										<td contenteditable="true" name="groupName">${vo.groupName}</td>
-										<td contenteditable="true" name="code">${vo.code}</td>
-										<td contenteditable="true" name="codeValue">${vo.codeValue}</td>
-										<td contenteditable="true" name="displayName">${vo.displayName}</td>
-										<td id="useYN${vo.codeId}">${vo.useYN}</td>
-										<td id="useYNSelect${vo.codeId}" hidden><select
-											name="useYN" class="${vo.codeId}" size="1%"
-											style="text-align-last: center">
-												<option
-													<c:if test="${vo.useYN eq 'Y'}">selected="selected"</c:if>
-													value="Y">Y</option>
-												<option
-													<c:if test="${vo.useYN eq 'N'}">selected="selected"</c:if>
-													value="N">N</option>
-										</select></td>
+								<tr id="${vo.codeId}">
+									<td name="codeId">${vo.codeId}</td>
+									<td name="groupCode" class="${vo.codeId}">${vo.groupCode}</td>
+									<td name="groupName" class="${vo.codeId}">${vo.groupName}</td>
+									<td name="code" class="${vo.codeId}">${vo.code}</td>
+									<td name="codeValue" class="${vo.codeId}">${vo.codeValue}</td>
+									<td name="displayName" class="${vo.codeId}">${vo.displayName}</td>
+									<td id="useYN${vo.codeId}">${vo.useYN}</td>
+									<td id="useYNSelect${vo.codeId}" hidden><select
+										name="useYN" style="text-align-last: center">
+											<option
+												<c:if test="${vo.useYN eq 'Y'}">selected="selected"</c:if>
+												value="Y">Y</option>
+											<option
+												<c:if test="${vo.useYN eq 'N'}">selected="selected"</c:if>
+												value="N">N</option>
+									</select></td>
 									<td><fmt:formatDate value="${vo.rgtrDt}"
 											pattern="yyyy-MM-dd HH:mm:ss" /></td>
 									<td>${vo.rgtrId}</td>
 									<td><fmt:formatDate value="${vo.updtDt}"
 											pattern="yyyy-MM-dd HH:mm:ss" /></td>
 									<td name="updtId">${vo.updtId}</td>
-									<td  id="modifyBtn${vo.codeId}">
-										<a href="JavaScript:modifyCode(${vo.codeId})"
-											class="gridBtn btnEdit">수정</a>
-										 <a href="JavaScript:fn_delete(${vo.codeId})"
-											class="gridBtn btnDelete">삭제</a></td>
-									<td id="submitBtn${vo.codeId}" hidden>
-										<a href="JavaScript:updateCode(${vo.codeId})"
-											class="gridBtn btnEdit">저장</a>
-										<a href="JavaScript:fn_delete(${vo.codeId})"
-											class="gridBtn btnDelete">삭제</a></td>
-									</form>
+									<td id="modifyBtn${vo.codeId}"><a
+										href="JavaScript:modifyCode(${vo.codeId})"
+										class="gridBtn btnEdit">수정</a> <a
+										href="JavaScript:fn_delete(${vo.codeId})"
+										class="gridBtn btnDelete">삭제</a></td>
+									<td id="submitBtn${vo.codeId}" hidden><a href="#"
+										onclick="updateCode(${vo.codeId})" class="gridBtn btnSave">저장</a>
+										<a href="dimCodeList.do" class="gridBtn btnCancel">취소</a></td>
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -202,63 +221,76 @@ function inquireCode() {
 </div>
 <!---- Layer Popup ---->
 <div id="layer_area" style="display: none;">
-  <div class="layer_pop"></div>
-  <div class="layer_wrap" style="width:500px;">
-    <div class="layBox">
-      <p class="btn_close"><a href="#none" class="closeLy"><img src="resources/images/ico_pop_close.png" title="close" alt="close" /></a></p>
-      <h1>코드등록<span>스마트관광 빅데이터 플랫폼</span></h1>
-      <div class="layerCon">
-        <div class="pop_tableType1">
-          <table>
-          	<form name="insert" method="post" class="insertForm">
-          	<tr>
-              <td>
-                <p>코드 그룹</p>
-                <input type="text" class="inputArea" name="groupCode" style="width:100%;"></td>
-            </tr>
-            <tr>
-              <td>
-                <p>코드 그룹명</p>
-                <input type="text" class="inputArea" name="groupName" style="width:100%;"></td>
-            </tr>
-            <tr>
-              <td>
-                <p>코드</p>
-                <input type="text" class="inputArea" name="code" style="width:100%;"></td>
-            </tr>
-            <tr>
-              <td>
-                <p>코드값</p>
-                <input type="text" class="inputArea" name="codeValue" style="width:100%;"></td>
-            </tr>
-            <tr>
-              <td>
-                <p>출력값</p>
-                <input type="text" class="inputArea" name="displayName" style="width:100%;"></td>
-            </tr>
-            <tr>
-              <td>
-                <p>사용여부</p>
-                <select name="useYN" style="width:100%;">
-                  <option>Y</option>
-                  <option>N</option> 
-                </select></td>
-            </tr>
-            </form>
-          </table>
-        </div>
-        <div class="pop_btnArea">
-            <a href="#" onclick="fn_submit(); return false;" class="btn btnType01">추가</a><a class="btn btnType02 closely">취소</a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!---- Layer Popup ---->
-  <script>
+	<div class="layer_pop"></div>
+	<div class="layer_wrap" style="width: 500px;">
+		<div class="layBox">
+			<p class="btn_close">
+				<a href="#none" class="closeLy"><img
+					src="resources/images/ico_pop_close.png" title="close" alt="close" /></a>
+			</p>
+			<h1>
+				코드등록<span>스마트관광 빅데이터 플랫폼</span>
+			</h1>
+			<div class="layerCon">
+				<div class="pop_tableType1">
+					<table>
+						<form name="insert" method="post" class="insertForm">
+							<tr>
+								<td>
+									<p>코드 그룹</p> <input type="text" class="inputArea"
+									name="groupCode" style="width: 100%;">
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<p>코드 그룹명</p> <input type="text" class="inputArea"
+									name="groupName" style="width: 100%;">
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<p>코드</p> <input type="text" class="inputArea" name="code"
+									style="width: 100%;">
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<p>코드값</p> <input type="text" class="inputArea"
+									name="codeValue" style="width: 100%;">
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<p>출력값</p> <input type="text" class="inputArea"
+									name="displayName" style="width: 100%;">
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<p>사용여부</p> <select name="useYN" style="width: 100%;">
+										<option>Y</option>
+										<option>N</option>
+								</select>
+								</td>
+							</tr>
+							<input type="hidden" name="rgtrId" value="test"> <input
+								type="hidden" name="updtId" value="test">
+						</form>
+					</table>
+				</div>
+				<div class="pop_btnArea">
+					<a href="#" onclick="fn_submit(); return false;"
+						class="btn btnType01">추가</a><a onclick="fn_exit()"
+						class="btn btnType02 closely">취소</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!---- Layer Popup ---->
+	<script>
   $('#codeModal').click(function(){
 		$('#layer_area').show();
 	});
-  
   function fn_submit() {
 		const regex = /^[A-Z0-9]*$/;
 		if (document.insert.groupCode.value == "") {
@@ -295,13 +327,13 @@ function inquireCode() {
           data: formData,
           success: function () {
          		alert("등록 완료")
-         		window.opener.location.reload();
-             	window.close();
+         		 $('#layer_area').hide();
+         		location.reload();
           },
-      	error: function(e) {
-      		alert(e)
+          error: function(e) {
+      		alert("등록 실패")
       	}    
 		})
 	}
   </script>
-<%@ include file="../footer.jsp"%>
+	<%@ include file="../footer.jsp"%>
