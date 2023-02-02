@@ -16,8 +16,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1"/>
 <!-- layout css -->
 <link rel="stylesheet" type="text/css" href="resources/css/styles.css">
-<link rel="stylesheet" type="text/css" href="resources/css/select.min.css">
-<link rel="stylesheet" type="text/css" href="resources/css/jquery-ui.css" />
 <link rel="stylesheet" type="text/css" href="resources/css/jquery.scrollbar.css" />
 <!-- Main scripts -->
 <script type="text/javascript" language="javascript" src="resources/js/jquery-3.6.0.min.js"></script>

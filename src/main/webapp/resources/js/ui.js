@@ -115,11 +115,6 @@ $(document).ready(function(e) {
 	}).resize();
 });
 
-var hamburger = document.querySelector(".hamburger");
-hamburger.addEventListener("click", function(){
- document.querySelector("body").classList.toggle("active");
-})
-
 
 jQuery(function($){
 	window.prettyPrint && prettyPrint();

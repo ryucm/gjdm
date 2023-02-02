@@ -53,7 +53,7 @@
                 <select id="distLvl2Search" name="distLvl2" style="width:100%;">
                   <option value="" disabled selected>-------선택하세요-------</option>
                   <c:forEach items="${distLvl2List}" var="distLvl2List">
-                    <c:if test="${distLvl2List.distLvl1 eq distLvl1}">
+                    <c:if test="${distLvl2List.nationId eq nationId and distLvl2List.distLvl1 eq distLvl1}">
                       <option value="${distLvl2List.distLvl2}" <c:if test="${distLvl2 eq distLvl2List.distLvl2}">selected</c:if>>${distLvl2List.distLvl2}</option>
                     </c:if>
                   </c:forEach>
@@ -71,8 +71,8 @@
       <!-- Search --> 
       <!-- Subtitle -->
       <div class="subtitle">
-        <h3>검색결과</h3>
-        <div><a id="districtModal" href="JavaScript:districtInsert()" class="btn btn-create">새 지역 등록</a></div>
+        <h3>검색결과(${dimDistrictList.size()})</h3>
+        <div><a id="districtModal" href="#" class="btn btn-create">새 지역 등록</a></div>
       </div>
       <!-- Subtitle -->
       <!-- Grid Area -->
@@ -109,7 +109,7 @@
 	            <tr class="nonEdit">
                   <c:forEach items="${dimNationList}" var="nation">
                 	<c:if test="${nation.nationId eq vo.nationId}">
-              			<td class="nonEdit">${nation.nationNm}</td>
+              			<td>${nation.nationNm}</td>
                 	</c:if>
                   </c:forEach>
 	              <td>${vo.districtId}</td>
@@ -124,7 +124,7 @@
 	              	<a href="#" class="gridBtn btnEdit">수정</a>
 	              	<a href="JavaScript:deleteDistrict(${vo.districtId})" class="gridBtn btnDelete">삭제</a>
 	              </td>
-	            </tr>
+	            <tr></tr>
 	            <tr style="display: none" class="editable">
 	              <td><select name="nationId${vo.districtId}" style="width:90%;">
 	            	<c:forEach items="${dimNationList}" var="nation">
@@ -144,7 +144,7 @@
 	              	<a href="JavaScript:updateDistrict(${vo.districtId})" class="gridBtn btnSave">저장</a>
 	              	<a href="#" class="gridBtn btnCancel">취소</a>
 	              </td>
-	            </tr>
+	             </tr>
             </c:forEach>
           </tbody>
         </table>
@@ -256,35 +256,28 @@
   	  }
     };
     
-    /* 수정버튼, 취소버튼 클릭시 로우 토글 */
     $(document).ready(function() {
-    	$("#editable").hide();
+	    /* 수정버튼, 취소버튼 클릭시 로우 토글 */
     	$('.btnEdit').click(function() {
     		$(this).parent().parent().css('display', 'none');
-    		$(this).parent().parent().next().css('display', 'table-row');
+    		$(this).parent().parent().next().next().css('display', 'table-row');
     	});
     	$('.btnCancel').click(function() {
     		if (confirm("변경된 내용이 저장되지 않습니다.\n그래도 취소하시겠습니까?")) {
     			$(this).parent().parent().css('display', 'none');
-	    		$(this).parent().parent().prev().css('display', 'table-row');
+	    		$(this).parent().parent().prev().prev().css('display', 'table-row');
     		}
     	})
     })
     
     /* district row 수정 */
 	function updateDistrict(districtId) {
-		if (confirm("변경사항을 저장하시겠습니까?")) {
-// 			$("#editForm").submit();
-		var nationId = $('select[name="nationId' + districtId + '"]').value;
-		var districtId = $('td[name="districtId"]').html();
-		var distLvl1 = $('td[id="distLvl1' + districtId + '"]').html();
-		var distLvl2 = $('td[id="distLvl2' + districtId + '"]').html();
-		var distLvl3 = $('td[id="distLvl3' + districtId + '"]').html();
-		console.log(nationId);
-		console.log(districtId);
-		console.log(distLvl1);
-		console.log(distLvl2);
-		console.log(distLvl3);
+		if (confirm("지역 ID '" + districtId + "' 를 수정하시겠습니까?")) {
+		var nationId = $('select[name="nationId' + districtId + '"] option:selected').val();
+		var districtId = $('td[name="districtId' + districtId + '"]').html();
+		var distLvl1 = $('input[name="distLvl1' + districtId + '"]').val();
+		var distLvl2 = $('input[name="distLvl2' + districtId + '"]').val();
+		var distLvl3 = $('input[name="distLvl3' + districtId + '"]').val();
 		$.ajax({
 			method: 'POST',
 			url: '/gjdm/updateDimDistrict.do',
@@ -296,15 +289,12 @@
 				distLvl3,
 			},
 			success: function() {
+				history.replaceState({}, null, location.pathname);
 				location.reload();
 			}
 		})
 		};
 	};
-	
-	/* district row 수정 시 ajax */
-	$("#editForm").submit(function(e) {
-	});
 	
 	/* district row 삭제 */
 	function deleteDistrict(districtId) {
