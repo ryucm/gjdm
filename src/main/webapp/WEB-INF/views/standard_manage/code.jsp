@@ -10,17 +10,6 @@ function fn_delete(codeId){
 	}
 }
 
-function modify(id){
-	$('.nonEdit[name="'+id+'"]').css('display', 'none');
-	$('.editable[name="'+id+'"]').css('display', 'table-row')
-}
-
-function cancel(id){
-	if (confirm("변경된 내용이 저장되지 않습니다.\n그래도 취소하시겠습니까?")) {
-		location.reload();
-	}
-	
-}
 function updateCode(codeId) {
 	if (confirm("코드 ID '" + codeId + "' 를 수정하시겠습니까?")) {
 		var codeId = $('.editable[name="'+codeId+'"] td[name="codeId"]').text();
@@ -52,17 +41,6 @@ function updateCode(codeId) {
 		});
 	}
 };
-
-
-
-function insertCode() {
-
-	var popupWidth = 800;
-    var popupHeight = 600;
-    var popupX = Math.round(window.screenX + (window.outerWidth / 2) - (popupWidth / 2));
-    var popupY = Math.round(window.screenY + (window.outerHeight / 2) - (popupHeight / 2));
-	window.open("codeInsert.do", null, 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);
-}
 
 function inquireCode() {
 	const regex = /^[0-9]*$/;
@@ -224,7 +202,6 @@ function pageClick(pageNo){
 										class="gridBtn btnDelete">삭제</a></td>
 								</tr>
 								<tr></tr>
-								<form>
 								<tr name="${vo.codeId}" class="editable" style="display: none">
 									<td name="codeId">${vo.codeId}</td>
 									<td><input type="text" name="groupCode"
@@ -260,7 +237,6 @@ function pageClick(pageNo){
 										onclick="updateCode(${vo.codeId})" class="gridBtn btnSave">저장</a>
 										<a href="JavaScript:cancel(${vo.codeId})" class="gridBtn btnCancel">취소</a></td>
 								</tr>
-								</form>
 							</c:forEach>
 						</tbody>
 					</table>

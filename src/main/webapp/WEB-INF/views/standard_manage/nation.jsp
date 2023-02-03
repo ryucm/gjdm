@@ -262,19 +262,6 @@
   </div>
   <!---- Layer Popup ---->
   <script>
-  
-  	function modify(id){
-		$('.nonEdit[name="'+id+'"]').css('display', 'none');
-		$('.editable[name="'+id+'"]').css('display', 'table-row')
-	}
-
-	function cancel(id){
-		if (confirm("변경된 내용이 저장되지 않습니다.\n그래도 취소하시겠습니까?")) {
-			location.reload();
-		}
-		
-	}
-    
     /* nation row 수정 */
     function updateDimNation(nationId){
   		var nationId = $('td[name="nationId' + nationId + '"]').html();
