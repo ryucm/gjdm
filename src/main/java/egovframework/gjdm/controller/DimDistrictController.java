@@ -87,10 +87,6 @@ public class DimDistrictController {
 		model.addAttribute("dimDistrictList", districtList);
 		model.addAttribute("distLvl1List", distLvl1List);
 		model.addAttribute("distLvl2List", distLvl2List);
-		for (int t = 0; t< distLvl2List.size(); t++) {
-			System.out.println(distLvl2List.get(t).getDistLvl2());
-			
-		}
 		
 		if(paramMap.get("nationId") != null && !paramMap.get("nationId").equals("")) {
 			model.addAttribute("nationId", paramMap.get("nationId"));
