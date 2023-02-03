@@ -107,11 +107,13 @@
           <tbody>
           	<c:forEach items="${dimDistrictList}" var="vo">
 	            <tr class="nonEdit">
+	              <td>
                   <c:forEach items="${dimNationList}" var="nation">
                 	<c:if test="${nation.nationId eq vo.nationId}">
-              			<td>${nation.nationNm}</td>
+              			${nation.nationNm}
                 	</c:if>
                   </c:forEach>
+                  </td>
 	              <td>${vo.districtId}</td>
 	              <td>${vo.distLvl1}</td>
 	              <td>${vo.distLvl2}</td>
