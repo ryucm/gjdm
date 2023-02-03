@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import egovframework.gjdm.pagination.Pagination;
 import egovframework.gjdm.service.DimDistrictService;
 import egovframework.gjdm.service.DimNationService;
 import egovframework.gjdm.vo.DimDistrictVO;
@@ -27,11 +28,23 @@ public class DimDistrictController {
 	
 	@RequestMapping("/dimDistrictList.do")
 	public String selectDimDistrictList(Model model, @RequestParam Map<String, String> paramMap) throws Exception {
+		
+		if (paramMap.get("currentPage")==null || paramMap.get("currentPage").equals("")) {
+			paramMap.put("currentPage", "1");
+			paramMap.put("contentLimit", "10");
+		}
+		
 		List<DimNationVO> nationList = DimNationService.selectDimNationListForDistrict();
 		List<DimDistrictVO> districtList = dimDistrictService.selectDimDistrictList(paramMap);
 		List<DimDistrictVO> distLvl1List = dimDistrictService.selectDimDistrictListGroupByLvl1();
 		List<DimDistrictVO> distLvl2List = dimDistrictService.selectDimDistrictListGroupByLvl2();
 		
+		int totalContentCount = dimDistrictService.selectDimDistrictListCount(paramMap);
+		
+		Pagination pg = new Pagination(totalContentCount, paramMap);
+		model.addAllAttributes(pg.getPageMap());
+		
+		model.addAllAttributes(paramMap);
 		model.addAttribute("dimNationList", nationList);
 		model.addAttribute("dimDistrictList", districtList);
 		model.addAttribute("distLvl1List", distLvl1List);

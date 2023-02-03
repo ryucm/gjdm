@@ -81,7 +81,7 @@
           <col width="12%" />
           <col />
           </colgroup>
-          <thead
+          <thead>
             <tr>
                 <th scope="col">국가ID</th>
                 <th scope="col">국가명(한글)</th>
@@ -189,10 +189,9 @@
         </div>
       </div>
     </article>
-    </div>
     </main>
+    </div>
 	<!----- Contents End ----->
-  </div>
   <!---- Layer Popup ---->
 <div id="layer_area" style="display: none;">
   <div class="layer_pop"></div>
@@ -259,6 +258,7 @@
         </div>
       </div>
     </div>
+  </div>
   </div>
   <!---- Layer Popup ---->
   <script>
@@ -351,7 +351,6 @@
   	
   	/* Insert 유효성 검사 */
 	function insertData(formname){
-
 		var checkNum = /^[0-9]*$/; //숫자 (ISO번호)
 		var checkEngA = /^[A-Z]*$/; //영어 대문자 (국가명 영문, ISO코드, ISO3코드)
 		var checkKor = /^[가-힣]*$/; //한글 (국가명 한글)
