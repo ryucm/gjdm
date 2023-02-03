@@ -14,8 +14,8 @@
   		if(window.location.href.includes('Nation')) {
   			$('a[href*="Nation"]').addClass('active');
   		}
-  		if(window.location.href.includes('District')) {
-  			$('a[href*="District"]').addClass('active');
+  		if(window.location.href.includes('Dist')) {
+  			$('a[href*="Dist"]').addClass('active');
   		}
 	}
 	if(window.location.href.includes('etl')) {

@@ -59,11 +59,10 @@
 									<select id="distLvl2Search" name="distLvl2" style="width:100%;">
 										<option value="" disabled selected>-------선택하세요-------</option>
 										<c:forEach items="${distLvl2List}" var="distLvl2List">
-											<c:if
-												test="${distLvl2List.nationId eq nationId and distLvl2List.distLvl1 eq distLvl1}">
-												<option value="${distLvl2List.distLvl2}" <c:if
-													test="${distLvl2 eq distLvl2List.distLvl2}">selected
-											</c:if>>${distLvl2List.distLvl2}</option>
+											<c:if test="${(distLvl2List.nationId eq nationId) && (distLvl2List.distLvl1 eq distLvl1)}">
+												<option value="${distLvl2List.distLvl2}" <c:if test="${distLvl2 eq distLvl2List.distLvl2}">selected</c:if>>
+												${distLvl2List.distLvl2}
+												</option>
 											</c:if>
 										</c:forEach>
 									</select>
@@ -80,7 +79,7 @@
 				<!-- Search -->
 				<!-- Subtitle -->
 				<div class="subtitle">
-					<h3>검색결과(${dimDistrictList.size()})</h3>
+					<h3>검색결과</h3>
 					<div><a id="districtModal" href="#" class="btn btn-create">새 지역 등록</a></div>
 				</div>
 				<!-- Subtitle -->
@@ -115,7 +114,7 @@
 						</thead>
 						<tbody>
 							<c:forEach items="${dimDistrictList}" var="vo">
-								<tr class="nonEdit">
+								<tr name="${vo.districtId}" class="nonEdit">
 									<td>
 										<c:forEach items="${dimNationList}" var="nation">
 											<c:if test="${nation.nationId eq vo.nationId}">
@@ -136,12 +135,12 @@
 									</td>
 									<td>${vo.updtId}</td>
 									<td>
-										<a href="#" class="gridBtn btnEdit">수정</a>
+										<a href="JavaScript:modify(${vo.districtId})" class="gridBtn btnEdit">수정</a>
 										<a href="JavaScript:deleteDistrict(${vo.districtId})"
 											class="gridBtn btnDelete">삭제</a>
 									</td>
 								<tr></tr>
-								<tr style="display: none" class="editable">
+								<tr style="display: none" name="${vo.districtId}" class="editable">
 									<td><select name="nationId${vo.districtId}" style="width:90%;">
 											<c:forEach items="${dimNationList}" var="nation">
 												<option <c:if test="${nation.nationId eq vo.nationId}">selected</c:if>
@@ -166,7 +165,7 @@
 									<td>
 										<a href="JavaScript:updateDistrict(${vo.districtId})"
 											class="gridBtn btnSave">저장</a>
-										<a href="#" class="gridBtn btnCancel">취소</a>
+										<a href="JavaScript:cancel(${vo.districtId})" class="gridBtn btnCancel">취소</a>
 									</td>
 								</tr>
 							</c:forEach>
@@ -188,15 +187,12 @@
 										src="resources/images/ico_board_prev.png" alt="Previous" /></a>
 							</c:if>
 							<c:forEach var="pageNo" begin="${startButtonNo}" end="${endButtonNo}" step="1">
-								<a onclick="pageClick(${pageNo})">
-									<c:if test="${currentPage == pageNo}">
-										<strong>
-									</c:if>
-									${pageNo}
-									<c:if test="${currentPage == pageNo}">
-										</strong>
-									</c:if>
-								</a>
+								<c:if test="${currentPage != pageNo}">
+									<a onclick="pageClick(${pageNo})">${pageNo}</a>
+								</c:if>
+								<c:if test="${currentPage == pageNo}">
+									<strong>${pageNo}</strong>
+								</c:if>
 							</c:forEach>
 							<c:if test="${currentPage < totalButtonCount-buttonPerSection+1}">
 								<a onclick="pageClick(${endButtonNo+1})" class="board_next"><img
@@ -291,13 +287,13 @@
 	/* 국가 선택시 시도 리스트 호출 */
 	function selectNation(value) {
 		var distLvl1 = $("#distLvl1Search option:selected").val();
-		location = "/gjdm/selectDistLvl.do?nationId=" + value;
+		location = "/gjdm/dimSelectDistLvl.do?nationId=" + value;
 	};
 
 	/* 시도 선택시 군구 리스트 호출 */
 	function selectDistLvl1(value) {
 		var nationId = $("#nationSearch option:selected").val();
-		location = "/gjdm/selectDistLvl.do?nationId=" + nationId + "&distLvl1=" + value;
+		location = "/gjdm/dimSelectDistLvl.do?nationId=" + nationId + "&distLvl1=" + value;
 	};
 
 	/* 조회 */
@@ -312,19 +308,6 @@
 			history.replaceState({}, null, location.pathname);
 		}
 	};
-
-	$(function () {
-		/* 수정버튼, 취소버튼 클릭시 로우 토글 */
-		$('.btnEdit').click(function () {
-			$(this).parent().parent().css('display', 'none');
-			$(this).parent().parent().next().next().css('display', 'table-row');
-		});
-
-		$('.btnCancel').click(function () {
-			$(this).parent().parent().css('display', 'none');
-			$(this).parent().parent().prev().prev().css('display', 'table-row');
-		})
-	})
 
 	/* district row 수정 */
 	function updateDistrict(districtId) {
@@ -413,7 +396,7 @@
 				$('#resultTable').html(resultTable);
 
 				//change paging button
-				var pagingButton = data.getElementById('pagingButton'.childNodes);
+				var pagingButton = data.getElementById('pagingButton').childNodes;
 				$('#pagingButton').empty();
 				$('#pagingButton').html(pagingButton);
 			},
