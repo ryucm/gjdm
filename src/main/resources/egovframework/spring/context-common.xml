@@ -12,18 +12,6 @@
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service" />
     	<context:include-filter type="annotation" expression="org.springframework.stereotype.Repository" />
     </context:component-scan>
-<!-- For Pagination Tag -->     
-  <!--<bean id="imageRenderer" class="egovframework.gjdm.paginationinfo.ImagePaginationRenderer"/> -->
-        
-  <bean id="textRenderer" class="egovframework.gjdm.paginationinfo.DefaultPaginationRenderer"/>
-        
-  <bean id="paginationManager" class="egovframework.gjdm.paginationinfo.DefaultPaginationManager">
-      <property name="rendererType">
-          <map>
-              <entry key="text" value-ref="textRenderer"/>
-          </map>
-      </property>
-  </bean>
 		
 	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="basenames">
