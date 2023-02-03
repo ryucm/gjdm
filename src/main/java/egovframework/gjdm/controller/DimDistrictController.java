@@ -65,17 +65,32 @@ public class DimDistrictController {
 		return "standard_manage/district";
 	}
 	
-	@RequestMapping("/selectDistLvl.do")
+	@RequestMapping("/dimSelectDistLvl.do")
 	public String selectDistLvl(Model model, @RequestParam Map<String, String> paramMap) throws Exception {
+		if (paramMap.get("currentPage")==null || paramMap.get("currentPage").equals("")) {
+			paramMap.put("currentPage", "1");
+			paramMap.put("contentLimit", "10");
+		}
+		
 		List<DimNationVO> nationList = DimNationService.selectDimNationListForDistrict();
-		List<DimDistrictVO> districtList = dimDistrictService.selectAll();
+		List<DimDistrictVO> districtList = dimDistrictService.selectAll(paramMap);
 		List<DimDistrictVO> distLvl1List = dimDistrictService.selectDimDistrictListGroupByLvl1();
 		List<DimDistrictVO> distLvl2List = dimDistrictService.selectDimDistrictListGroupByLvl2();
 		
+		int totalContentCount = dimDistrictService.selectDimDistrictListCount(paramMap);
+		
+		Pagination pg = new Pagination(totalContentCount, paramMap);
+		model.addAllAttributes(pg.getPageMap());
+		
+		model.addAllAttributes(paramMap);
 		model.addAttribute("dimNationList", nationList);
 		model.addAttribute("dimDistrictList", districtList);
 		model.addAttribute("distLvl1List", distLvl1List);
 		model.addAttribute("distLvl2List", distLvl2List);
+		for (int t = 0; t< distLvl2List.size(); t++) {
+			System.out.println(distLvl2List.get(t).getDistLvl2());
+			
+		}
 		
 		if(paramMap.get("nationId") != null && !paramMap.get("nationId").equals("")) {
 			model.addAttribute("nationId", paramMap.get("nationId"));
