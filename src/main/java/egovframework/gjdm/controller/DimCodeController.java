@@ -39,15 +39,15 @@ public class DimCodeController {
 		return "standard_manage/code";
 	}
 	
-	@RequestMapping("/codeInsert.do")
-	public String codeInsert() throws Exception{
-		return "standard_manage/codeInsert";
-	}
+//	@RequestMapping("/codeInsert.do")
+//	public String codeInsert() throws Exception{
+//		return "standard_manage/codeInsert";
+//	}
 	
 	@RequestMapping("/insertCode.do")
 	public String insertCode(@RequestParam Map<String, String> paramMap) throws Exception {
 		dimCodeService.insertDimCode(paramMap);
-		return "redirect:codeInsert.do";
+		return "redirect:dimCodeList.do";
 	}
 	
 	@RequestMapping("/deleteCode.do")

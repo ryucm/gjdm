@@ -263,25 +263,25 @@ function inquireCode() {
 							<tr>
 								<td>
 									<p>코드 그룹</p> <input type="text" class="inputArea"
-									name="groupCode" style="width: 100%;">
+									name="groupCode" style="width: 100%;" required>
 								</td>
 							</tr>
 							<tr>
 								<td>
 									<p>코드 그룹명</p> <input type="text" class="inputArea"
-									name="groupName" style="width: 100%;">
+									name="groupName" style="width: 100%;" required>
 								</td>
 							</tr>
 							<tr>
 								<td>
 									<p>코드</p> <input type="text" class="inputArea" name="code"
-									style="width: 100%;">
+									style="width: 100%;" required>
 								</td>
 							</tr>
 							<tr>
 								<td>
 									<p>코드값</p> <input type="text" class="inputArea"
-									name="codeValue" style="width: 100%;">
+									name="codeValue" style="width: 100%;" required>
 								</td>
 							</tr>
 							<tr>
@@ -318,29 +318,11 @@ function inquireCode() {
 	});
   function fn_submit() {
 		const regex = /^[A-Z0-9]*$/;
-		if (document.insert.groupCode.value == "") {
-			alert("코드 그룹을 입력해 주세요.")
-			document.insert.groupCode.focus();
-			return false
-		} else if (!regex.test(document.insert.groupCode.value)) {
+		if (!regex.test(document.insert.groupCode.value)) {
 			alert("코드 그룹은 영어 대문자와 숫자만 입력 가능합니다.")
 			return false
 		}
-		if (document.insert.groupName.value == "") {
-			alert("코드 그룹명을 입력해 주세요.")
-			document.insert.groupCode.focus();
-			return false
-		}
-		if (document.insert.code.value == "") {
-			alert("코드를 입력해 주세요.")
-			document.insert.code.focus();
-			return false
-		}
-		if (document.insert.codeValue.value == "") {
-			alert("코드값를 입력해 주세요.")
-			document.insert.code.focus();
-			return false
-		}
+		
 		if (document.insert.displayName.value == "") {
 			document.insert.displayName.value = document.insert.codeValue.value
 		}
