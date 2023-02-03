@@ -16,7 +16,6 @@ function formSubmit() {
   };
 </script> -->
 <c:set var="yearList" value="${fn:split('2021,2022,2023,2024,2025',',')}"/>
-
 <div class="col-2">
 	<header>    
       <div class="top_navbar">
@@ -42,7 +41,7 @@ function formSubmit() {
           <col width="50%" />
           </colgroup>
           <tr>
-          	<form action="/gjdm/dimCalendarList.do" method="post">
+          	<form action="/gjdm/dimCalendarList.do" method="post" id="searchForm">
           		<td>
           			<p>연도</p>
 					<select name="yearPage" id="yearSearch" style="width:15%">
@@ -56,8 +55,8 @@ function formSubmit() {
 		           	</select>
 		         </td>
 		           	<td>
-		           		<div class="btnArea">  	
-	           		<button type="submit" class="btn btnType01">조회</button>
+		           		<div class="btnArea">
+								<a href="JavaScript:formSubmit()" class="btn btnType01">조회</a>
 	           			</div>
 	           		</td>
 				</form>
@@ -186,6 +185,10 @@ function formSubmit() {
   
   
   <script>
+  /* 조회 */
+	function formSubmit() {
+		$("#searchForm").submit();
+	};
   /* Pagination 버튼 클릭 */
 	function pageClick(pageNo){
 		//text to html
