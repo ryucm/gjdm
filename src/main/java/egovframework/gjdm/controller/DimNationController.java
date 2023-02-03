@@ -74,7 +74,16 @@ public class DimNationController {
 	public String insertDimNation(Model model, @ModelAttribute DimNationVO vo, @RequestParam Map<String,String> paramMap) throws Exception{
 		dimNationService.insertDimNation(vo);
 
-		model.addAttribute("continentPage", paramMap.get("continentPage"));
+		model.addAllAttributes(paramMap);
+		
+    	Iterator<String> iter = paramMap.keySet().iterator();
+      
+      while(iter.hasNext()) {
+          String key = iter.next();
+          String value = paramMap.get(key);
+          
+          System.out.println(key + " : " + value);
+      }
 		
 		return "redirect:dimNationList.do";
 		
@@ -84,7 +93,9 @@ public class DimNationController {
 	public String updateDimNation(Model model, @ModelAttribute DimNationVO vo, @RequestParam Map<String,String> paramMap) throws Exception{
 		dimNationService.updateDimNation(vo);
 		
-		model.addAttribute("continentPage",paramMap.get("continentPage"));
+		model.addAllAttributes(paramMap);
+		
+		
 		
 		return "redirect:dimNationList.do";
 	}
@@ -94,7 +105,7 @@ public class DimNationController {
 		
 		dimNationService.deleteDimNation(paramMap.get("nationId"));
 		
-		model.addAttribute("continentPage", paramMap.get("continentPage"));
+		model.addAllAttributes(paramMap);
 		
 		return "redirect:dimNationList.do";
 	}

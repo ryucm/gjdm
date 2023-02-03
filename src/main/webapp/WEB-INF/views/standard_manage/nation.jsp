@@ -191,10 +191,13 @@
                		<td><input name="rgtrId" value="${vo.rgtrId}" class="nationIdInput" disabled></td>
                		<td><input name="rgtrDt" value="<fmt:formatDate value="${vo.updtDt}" pattern="yyyy-MM-dd HH:mm:ss"/>" disabled></td>
                		<td><input name="updtIdOrg" value="${vo.updtId}" class="nationIdInput" disabled> --%>
+               			<!-- 페이징 관련 -->
+			            <input type="hidden" name="contentLimit" value="${contentLimit}">
+			            <input type="hidden" name="continentPage" value="${continentPage}">
+			            <input type="hidden" name="currentPage" value="${currentPage}">
+			            
                   		<!-- 차후 사용자 ID로 수정 -->
 						<input type="hidden" name="updtId" value="관리자">
-						<!-- 페이징 관련 -->
-						<input type="hidden" name="continentPage" value="${continentPage}">
                     </td>
                		<td id="updateBtn${vo.nationId}">
                			<a onClick="location.href='javascript:updateDimNation(${vo.nationId})'" class="gridBtn btnEdit">
@@ -235,7 +238,7 @@
       <div>
       <!-- Paging -->
         <div class="paging">
-        	<c:if test="${currentPage+0 > buttonPerSection+0}">
+        	<c:if test="${currentPage > buttonPerSection+0}">
           		<a onclick="pageClick(1)" class="board_prev"><img src="resources/images/ico_board_prev_end.png" alt="First" /></a>
           		<a onclick="pageClick(${startButtonNo-1})" class="board_prev"><img src="resources/images/ico_board_prev.png" alt="Previous" /></a>
           	</c:if>
@@ -250,16 +253,16 @@
 		    		</c:if>	
 		    	</a>
 		    </c:forEach>
-          	<c:if test="${currentPage+0 < totalButtonCount-buttonPerSection+1}">
+          	<c:if test="${currentPage < totalButtonCount-buttonPerSection+1}">
           		<a onclick="pageClick(${endButtonNo+1})" class="board_next"><img src="resources/images/ico_board_next.png" alt="Next" /></a>
           		<a onclick="pageClick(${totalButtonCount})" class="board_next"><img src="resources/images/ico_board_next_end.png" alt="Next End" /></a>
           	</c:if>
           	
-          <select id="contentLimit" class="select-select" data-placeholder="10">
-            <option value="10">10</option>
-            <option value="20">20</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
+          <select id="contentLimit" class="select-select" onchange="pageClick(0)" data-placeholder="10">
+            <option value="10" <c:if test="${contentLimit == 10}">selected="selected"</c:if>>10</option>
+            <option value="20" <c:if test="${contentLimit == 20}">selected="selected"</c:if>>20</option>
+            <option value="50" <c:if test="${contentLimit == 50}">selected="selected"</c:if>>50</option>
+            <option value="100" <c:if test="${contentLimit == 100}">selected="selected"</c:if>>100</option>
           </select>
         </div>
         <!-- Paging -->    
@@ -320,6 +323,11 @@
                 <input type="text" name="isoNo" class="inputArea" style="width:100%;">
                </td>
             </tr>
+            <!-- 페이징 관련 -->
+            <input type="hidden" name="contentLimit" value="${contentLimit}">
+            <input type="hidden" name="continentPage" value="${continentPage}">
+            <input type="hidden" name="currentPage" value="${currentPage}">
+            
             <!-- 차후 사용자 ID로 수정 -->
 			<input type="hidden" name="rgtrId" value="관리자">
 			<input type="hidden" name="updtId" value="관리자">
@@ -335,6 +343,7 @@
   </div>
   <!---- Layer Popup ---->
   <script>
+  	/* 추가 버튼 클릭시 모달 show */
   	$('#nationModal').click(function(){
   		$('#layer_area').show();
   	});
@@ -396,9 +405,12 @@
 		const parser = new DOMParser();
 		
 		var contentLimit = $('#contentLimit option:selected').val();
-		var currentPage = ${currentPage};
-		
 		var continentPage = '${continentPage}';
+		
+		//contentLimit select 클릭시 1페이지로 이동
+		if (pageNo == 0){
+			pageNo = 1;
+		}
 		
 		$.ajax({
 			type : 'POST',
