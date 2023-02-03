@@ -189,10 +189,9 @@
         </div>
       </div>
     </article>
-    </div>
     </main>
+    </div>
 	<!----- Contents End ----->
-  </div>
   <!---- Layer Popup ---->
 <div id="layer_area" style="display: none;">
   <div class="layer_pop"></div>
@@ -259,6 +258,7 @@
         </div>
       </div>
     </div>
+  </div>
   </div>
   <!---- Layer Popup ---->
   <script>
