@@ -10,11 +10,6 @@ function fn_delete(codeId){
 	}
 }
 
-function modify(id){
-	$('.nonEdit[name="'+id+'"]').css('display', 'none');
-	$('.editable[name="'+id+'"]').css('display', 'table-row')
-}
-
 function updateCode(codeId) {
 	if (confirm("코드 ID '" + codeId + "' 를 수정하시겠습니까?")) {
 		var codeId = $('.editable[name="'+codeId+'"] td[name="codeId"]').text();
@@ -46,29 +41,6 @@ function updateCode(codeId) {
 		});
 	}
 };
-
-$(document).ready(function() {
-    /* 수정버튼, 취소버튼 클릭시 로우 토글 */
-	$/* ('.btnEdit').click(function() {
-		$(this).parent().parent().css('display', 'none');
-		$(this).parent().parent().next().next().css('display', 'table-row');
-	}); */
-	$('.btnCancel').click(function() {
-		if (confirm("변경된 내용이 저장되지 않습니다.\n그래도 취소하시겠습니까?")) {
-			$(this).parent().parent().css('display', 'none');
-    		$(this).parent().parent().prev().prev().css('display', 'table-row');
-		}
-	})
-})
-
-function insertCode() {
-
-	var popupWidth = 800;
-    var popupHeight = 600;
-    var popupX = Math.round(window.screenX + (window.outerWidth / 2) - (popupWidth / 2));
-    var popupY = Math.round(window.screenY + (window.outerHeight / 2) - (popupHeight / 2));
-	window.open("codeInsert.do", null, 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);
-}
 
 function inquireCode() {
 	const regex = /^[0-9]*$/;
@@ -263,7 +235,7 @@ function pageClick(pageNo){
 									<td name="updtId">${vo.updtId}</td>
 									<td id="submitBtn${vo.codeId}"><a href="#"
 										onclick="updateCode(${vo.codeId})" class="gridBtn btnSave">저장</a>
-										<a href="#" class="gridBtn btnCancel">취소</a></td>
+										<a href="JavaScript:cancel(${vo.codeId})" class="gridBtn btnCancel">취소</a></td>
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -316,8 +288,9 @@ function pageClick(pageNo){
 			</div>
 		</article>
 	</main>
-	<!----- Contents End ----->
 </div>
+	<!----- Contents End ----->
+
 <!---- Layer Popup ---->
 <div id="layer_area" style="display: none;">
 	<div class="layer_pop"></div>
@@ -385,6 +358,7 @@ function pageClick(pageNo){
 			</div>
 		</div>
 	</div>
+</div>
 	<!---- Layer Popup ---->
 	<script>
   $('#codeModal').click(function(){

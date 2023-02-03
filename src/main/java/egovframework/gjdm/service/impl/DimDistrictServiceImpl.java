@@ -17,15 +17,21 @@ public class DimDistrictServiceImpl implements DimDistrictService {
 	DimDistrictMapper dimDistrictMapper;
 	
 	@Override
-	public List<DimDistrictVO> selectAll() throws Exception {
+	public List<DimDistrictVO> selectAll(Map<String, String> paramMap) throws Exception {
 		// TODO Auto-generated method stub
-		return dimDistrictMapper.selectAll();
+		return dimDistrictMapper.selectAll(paramMap);
 	}
 	
 	@Override
 	public List<DimDistrictVO> selectDimDistrictList(Map<String, String> paramMap) throws Exception {
 		// TODO Auto-generated method stub
 		return dimDistrictMapper.selectDimDistrictList(paramMap);
+	}
+	
+	@Override
+	public int selectDimDistrictListCount(Map<String, String> paramMap) throws Exception {
+		// TODO Auto-generated method stub
+		return dimDistrictMapper.selectDimDistrictListCount(paramMap);
 	}
 	
 	@Override

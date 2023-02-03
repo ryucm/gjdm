@@ -9,9 +9,11 @@ import egovframework.gjdm.vo.DimDistrictVO;
 
 @Mapper("DimDistrictMapper")
 public interface DimDistrictMapper {
-	public List<DimDistrictVO> selectAll() throws Exception;
+	public List<DimDistrictVO> selectAll(Map<String, String> paramMap) throws Exception;
 	
 	public List<DimDistrictVO> selectDimDistrictList(Map<String, String> paramMap) throws Exception;
+	
+	public int selectDimDistrictListCount(Map<String,String> paramMap) throws Exception;
 	
 	public List<DimDistrictVO> selectDimDistrictListGroupByLvl1() throws Exception;
 	

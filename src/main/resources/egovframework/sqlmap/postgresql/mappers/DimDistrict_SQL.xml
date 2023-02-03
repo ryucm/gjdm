@@ -2,15 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="egovframework.gjdm.mapper.DimDistrictMapper">
-	<select id="selectAll" resultType="dimDistrictVO">
+	<select id="selectAll" parameterType="java.util.Map" resultType="dimDistrictVO">
 		select * from dwdm.dim_district 
-			order by nation_id, dist_lvl_1, dist_lvl_2, dist_lvl_3 LIMIT 30
+			order by nation_id, dist_lvl_1, dist_lvl_2, dist_lvl_3 LIMIT #{contentLimit}::INT offset (#{currentPage}::INT-1)*#{contentLimit}::INT
+	</select>
+	
+	<select id="selectDimDistrictListCount" parameterType="java.util.Map" resultType="int">
+		select count(*) 
+		from dwdm.dim_district
+		where 1=1
+		<if test="continentPage != null and continentPage != ''">
+			and continent = #{continentPage}
+		</if>
 	</select>
 
 	<select id="selectDimDistrictList" parameterType="java.util.Map" resultType="dimDistrictVO">
 		select * from dwdm.dim_district where 1=1
 			<if test="nationId != null and nationId != ''">
-				and nation_id = cast(#{nationId} as integer)
+				and nation_id = #{nationId}::INT
 			</if>
 			<if test="distLvl1 != null and distLvl1 != ''">
 				and dist_lvl_1 = #{distLvl1}
@@ -18,7 +27,10 @@
 			<if test="distLvl2 != null and distLvl2 != ''">
 				and dist_lvl_2 = #{distLvl2}
 			</if>
-			order by nation_id, dist_lvl_1, dist_lvl_2, dist_lvl_3 LIMIT 30
+			<if test="continentPage != null and continentPage != ''">
+				and continent = #{continentPage}
+			</if>
+			order by nation_id, dist_lvl_1, dist_lvl_2, dist_lvl_3 LIMIT #{contentLimit}::INT OFFSET (#{currentPage}::INT-1)*#{contentLimit}::INT
 	</select>
 	
 	<select id="selectDimDistrictListGroupByLvl1" resultType="dimDistrictVO">
@@ -31,12 +43,12 @@
 	
 	<insert id="insertDimDistrict" parameterType="java.util.Map">
 		insert into dwdm.dim_district (nation_id, dist_lvl_1, dist_lvl_2, dist_lvl_3, rgtr_id, updt_id)
-			values (cast(#{nationId} as integer), #{distLvl1}, #{distLvl2}, #{distLvl3}, #{rgtrId}, #{updtId})
+			values (#{nationId}::INT, #{distLvl1}, #{distLvl2}, #{distLvl3}, #{rgtrId}, #{updtId})
 	</insert>
 	
 	<update id="updateDimDistrict" parameterType="java.util.Map">
-		update dwdm.dim_district set nation_id = cast(#{nationId} as integer), dist_lvl_1 = #{distLvl1}, dist_lvl_2 = #{distLvl2}, dist_lvl_3 = #{distLvl3}, updt_dt = now(), updt_id = 'test2'
-			where district_id = cast(#{districtId} as integer)
+		update dwdm.dim_district set nation_id = #{nationId}::INT, dist_lvl_1 = #{distLvl1}, dist_lvl_2 = #{distLvl2}, dist_lvl_3 = #{distLvl3}, updt_dt = now(), updt_id = 'test2'
+			where district_id = #{districtId}::INT
 	</update>
 	
 	<delete id="deleteDimDistrict" parameterType="int">

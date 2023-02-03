@@ -10,4 +10,6 @@ import egovframework.gjdm.vo.DimCalendarVO;
 @Mapper("DimCalendarMapper")
 public interface DimCalendarMapper {
 	public List<DimCalendarVO> selectDimCalendarList(Map<String, String> paramMap) throws Exception;
+	
+	public int selectDimCalendarListCount(Map<String,String> paramMap) throws Exception;
 }
