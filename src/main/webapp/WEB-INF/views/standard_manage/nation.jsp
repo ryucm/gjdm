@@ -68,12 +68,12 @@
         <table summary="">
           <colgroup>
           <col width="8%" />
-          <col width="15%" />
-          <col width="15%" />
+          <col width="14%" />
+          <col width="14%" />
           <col width="4%" />
           <col width="5%" />
           <col width="4%" />
-          <col width="4%" />
+          <col width="6%" />
           <col width="8%" />
           <col width="8%" />
           <col width="8%" />
@@ -162,15 +162,14 @@
           		<a onclick="pageClick(${startButtonNo-1})" class="board_prev"><img src="resources/images/ico_board_prev.png" alt="Previous" /></a>
           	</c:if>
 		    <c:forEach var="pageNo" begin="${startButtonNo}" end="${endButtonNo}" step="1">
-		    	<a onclick="pageClick(${pageNo})">
-		    		<c:if test="${currentPage == pageNo}">
-		    			<strong>
-		    		</c:if>
-		    		${pageNo}
-		    		<c:if test="${currentPage == pageNo}">
-		    			</strong>
-		    		</c:if>	
-		    	</a>
+		    	<c:if test="${currentPage != pageNo}">
+                	<a onclick="pageClick(${pageNo})">
+                    	${pageNo}
+                   	</a>
+               </c:if>
+               <c:if test="${currentPage == pageNo}">
+                   <strong>${pageNo}</strong>
+               </c:if>
 		    </c:forEach>
           	<c:if test="${currentPage < totalButtonCount-buttonPerSection+1}">
           		<a onclick="pageClick(${endButtonNo+1})" class="board_next"><img src="resources/images/ico_board_next.png" alt="Next" /></a>
@@ -259,7 +258,7 @@
       </div>
     </div>
   </div>
-  </div>
+ </div>
   <!---- Layer Popup ---->
   <script>
   
