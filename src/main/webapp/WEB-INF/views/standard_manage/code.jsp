@@ -312,8 +312,9 @@ function pageClick(pageNo){
 			</div>
 		</article>
 	</main>
-	<!----- Contents End ----->
 </div>
+	<!----- Contents End ----->
+
 <!---- Layer Popup ---->
 <div id="layer_area" style="display: none;">
 	<div class="layer_pop"></div>
@@ -381,6 +382,7 @@ function pageClick(pageNo){
 			</div>
 		</div>
 	</div>
+</div>
 	<!---- Layer Popup ---->
 	<script>
   $('#codeModal').click(function(){
