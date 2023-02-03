@@ -24,6 +24,7 @@
 	<select id="selectDimNationList" parameterType="java.util.Map" resultMap="dimNationList">
 		select * 
 		from dwdm.dim_nation 
+		
 		where 1=1
 		<if test="continentPage != null and continentPage != ''">
 			and continent = #{continentPage}
