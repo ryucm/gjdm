@@ -6,6 +6,15 @@
 		select * from dwdm.dim_district 
 			order by nation_id, dist_lvl_1, dist_lvl_2, dist_lvl_3 LIMIT 30
 	</select>
+	
+	<select id="selectDimDistrictListCount" parameterType="java.util.Map" resultType="int">
+		select count(*) 
+		from dwdm.dim_district
+		where 1=1
+		<if test="continentPage != null and continentPage != ''">
+			and continent = #{continentPage}
+		</if>
+	</select>
 
 	<select id="selectDimDistrictList" parameterType="java.util.Map" resultType="dimDistrictVO">
 		select * from dwdm.dim_district where 1=1
@@ -18,7 +27,10 @@
 			<if test="distLvl2 != null and distLvl2 != ''">
 				and dist_lvl_2 = #{distLvl2}
 			</if>
-			order by nation_id, dist_lvl_1, dist_lvl_2, dist_lvl_3 LIMIT 30
+			<if test="continentPage != null and continentPage != ''">
+				and continent = #{continentPage}
+			</if>
+			order by nation_id, dist_lvl_1, dist_lvl_2, dist_lvl_3 LIMIT #{contentLimit}::int offset (#{currentPage}::int-1)*#{contentLimit}::int
 	</select>
 	
 	<select id="selectDimDistrictListGroupByLvl1" resultType="dimDistrictVO">

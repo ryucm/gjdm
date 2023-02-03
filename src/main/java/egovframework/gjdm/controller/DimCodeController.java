@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import egovframework.gjdm.pagination.Pagination;
 import egovframework.gjdm.service.DimCodeService;
 import egovframework.gjdm.vo.DimCodeVO;
 
@@ -22,7 +23,22 @@ public class DimCodeController {
 
 	@RequestMapping("/dimCodeList.do")
 	public String selectDimCodeList(Model model, @RequestParam Map<String, String> paramMap) throws Exception {
+		
+		//처음 국가페이지 들어올때 페이징 관련 초기값 설정
+		if (paramMap.get("currentPage")==null || paramMap.get("currentPage").equals("")) {
+			paramMap.put("currentPage", "1");
+			paramMap.put("contentLimit", "10");
+		}
+		
 		List<DimCodeVO> list = dimCodeService.selectDimCodeList(paramMap);
+		
+		// 총 데이터 개수
+		int totalContentCount = dimCodeService.selectDimCodeListCount(paramMap);
+		
+		Pagination pg = new Pagination(totalContentCount, paramMap);
+		
+		model.addAllAttributes(pg.getPageMap());
+		model.addAllAttributes(paramMap);
 		model.addAttribute("dimCodeList", list);
 		if(paramMap.get("codeId") != null && !paramMap.get("codeId").equals("")) {
 			model.addAttribute("codeId", paramMap.get("codeId"));
@@ -39,15 +55,10 @@ public class DimCodeController {
 		return "standard_manage/code";
 	}
 	
-	@RequestMapping("/codeInsert.do")
-	public String codeInsert() throws Exception{
-		return "standard_manage/codeInsert";
-	}
-	
 	@RequestMapping("/insertCode.do")
 	public String insertCode(@RequestParam Map<String, String> paramMap) throws Exception {
 		dimCodeService.insertDimCode(paramMap);
-		return "redirect:codeInsert.do";
+		return "redirect:dimCodeList.do";
 	}
 	
 	@RequestMapping("/deleteCode.do")

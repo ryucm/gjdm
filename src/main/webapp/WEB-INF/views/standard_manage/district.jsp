@@ -76,7 +76,7 @@
       </div>
       <!-- Subtitle -->
       <!-- Grid Area -->
-      <div class="table_type1">
+      <div id="resultTable" class="table_type1">
         <table summary="">
           <colgroup>
           <col width="10%" />
@@ -152,26 +152,39 @@
         </table>
       </div>
       <!-- Grid Area -->
-      <div class="gridFooter">
-        <div class="page_info">Showing 1 to 5 of 150 entries</div> 
-        <div>
-        <!-- Paging -->
-          <div class="paging">
-            <a href="#" class="board_prev"><img src="resources/images/ico_board_prev_end.png" alt="First" /></a>
-            <a href="#" class="board_prev"><img src="resources/images/ico_board_prev.png" alt="Previous" /></a>
-            <strong>1</strong> <a href="#">2</a> <a href="#">3</a> <a href="#">4</a>
-            <a href="#">5</a>
-            <a class="board_next" href="#"><img src="resources/images/ico_board_next.png" alt="Next" /></a>
-            <a class="board_next" href="#"><img src="resources/images/ico_board_next_end.png" alt="Next End" /></a>
-            <select class="select-select" data-placeholder="10">
-              <option>10</option>
-              <option>10</option>
-              <option>20</option>
-              <option>50</option>
-              <option>100</option>
-            </select>
-          </div>
-        <!-- Paging -->    
+    <div class="gridFooter" id="pagingButton">
+      <div class="page_info">Showing ${(currentPage-1)*contentLimit+1} to ${(currentPage-1)*contentLimit+contentLimit>totalContentCount?totalContentCount:(currentPage-1)*contentLimit+contentLimit} of ${totalContentCount} entries</div> 
+      <div>
+      <!-- Paging -->
+        <div class="paging">
+        	<c:if test="${currentPage > buttonPerSection+0}">
+          		<a onclick="pageClick(1)" class="board_prev"><img src="resources/images/ico_board_prev_end.png" alt="First" /></a>
+          		<a onclick="pageClick(${startButtonNo-1})" class="board_prev"><img src="resources/images/ico_board_prev.png" alt="Previous" /></a>
+          	</c:if>
+		    <c:forEach var="pageNo" begin="${startButtonNo}" end="${endButtonNo}" step="1">
+		    	<a onclick="pageClick(${pageNo})">
+		    		<c:if test="${currentPage == pageNo}">
+		    			<strong>
+		    		</c:if>
+		    		${pageNo}
+		    		<c:if test="${currentPage == pageNo}">
+		    			</strong>
+		    		</c:if>	
+		    	</a>
+		    </c:forEach>
+          	<c:if test="${currentPage < totalButtonCount-buttonPerSection+1}">
+          		<a onclick="pageClick(${endButtonNo+1})" class="board_next"><img src="resources/images/ico_board_next.png" alt="Next" /></a>
+          		<a onclick="pageClick(${totalButtonCount})" class="board_next"><img src="resources/images/ico_board_next_end.png" alt="Next End" /></a>
+          	</c:if>
+          	
+          <select id="contentLimit" class="select-select" onchange="pageClick(0)" data-placeholder="10">
+            <option value="10" <c:if test="${contentLimit == 10}">selected="selected"</c:if>>10</option>
+            <option value="20" <c:if test="${contentLimit == 20}">selected="selected"</c:if>>20</option>
+            <option value="50" <c:if test="${contentLimit == 50}">selected="selected"</c:if>>50</option>
+            <option value="100" <c:if test="${contentLimit == 100}">selected="selected"</c:if>>100</option>
+          </select>
+        </div>
+        <!-- Paging -->  
         </div>
       </div>
     </article>
@@ -326,8 +339,41 @@
 			}
 		})
 	};
-	function linkPage(pageNo){
-		location.href = "/gjdm/dimDistrictList.do?pageNo="+pageNo;
+	
+	/* Pagination 버튼 클릭 */
+	function pageClick(pageNo){
+		//text to html
+		const parser = new DOMParser();
+		
+		var contentLimit = $('#contentLimit option:selected').val();
+		var currentPage = ${currentPage};
+		
+		$.ajax({
+			type : 'POST',
+			url : '/gjdm/dimDistrictList.do',
+			data : {
+				'contentLimit' : contentLimit,
+				'currentPage' : pageNo
+			},
+			dataType : 'html',
+			success : function(data){
+				//text to html
+				data = parser.parseFromString(data, 'text/html');
+				
+				//change table
+				var resultTable = data.getElementById('resultTable');
+				$('#resultTable').empty();
+				$('#resultTable').html(resultTable);
+				
+				//change paging button
+				var pagingButton = data.getElementById('pagingButton');
+				$('#pagingButton').empty();
+				$('#pagingButton').html(pagingButton);
+			},
+			error : function(e){
+				console.log(e);
+			}
+		});
 	}
   </script>
   <%@ include file="../footer.jsp"%>
