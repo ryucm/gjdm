@@ -23,4 +23,10 @@ public class DimCalendarServiceImpl extends EgovAbstractServiceImpl
 		// TODO Auto-generated method stub
 		return dimCalendarMapper.selectDimCalendarList(paramMap);
 	}
-}
+	
+	@Override
+	public int selectDimCalendarListCount(Map<String, String> paramMap) throws Exception {
+			
+		return dimCalendarMapper.selectDimCalendarListCount(paramMap);
+		}
+	}

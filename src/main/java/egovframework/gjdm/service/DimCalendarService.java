@@ -7,4 +7,6 @@ import egovframework.gjdm.vo.DimCalendarVO;
 
 public interface DimCalendarService {
 	public List<DimCalendarVO> selectDimCalendarList(Map<String, String> paramMap) throws Exception;
+	
+	public int selectDimCalendarListCount(Map<String,String> paramMap) throws Exception;
 }
