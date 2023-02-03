@@ -34,8 +34,8 @@
 										style="width:100%;">
 										<option value="" disabled selected>-------선택하세요-------</option>
 										<c:forEach items="${dimNationList}" var="nation">
-											<option value="${nation.nationId}" <c:if
-												test="${nationId eq nation.nationId}">selected</c:if>>${nation.nationNm}
+											<option value="${nation.nationId}"<c:if test="${nationId eq nation.nationId}">selected</c:if>>
+											${nation.nationNm}
 											</option>
 										</c:forEach>
 									</select>
@@ -47,9 +47,9 @@
 										<option value="" disabled selected>-------선택하세요-------</option>
 										<c:forEach items="${distLvl1List}" var="distLvl1List">
 											<c:if test="${distLvl1List.nationId eq nationId}">
-												<option value="${distLvl1List.distLvl1}" <c:if
-													test="${distLvl1 eq distLvl1List.distLvl1}">selected
-											</c:if>>${distLvl1List.distLvl1}</option>
+												<option value="${distLvl1List.distLvl1}" <c:if test="${distLvl1 eq distLvl1List.distLvl1}">selected</c:if>>
+												${distLvl1List.distLvl1}
+												</option>
 											</c:if>
 										</c:forEach>
 									</select>
