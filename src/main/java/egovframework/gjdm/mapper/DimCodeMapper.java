@@ -13,6 +13,8 @@ public interface DimCodeMapper {
 
 	public List<DimCodeVO> selectDimCodeList(Map<String, String> paramMap) throws Exception;
 	
+	public int selectDimCodeListCount(Map<String, String> paramMap) throws Exception;
+	
 	public void insertDimCode(Map<String, String> paramMap) throws Exception;
 
 	public void deleteDimCode(int codeId) throws Exception;

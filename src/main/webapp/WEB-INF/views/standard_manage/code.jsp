@@ -10,15 +10,20 @@ function fn_delete(codeId){
 	}
 }
 
+function modify(id){
+	$('.nonEdit[name="'+id+'"]').css('display', 'none');
+	$('.editable[name="'+id+'"]').css('display', 'table-row')
+}
+
 function updateCode(codeId) {
 	if (confirm("코드 ID '" + codeId + "' 를 수정하시겠습니까?")) {
-		var codeId = $("#"+codeId+' td[name="codeId"]').text();
-		var groupCode = $("#"+codeId+' input[name="groupCode"]').val();
-		var groupName = $("#"+codeId+' input[name="groupName"]').val();
-		var code = $("#"+codeId+' input[name="code"]').val();
-		var codeValue = $("#"+codeId+' input[name="codeValue"]').val();
-		var displayName = $("#"+codeId+' input[name="displayName"]').val();
-		var useYN = $("#"+codeId+' select[name="useYN"] option:selected').text();
+		var codeId = $('.editable[name="'+codeId+'"] td[name="codeId"]').text();
+		var groupCode = $('.editable[name="'+codeId+'"] input[name="groupCode"]').val();
+		var groupName = $('.editable[name="'+codeId+'"] input[name="groupName"]').val();
+		var code = $('.editable[name="'+codeId+'"] input[name="code"]').val();
+		var codeValue = $('.editable[name="'+codeId+'"] input[name="codeValue"]').val();
+		var displayName = $('.editable[name="'+codeId+'"] input[name="displayName"]').val();
+		var useYN = $('.editable[name="'+codeId+'"] select[name="useYN"] option:selected').text();
 		
 		if (displayName == ""){
 			displayName = codeValue;
@@ -44,10 +49,10 @@ function updateCode(codeId) {
 
 $(document).ready(function() {
     /* 수정버튼, 취소버튼 클릭시 로우 토글 */
-	$('.btnEdit').click(function() {
+	$/* ('.btnEdit').click(function() {
 		$(this).parent().parent().css('display', 'none');
 		$(this).parent().parent().next().next().css('display', 'table-row');
-	});
+	}); */
 	$('.btnCancel').click(function() {
 		if (confirm("변경된 내용이 저장되지 않습니다.\n그래도 취소하시겠습니까?")) {
 			$(this).parent().parent().css('display', 'none');
@@ -72,6 +77,46 @@ function inquireCode() {
 		return false
 	}
 	document.inquire.submit();
+}
+
+/* Pagination 버튼 클릭 */
+function pageClick(pageNo){
+	//text to html
+	const parser = new DOMParser();
+	
+	var contentLimit = $('#contentLimit option:selected').val();
+	
+	//contentLimit select 클릭시 1페이지로 이동
+	if (pageNo == 0){
+		pageNo = 1;
+	}
+	
+	$.ajax({
+		type : 'POST',
+		url : '/gjdm/dimCodeList.do',
+		data : {
+			'contentLimit' : contentLimit,
+			'currentPage' : pageNo
+		},
+		dataType : 'html',
+		success : function(data){
+			//text to html
+			data = parser.parseFromString(data, 'text/html');
+			
+			//change table
+			var resultTable = data.getElementById('resultTable').childNodes;
+			$('#resultTable').empty();
+			$('#resultTable').html(resultTable);
+			
+			//change paging button
+			var pagingButton = data.getElementById('pagingButton').childNodes;
+			$('#pagingButton').empty();
+			$('#pagingButton').html(pagingButton);
+		},
+		error : function(e){
+			console.log(e);
+		}
+	});
 }
 </script>
 
@@ -129,7 +174,8 @@ function inquireCode() {
 					</div>
 				</div>
 				<!-- Subtitle -->
-				<div class="table_type1">
+				<!-- Grid Area -->
+				<div id="resultTable" class="table_type1">
 					<table summary="">
 						<colgroup>
 							<col width="6%" />
@@ -163,7 +209,7 @@ function inquireCode() {
 						</thead>
 						<tbody>
 							<c:forEach items="${dimCodeList}" var="vo">
-								<tr class="nonEdit">
+								<tr class="nonEdit" name=${vo.codeId}>
 									<td>${vo.codeId}</td>
 									<td>${vo.groupCode}</td>
 									<td>${vo.groupName}</td>
@@ -178,21 +224,30 @@ function inquireCode() {
 											pattern="yyyy-MM-dd HH:mm:ss" /></td>
 									<td name="updtId">${vo.updtId}</td>
 									<td id="modifyBtn${vo.codeId}"><a
-										href="JavaScript:modifyCode(${vo.codeId})"
+										href="JavaScript:modify(${vo.codeId})"
 										class="gridBtn btnEdit">수정</a> <a
 										href="JavaScript:fn_delete(${vo.codeId})"
 										class="gridBtn btnDelete">삭제</a></td>
 								</tr>
 								<tr></tr>
-								<tr id="${vo.codeId}" class="editable" style="display: none">
+								<tr name="${vo.codeId}" class="editable" style="display: none">
 									<td name="codeId">${vo.codeId}</td>
-									<td><input type="text" name="groupCode" style="width: 90%;" class="inputArea" required value="${vo.groupCode}"></td>
-									<td><input type="text" name="groupName" style="width: 90%;" class="inputArea" required value="${vo.groupName}"></td>
-									<td><input type="text" name="code" style="width: 90%;" class="inputArea" required value="${vo.code}"></td>
-									<td><input type="text" name="codeValue" style="width: 90%;" class="inputArea" required value="${vo.codeValue}"></td>
-									<td><input type="text" name="displayName" style="width: 90%;" class="inputArea" value="${vo.displayName}"></td>
-									<td id="useYNSelect${vo.codeId}"><select
-										name="useYN" style="text-align-last: center">
+									<td><input type="text" name="groupCode"
+										style="width: 90%;" class="inputArea" required
+										value="${vo.groupCode}"></td>
+									<td><input type="text" name="groupName"
+										style="width: 90%;" class="inputArea" required
+										value="${vo.groupName}"></td>
+									<td><input type="text" name="code" style="width: 90%;"
+										class="inputArea" required value="${vo.code}"></td>
+									<td><input type="text" name="codeValue"
+										style="width: 90%;" class="inputArea" required
+										value="${vo.codeValue}"></td>
+									<td><input type="text" name="displayName"
+										style="width: 90%;" class="inputArea"
+										value="${vo.displayName}"></td>
+									<td id="useYNSelect${vo.codeId}"><select name="useYN"
+										style="text-align-last: center">
 											<option
 												<c:if test="${vo.useYN eq 'Y'}">selected="selected"</c:if>
 												value="Y">Y</option>
@@ -206,34 +261,53 @@ function inquireCode() {
 									<td><fmt:formatDate value="${vo.updtDt}"
 											pattern="yyyy-MM-dd HH:mm:ss" /></td>
 									<td name="updtId">${vo.updtId}</td>
-									<td id="submitBtn${vo.codeId}">
-										<a href="#" onclick="updateCode(${vo.codeId})" class="gridBtn btnSave">저장</a>
+									<td id="submitBtn${vo.codeId}"><a href="#"
+										onclick="updateCode(${vo.codeId})" class="gridBtn btnSave">저장</a>
 										<a href="#" class="gridBtn btnCancel">취소</a></td>
 								</tr>
 							</c:forEach>
 						</tbody>
 					</table>
 				</div>
-				<div class="gridFooter">
-					<div class="page_info">Showing 1 to 5 of 150 entries</div>
+				<!-- Grid Area -->
+				<div class="gridFooter" id="pagingButton">
+					<div class="page_info">Showing ${(currentPage-1)*contentLimit+1} to ${(currentPage-1)*contentLimit+contentLimit>totalContentCount?totalContentCount:(currentPage-1)*contentLimit+contentLimit} of ${totalContentCount} entries</div>
 					<div>
 						<!-- Paging -->
 						<div class="paging">
-							<a href="#" class="board_prev"><img
-								src="resources/images/ico_board_prev_end.png" alt="First" /></a> <a
-								href="#" class="board_prev"><img
-								src="resources/images/ico_board_prev.png" alt="Previous" /></a> <strong>1</strong>
-							<a href="#">2</a> <a href="#">3</a> <a href="#">4</a> <a href="#">5</a>
-							<a class="board_next" href="#"><img
-								src="resources/images/ico_board_next.png" alt="Next" /></a> <a
-								class="board_next" href="#"><img
-								src="resources/images/ico_board_next_end.png" alt="Next End" /></a>
-							<select class="select-select" data-placeholder="10">
-								<option>10</option>
-								<option>10</option>
-								<option>20</option>
-								<option>50</option>
-								<option>100</option>
+							<c:if test="${currentPage > buttonPerSection+0}">
+								<a onclick="pageClick(1)" class="board_prev"><img
+									src="resources/images/ico_board_prev_end.png" alt="First" /></a>
+								<a onclick="pageClick(${startButtonNo-1})" class="board_prev"><img
+									src="resources/images/ico_board_prev.png" alt="Previous" /></a>
+							</c:if>
+							<c:forEach var="pageNo" begin="${startButtonNo}"
+								end="${endButtonNo}" step="1">
+								<a onclick="pageClick(${pageNo})"> <c:if
+										test="${currentPage == pageNo}">
+										<strong>
+									</c:if> ${pageNo} <c:if test="${currentPage == pageNo}">
+										</strong>
+									</c:if>
+								</a>
+							</c:forEach>
+							<c:if test="${currentPage < totalButtonCount-buttonPerSection+1}">
+								<a onclick="pageClick(${endButtonNo+1})" class="board_next"><img
+									src="resources/images/ico_board_next.png" alt="Next" /></a>
+								<a onclick="pageClick(${totalButtonCount})" class="board_next"><img
+									src="resources/images/ico_board_next_end.png" alt="Next End" /></a>
+							</c:if>
+
+							<select id="contentLimit" class="select-select"
+								onchange="pageClick(0)" data-placeholder="10">
+								<option value="10"
+									<c:if test="${contentLimit == 10}">selected="selected"</c:if>>10</option>
+								<option value="20"
+									<c:if test="${contentLimit == 20}">selected="selected"</c:if>>20</option>
+								<option value="50"
+									<c:if test="${contentLimit == 50}">selected="selected"</c:if>>50</option>
+								<option value="100"
+									<c:if test="${contentLimit == 100}">selected="selected"</c:if>>100</option>
 							</select>
 						</div>
 						<!-- Paging -->

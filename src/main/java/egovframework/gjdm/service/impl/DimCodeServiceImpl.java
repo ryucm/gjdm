@@ -37,4 +37,10 @@ public class DimCodeServiceImpl extends EgovAbstractServiceImpl
 	public void insertDimCode(Map<String, String> paramMap) throws Exception {
 		dimCodeMapper.insertDimCode(paramMap);
 	}
+
+	@Override
+	public int selectDimCodeListCount(Map<String, String> paramMap) throws Exception {
+		// TODO Auto-generated method stub
+		return dimCodeMapper.selectDimCodeListCount(paramMap);
+	}
 }
