@@ -1,6 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
-<script type="text/javascript">
+<script>
+/* 수정버튼, 취소버튼 클릭시 로우 토글 */
+function modify(id){
+	$('.nonEdit[name="'+id+'"]').css('display', 'none');
+	$('.editable[name="'+id+'"]').css('display', 'table-row')
+}
+
+function cancel(id){
+	if (confirm("변경된 내용이 저장되지 않습니다.\n그래도 취소하시겠습니까?")) {
+		location.reload();
+	}
+}
   $(document).ready(function(){
 	//navbar active
 	if(window.location.href.includes('dim')) {
@@ -29,17 +40,6 @@
   		}
 	}
 	
-	/* 수정버튼, 취소버튼 클릭시 로우 토글 */
-	function modify(id){
-		$('.nonEdit[name="'+id+'"]').css('display', 'none');
-		$('.editable[name="'+id+'"]').css('display', 'table-row')
-	}
-
-	function cancel(id){
-		if (confirm("변경된 내용이 저장되지 않습니다.\n그래도 취소하시겠습니까?")) {
-			location.reload();
-		}
-	}
 	
     //jquery for toggle sub menus
     $('.sub-btn').click(function(){
