@@ -60,7 +60,7 @@
         <!-- Subtitle -->
         <div class="subtitle">
 	        <h3>검색결과</h3>
-	        <div><a id="nationModal" class="btn btn-create">새 지역 등록</a></div>
+	        <div><a id="nationModal" class="btn btn-create">새 국가 등록</a></div>
      	</div>
       <!-- Subtitle -->
       <!-- Grid Area -->
@@ -99,7 +99,7 @@
 	       </thead>
 	       <tbody>
 	       	<c:forEach items="${dimNationList}" var="vo">
-	       		<tr class="nonEdit">
+	       		<tr class="nonEdit" name="${vo.nationId}">
 	       			<td>${vo.nationId}</td>
 	        		<td>${vo.nationNm}</td>
 	        		<td>${vo.nationNmEn}</td>
@@ -117,12 +117,12 @@
                		<td><fmt:formatDate value="${vo.updtDt}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
                		<td>${vo.updtId}</td>
                		<td>
-               			<a href="#" class="gridBtn btnEdit">수정</a>
+               			<a href="JavaScript:modify(${vo.nationId})" class="gridBtn btnEdit">수정</a>
                			<a href="JavaScript:deleteDimNation(${vo.nationId})" class="gridBtn btnDelete">삭제</a>
                		</td>
                		<tr></tr>
                		<!-- 수정 버튼 클릭시 나오는 row -->
-               		<tr style="display: none" class="editable">
+               		<tr style="display: none" class="editable" name="${vo.nationId}">
                			<td name="nationId${vo.nationId}">${vo.nationId}</td>
                			<td><input type="text" class="inputArea" style="width: 90%;" name="nationNm${vo.nationId}" value="${vo.nationNm}" required></td>
                			<td><input type="text" class="inputArea" style="width: 90%;" name="nationNmEn${vo.nationId}" value="${vo.nationNmEn}" required></td>
@@ -144,7 +144,7 @@
                			<td name="updtId${vo.nationId}">${vo.updtId}</td>
                			<td>
 			              	<a href="JavaScript:updateDimNation(${vo.nationId})" class="gridBtn btnSave">저장</a>
-			              	<a href="#" class="gridBtn btnCancel">취소</a>
+			              	<a href="JavaScript:cancel(${vo.nationId})" class="gridBtn btnCancel">취소</a>
 			            </td>
                		</tr>
                	</c:forEach>
@@ -262,22 +262,6 @@
   </div>
   <!---- Layer Popup ---->
   <script>
-  
-  	/* 수정버튼, 취소버튼 클릭시 로우 토글 */
-  	$(document).ready(function() {
-	    /* 수정버튼, 취소버튼 클릭시 로우 토글 */
-    	$('.btnEdit').click(function() {
-    		$(this).parent().parent().css('display', 'none');
-    		$(this).parent().parent().next().next().css('display', 'table-row');
-    	});
-    	$('.btnCancel').click(function() {
-    		if (confirm("변경된 내용이 저장되지 않습니다.\n그래도 취소하시겠습니까?")) {
-    			$(this).parent().parent().css('display', 'none');
-	    		$(this).parent().parent().prev().prev().css('display', 'table-row');
-    		}
-    	})
-    })
-    
     /* nation row 수정 */
     function updateDimNation(nationId){
   		var nationId = $('td[name="nationId' + nationId + '"]').html();

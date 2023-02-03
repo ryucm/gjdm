@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
 <script type="text/javascript">
   $(document).ready(function(){
 	//navbar active
@@ -14,8 +16,8 @@
   		if(window.location.href.includes('Nation')) {
   			$('a[href*="Nation"]').addClass('active');
   		}
-  		if(window.location.href.includes('District')) {
-  			$('a[href*="District"]').addClass('active');
+  		if(window.location.href.includes('Dist')) {
+  			$('a[href*="Dist"]').addClass('active');
   		}
 	}
 	if(window.location.href.includes('etl')) {
@@ -26,6 +28,19 @@
   			$('a[href*="Batch"]').addClass('active');
   		}
 	}
+	
+	/* 수정버튼, 취소버튼 클릭시 로우 토글 */
+	function modify(id){
+		$('.nonEdit[name="'+id+'"]').css('display', 'none');
+		$('.editable[name="'+id+'"]').css('display', 'table-row')
+	}
+
+	function cancel(id){
+		if (confirm("변경된 내용이 저장되지 않습니다.\n그래도 취소하시겠습니까?")) {
+			location.reload();
+		}
+	}
+	
     //jquery for toggle sub menus
     $('.sub-btn').click(function(){
       $(this).toggleClass('on');

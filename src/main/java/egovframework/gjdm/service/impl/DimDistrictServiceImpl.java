@@ -17,9 +17,9 @@ public class DimDistrictServiceImpl implements DimDistrictService {
 	DimDistrictMapper dimDistrictMapper;
 	
 	@Override
-	public List<DimDistrictVO> selectAll() throws Exception {
+	public List<DimDistrictVO> selectAll(Map<String, String> paramMap) throws Exception {
 		// TODO Auto-generated method stub
-		return dimDistrictMapper.selectAll();
+		return dimDistrictMapper.selectAll(paramMap);
 	}
 	
 	@Override
