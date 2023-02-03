@@ -10,15 +10,20 @@ function fn_delete(codeId){
 	}
 }
 
+function modify(id){
+	$('.nonEdit[name="'+id+'"]').css('display', 'none');
+	$('.editable[name="'+id+'"]').css('display', 'table-row')
+}
+
 function updateCode(codeId) {
 	if (confirm("코드 ID '" + codeId + "' 를 수정하시겠습니까?")) {
-		var codeId = $("#"+codeId+' td[name="codeId"]').text();
-		var groupCode = $("#"+codeId+' input[name="groupCode"]').val();
-		var groupName = $("#"+codeId+' input[name="groupName"]').val();
-		var code = $("#"+codeId+' input[name="code"]').val();
-		var codeValue = $("#"+codeId+' input[name="codeValue"]').val();
-		var displayName = $("#"+codeId+' input[name="displayName"]').val();
-		var useYN = $("#"+codeId+' select[name="useYN"] option:selected').text();
+		var codeId = $('.editable[name="'+codeId+'"] td[name="codeId"]').text();
+		var groupCode = $('.editable[name="'+codeId+'"] input[name="groupCode"]').val();
+		var groupName = $('.editable[name="'+codeId+'"] input[name="groupName"]').val();
+		var code = $('.editable[name="'+codeId+'"] input[name="code"]').val();
+		var codeValue = $('.editable[name="'+codeId+'"] input[name="codeValue"]').val();
+		var displayName = $('.editable[name="'+codeId+'"] input[name="displayName"]').val();
+		var useYN = $('.editable[name="'+codeId+'"] select[name="useYN"] option:selected').text();
 		
 		if (displayName == ""){
 			displayName = codeValue;
@@ -44,10 +49,10 @@ function updateCode(codeId) {
 
 $(document).ready(function() {
     /* 수정버튼, 취소버튼 클릭시 로우 토글 */
-	$('.btnEdit').click(function() {
+	$/* ('.btnEdit').click(function() {
 		$(this).parent().parent().css('display', 'none');
 		$(this).parent().parent().next().next().css('display', 'table-row');
-	});
+	}); */
 	$('.btnCancel').click(function() {
 		if (confirm("변경된 내용이 저장되지 않습니다.\n그래도 취소하시겠습니까?")) {
 			$(this).parent().parent().css('display', 'none');
@@ -204,7 +209,7 @@ function pageClick(pageNo){
 						</thead>
 						<tbody>
 							<c:forEach items="${dimCodeList}" var="vo">
-								<tr class="nonEdit">
+								<tr class="nonEdit" name=${vo.codeId}>
 									<td>${vo.codeId}</td>
 									<td>${vo.groupCode}</td>
 									<td>${vo.groupName}</td>
@@ -219,13 +224,13 @@ function pageClick(pageNo){
 											pattern="yyyy-MM-dd HH:mm:ss" /></td>
 									<td name="updtId">${vo.updtId}</td>
 									<td id="modifyBtn${vo.codeId}"><a
-										href="JavaScript:modifyCode(${vo.codeId})"
+										href="JavaScript:modify(${vo.codeId})"
 										class="gridBtn btnEdit">수정</a> <a
 										href="JavaScript:fn_delete(${vo.codeId})"
 										class="gridBtn btnDelete">삭제</a></td>
 								</tr>
 								<tr></tr>
-								<tr id="${vo.codeId}" class="editable" style="display: none">
+								<tr name="${vo.codeId}" class="editable" style="display: none">
 									<td name="codeId">${vo.codeId}</td>
 									<td><input type="text" name="groupCode"
 										style="width: 90%;" class="inputArea" required
