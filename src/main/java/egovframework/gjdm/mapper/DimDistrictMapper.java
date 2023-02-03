@@ -13,6 +13,8 @@ public interface DimDistrictMapper {
 	
 	public List<DimDistrictVO> selectDimDistrictList(Map<String, String> paramMap) throws Exception;
 	
+	public int selectDimDistrictListCount(Map<String,String> paramMap) throws Exception;
+	
 	public List<DimDistrictVO> selectDimDistrictListGroupByLvl1() throws Exception;
 	
 	public List<DimDistrictVO> selectDimDistrictListGroupByLvl2() throws Exception;

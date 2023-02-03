@@ -57,13 +57,6 @@ public class DimNationController {
 		
     	Iterator<String> iter = paramMap.keySet().iterator();
       
-      while(iter.hasNext()) {
-          String key = iter.next();
-          String value = paramMap.get(key);
-          
-          System.out.println(key + " : " + value);
-      }
-		
 		return "redirect:dimNationList.do";
 		
 	}

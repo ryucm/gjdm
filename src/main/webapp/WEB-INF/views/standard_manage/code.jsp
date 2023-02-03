@@ -15,6 +15,12 @@ function modify(id){
 	$('.editable[name="'+id+'"]').css('display', 'table-row')
 }
 
+function cancel(id){
+	if (confirm("변경된 내용이 저장되지 않습니다.\n그래도 취소하시겠습니까?")) {
+		location.reload();
+	}
+	
+}
 function updateCode(codeId) {
 	if (confirm("코드 ID '" + codeId + "' 를 수정하시겠습니까?")) {
 		var codeId = $('.editable[name="'+codeId+'"] td[name="codeId"]').text();
@@ -47,19 +53,7 @@ function updateCode(codeId) {
 	}
 };
 
-$(document).ready(function() {
-    /* 수정버튼, 취소버튼 클릭시 로우 토글 */
-	$/* ('.btnEdit').click(function() {
-		$(this).parent().parent().css('display', 'none');
-		$(this).parent().parent().next().next().css('display', 'table-row');
-	}); */
-	$('.btnCancel').click(function() {
-		if (confirm("변경된 내용이 저장되지 않습니다.\n그래도 취소하시겠습니까?")) {
-			$(this).parent().parent().css('display', 'none');
-    		$(this).parent().parent().prev().prev().css('display', 'table-row');
-		}
-	})
-})
+
 
 function insertCode() {
 
@@ -230,6 +224,7 @@ function pageClick(pageNo){
 										class="gridBtn btnDelete">삭제</a></td>
 								</tr>
 								<tr></tr>
+								<form>
 								<tr name="${vo.codeId}" class="editable" style="display: none">
 									<td name="codeId">${vo.codeId}</td>
 									<td><input type="text" name="groupCode"
@@ -263,8 +258,9 @@ function pageClick(pageNo){
 									<td name="updtId">${vo.updtId}</td>
 									<td id="submitBtn${vo.codeId}"><a href="#"
 										onclick="updateCode(${vo.codeId})" class="gridBtn btnSave">저장</a>
-										<a href="#" class="gridBtn btnCancel">취소</a></td>
+										<a href="JavaScript:cancel(${vo.codeId})" class="gridBtn btnCancel">취소</a></td>
 								</tr>
+								</form>
 							</c:forEach>
 						</tbody>
 					</table>
