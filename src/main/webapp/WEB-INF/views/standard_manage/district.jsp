@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+	pageEncoding="utf-8"%>
 <%@ include file="../header.jsp"%>
 <div class="col-2">
 	<header>
@@ -261,7 +261,7 @@
 							<tr>
 								<td>
 									<p>동</p>
-									<input type="text" placeholder="동" class="inputArea" name="distLvl3" required
+									<input type="text" placeholder="동" class="inputArea" name="distLvl3"
 										style="width:100%;">
 								</td>
 							</tr>
@@ -286,7 +286,6 @@
 <script>
 	/* 국가 선택시 시도 리스트 호출 */
 	function selectNation(value) {
-		var distLvl1 = $("#distLvl1Search option:selected").val();
 		location = "/gjdm/dimSelectDistLvl.do?nationId=" + value;
 	};
 
@@ -372,6 +371,9 @@
 
 		var contentLimit = $('#contentLimit option:selected').val();
 		var currentPage = '${continentPage}';
+		var nationId = $("#nationSearch option:selected").val();
+		var distLvl1 = $("#distLvl1Search option:selected").val();
+		var distLvl2 = $("#distLvl2Search option:selected").val();
 		
 		//contentLimit select 클릭시 1페이지로 이동
 		if (pageNo == 0){
@@ -380,10 +382,13 @@
 		
 		$.ajax({
 			type: 'POST',
-			url: '/gjdm/dimDistrictList.do',
+			url: window.location.href.includes('List') ? '/gjdm/dimDistrictList.do' : '/gjdm/dimSelectDistLvl.do',
 			data: {
 				'contentLimit': contentLimit,
-				'currentPage': pageNo
+				'currentPage': pageNo,
+				'nationId': nationId == "" ? null : nationId,
+				'distLvl1': distLvl1 == "" ? null : distLvl1,
+				'distLvl2': distLvl2 == "" ? null : distLvl2
 			},
 			dataType: 'html',
 			success: function (data) {
