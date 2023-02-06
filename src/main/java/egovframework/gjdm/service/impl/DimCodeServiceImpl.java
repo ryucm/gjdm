@@ -43,14 +43,4 @@ public class DimCodeServiceImpl extends EgovAbstractServiceImpl
 		// TODO Auto-generated method stub
 		return dimCodeMapper.selectDimCodeListCount(paramMap);
 	}
-
-	@Override
-	public int checkGroupCode(Map<String, String> paramMap) throws Exception {
-		return dimCodeMapper.checkGroupCode(paramMap);
-	}
-
-	@Override
-	public int checkCode(Map<String, String> paramMap) throws Exception {
-		return dimCodeMapper.checkCode(paramMap);
-	}
 }

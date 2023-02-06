@@ -373,34 +373,6 @@ function pageClick(pageNo){
 			return false
 		}
 		
-		var rtn = false
-		
-		$.ajax({
-			type: "POST",
-			url: "/gjdm/checkInsert.do",
-			data: {
-				groupCode:document.insert.groupCode.value,
-          		code:document.insert.code.value,
-          	},
-          	async:false,
-          	success: function(data) {
-          		switch (data) {
-          		case "groupCode":
-          			rtn = true;
-          			alert("코드 그룹이 이미 존재합니다.");
-          			break;
-          		case "code":
-          			rtn = true;
-          			alert("이미 존재하는 코드입니다.");
-          			break;
-          		}
-      		}
-		})
-		
-		if (rtn) {
-			return false;
-		}
-		
 		if (document.insert.displayName.value == "") {
 			document.insert.displayName.value = document.insert.codeValue.value
 		}
@@ -418,7 +390,7 @@ function pageClick(pageNo){
          		location.reload();
           },
           error: function(e) {
-        	  alert("등록에 실패하였습니다. 관리자에게 문의하세요.");
+        	  alert("코드 그룹 및 코드가 중복됩니다. 다시 확인하세요.");
       	}
 		})
 	}
