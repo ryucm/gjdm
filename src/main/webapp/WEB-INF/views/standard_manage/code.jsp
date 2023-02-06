@@ -196,9 +196,8 @@ function pageClick(pageNo){
 											pattern="yyyy-MM-dd HH:mm:ss" /></td>
 									<td name="updtId">${vo.updtId}</td>
 									<td id="modifyBtn${vo.codeId}"><a
-										href="JavaScript:modify(${vo.codeId})"
-										class="gridBtn btnEdit">수정</a> <a
-										href="JavaScript:fn_delete(${vo.codeId})"
+										href="JavaScript:modify(${vo.codeId})" class="gridBtn btnEdit">수정</a>
+										<a href="JavaScript:fn_delete(${vo.codeId})"
 										class="gridBtn btnDelete">삭제</a></td>
 								</tr>
 								<tr></tr>
@@ -235,7 +234,8 @@ function pageClick(pageNo){
 									<td name="updtId">${vo.updtId}</td>
 									<td id="submitBtn${vo.codeId}"><a href="#"
 										onclick="updateCode(${vo.codeId})" class="gridBtn btnSave">저장</a>
-										<a href="JavaScript:cancel(${vo.codeId})" class="gridBtn btnCancel">취소</a></td>
+										<a href="JavaScript:cancel(${vo.codeId})"
+										class="gridBtn btnCancel">취소</a></td>
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -243,7 +243,10 @@ function pageClick(pageNo){
 				</div>
 				<!-- Grid Area -->
 				<div class="gridFooter" id="pagingButton">
-					<div class="page_info">Showing ${(currentPage-1)*contentLimit+1} to ${(currentPage-1)*contentLimit+contentLimit>totalContentCount?totalContentCount:(currentPage-1)*contentLimit+contentLimit} of ${totalContentCount} entries</div>
+					<div class="page_info">Showing
+						${(currentPage-1)*contentLimit+1} to
+						${(currentPage-1)*contentLimit+contentLimit>totalContentCount?totalContentCount:(currentPage-1)*contentLimit+contentLimit}
+						of ${totalContentCount} entries</div>
 					<div>
 						<!-- Paging -->
 						<div class="paging">
@@ -289,7 +292,7 @@ function pageClick(pageNo){
 		</article>
 	</main>
 </div>
-	<!----- Contents End ----->
+<!----- Contents End ----->
 
 <!---- Layer Popup ---->
 <div id="layer_area" style="display: none;">
@@ -352,15 +355,14 @@ function pageClick(pageNo){
 				</div>
 				<div class="pop_btnArea">
 					<a href="#" onclick="fn_submit(); return false;"
-						class="btn btnType01">추가</a><a onclick="fn_exit()"
-						class="btn btnType02 closely">취소</a>
+						class="btn btnType01">추가</a> <a class="btn btnType02 closeLy">취소</a>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-	<!---- Layer Popup ---->
-	<script>
+<!---- Layer Popup ---->
+<script>
   $('#codeModal').click(function(){
 		$('#layer_area').show();
 	});
@@ -369,6 +371,34 @@ function pageClick(pageNo){
 		if (!regex.test(document.insert.groupCode.value)) {
 			alert("코드 그룹은 영어 대문자와 숫자만 입력 가능합니다.")
 			return false
+		}
+		
+		var rtn = false
+		
+		$.ajax({
+			type: "POST",
+			url: "/gjdm/checkInsert.do",
+			data: {
+				groupCode:document.insert.groupCode.value,
+          		code:document.insert.code.value,
+          	},
+          	async:false,
+          	success: function(data) {
+          		switch (data) {
+          		case "groupCode":
+          			rtn = true;
+          			alert("코드 그룹이 이미 존재합니다.");
+          			break;
+          		case "code":
+          			rtn = true;
+          			alert("이미 존재하는 코드입니다.");
+          			break;
+          		}
+      		}
+		})
+		
+		if (rtn) {
+			return false;
 		}
 		
 		if (document.insert.displayName.value == "") {
@@ -380,15 +410,17 @@ function pageClick(pageNo){
           type: "POST",
           url: "/gjdm/insertCode.do",
           data: formData,
+          async:false,
           success: function () {
+        	  console.log("성공")
          		alert("등록 완료")
          		 $('#layer_area').hide();
          		location.reload();
           },
           error: function(e) {
-      		alert("등록 실패")
-      	}    
+        	  alert("등록에 실패하였습니다. 관리자에게 문의하세요.");
+      	}
 		})
 	}
   </script>
-	<%@ include file="../footer.jsp"%>
+<%@ include file="../footer.jsp"%>

@@ -20,4 +20,8 @@ public interface DimCodeMapper {
 	public void deleteDimCode(int codeId) throws Exception;
 	
 	public void updateDimCode(Map<String, String> paramMap) throws Exception;
+	
+	public int checkGroupCode(Map<String, String> paramMap) throws Exception;
+	
+	public int checkCode(Map<String, String> paramMap) throws Exception;
 }
