@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="egovframework.gjdm.mapper.DimNationMapper">
+	
+	<resultMap id="dimNationList" type="egovframework.gjdm.vo.DimNationVO">
+	</resultMap>
+	
+	<select id="selectDimNationListForDistrict" resultMap="dimNationList">
+		select * 
+		from dwdm.dim_nation 
+		order by nation_nm asc
+	</select>
+	
+	<select id="selectDimNationListCount" parameterType="java.util.Map" resultType="int">
+		select count(*) 
+		from dwdm.dim_nation 
+		where 1=1
+		<if test="continentPage != null and continentPage != ''">
+			and continent = #{continentPage}
+		</if>
+	</select>
+	
+	<select id="selectDimNationList" parameterType="java.util.Map" resultMap="dimNationList">
+		select * 
+		from dwdm.dim_nation 
+		
+		where 1=1
+		<if test="continentPage != null and continentPage != ''">
+			and continent = #{continentPage}
+		</if>
+		order by nation_nm asc
+		limit #{contentLimit}::int
+		offset (#{currentPage}::int-1)*#{contentLimit}::int
+	</select>
+	
+	<insert id="insertDimNation" parameterType="dimNationVO">
+		insert into dwdm.dim_nation(nation_nm, nation_nm_en, iso_cd, iso3_cd, iso_no, continent, rgtr_dt, rgtr_id, updt_dt, updt_id)
+		values(#{nationNm}, #{nationNmEn}, #{isoCd}, #{iso3Cd}, #{isoNo}, #{continent}, now(), #{rgtrId}, now(), #{updtId})
+	</insert>
+	
+	<update id="updateDimNation" parameterType="dimNationVO">
+		update dwdm.dim_nation
+		set nation_nm = #{nationNm},
+			nation_nm_en = #{nationNmEn},
+			iso_cd = #{isoCd},
+			iso3_cd = #{iso3Cd},
+			iso_no = #{isoNo},
+			continent = #{continent},
+			updt_dt = now(),
+			updt_id = #{updtId}
+		where nation_id = #{nationId}
+	</update>
+	
+	<delete id="deleteDimNation" parameterType="int">
+		delete from dwdm.dim_nation
+		where nation_id = #{nationId}
+	</delete>
+</mapper>

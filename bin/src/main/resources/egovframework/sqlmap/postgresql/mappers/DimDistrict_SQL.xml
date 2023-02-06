@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="egovframework.gjdm.mapper.DimDistrictMapper">
+	<select id="selectAll" parameterType="java.util.Map" resultType="dimDistrictVO">
+		select * from dwdm.dim_district 
+			order by nation_id, dist_lvl_1, dist_lvl_2, dist_lvl_3 LIMIT #{contentLimit}::INT offset (#{currentPage}::INT-1)*#{contentLimit}::INT
+	</select>
+	
+	<select id="selectDimDistrictListCount" parameterType="java.util.Map" resultType="int">
+		select count(*) 
+		from dwdm.dim_district
+		where 1=1
+		<if test="continentPage != null and continentPage != ''">
+			and continent = #{continentPage}
+		</if>
+	</select>
+
+	<select id="selectDimDistrictList" parameterType="java.util.Map" resultType="dimDistrictVO">
+		select * from dwdm.dim_district where 1=1
+			<if test="nationId != null and nationId != ''">
+				and nation_id = #{nationId}::INT
+			</if>
+			<if test="distLvl1 != null and distLvl1 != ''">
+				and dist_lvl_1 = #{distLvl1}
+			</if>
+			<if test="distLvl2 != null and distLvl2 != ''">
+				and dist_lvl_2 = #{distLvl2}
+			</if>
+			<if test="continentPage != null and continentPage != ''">
+				and continent = #{continentPage}
+			</if>
+			order by nation_id, dist_lvl_1, dist_lvl_2, dist_lvl_3 LIMIT #{contentLimit}::INT OFFSET (#{currentPage}::INT-1)*#{contentLimit}::INT
+	</select>
+	
+	<select id="selectDimDistrictListGroupByLvl1" resultType="dimDistrictVO">
+		select nation_id, dist_lvl_1 from dwdm.dim_district group by dist_lvl_1, nation_id order by nation_id, dist_lvl_1;
+	</select>
+	
+	<select id="selectDimDistrictListGroupByLvl2" resultType="dimDistrictVO">
+		select nation_id, dist_lvl_1, dist_lvl_2 from dwdm.dim_district group by dist_lvl_2, dist_lvl_1, nation_id order by nation_id, dist_lvl_1, dist_lvl_2;
+	</select>
+	
+	<insert id="insertDimDistrict" parameterType="java.util.Map">
+		insert into dwdm.dim_district (nation_id, dist_lvl_1, dist_lvl_2, dist_lvl_3, rgtr_id, updt_id)
+			values (#{nationId}::INT, #{distLvl1}, #{distLvl2}, #{distLvl3}, #{rgtrId}, #{updtId})
+	</insert>
+	
+	<update id="updateDimDistrict" parameterType="java.util.Map">
+		update dwdm.dim_district set nation_id = #{nationId}::INT, dist_lvl_1 = #{distLvl1}, dist_lvl_2 = #{distLvl2}, dist_lvl_3 = #{distLvl3}, updt_dt = now(), updt_id = 'test2'
+			where district_id = #{districtId}::INT
+	</update>
+	
+	<delete id="deleteDimDistrict" parameterType="int">
+		delete from dwdm.dim_district where district_id = #{districtId}
+	</delete>
+
+</mapper>
