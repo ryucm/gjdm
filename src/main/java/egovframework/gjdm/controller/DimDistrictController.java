@@ -77,7 +77,7 @@ public class DimDistrictController {
 		List<DimDistrictVO> distLvl1List = dimDistrictService.selectDimDistrictListGroupByLvl1();
 		List<DimDistrictVO> distLvl2List = dimDistrictService.selectDimDistrictListGroupByLvl2();
 		
-		int totalContentCount = dimDistrictService.selectDimDistrictListCount(paramMap);
+		int totalContentCount = dimDistrictService.selectDimDistrictAllListCount();
 		
 		Pagination pg = new Pagination(totalContentCount, paramMap);
 		model.addAllAttributes(pg.getPageMap());

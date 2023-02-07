@@ -7,20 +7,12 @@
 			order by nation_id, dist_lvl_1, dist_lvl_2, dist_lvl_3 LIMIT #{contentLimit}::INT offset (#{currentPage}::INT-1)*#{contentLimit}::INT
 	</select>
 	
-	<select id="selectDimDistrictAllListCount" resultType="int">
-		select count(*) from dwdm.dim_district
-	</select>
-	
 	<select id="selectDimDistrictListCount" parameterType="java.util.Map" resultType="int">
-		select count(*) from dwdm.dim_district where 1=1
-		<if test="nationId != null and nationId != ''">
-			and nation_id = #{nationId}::INT
-		</if>
-		<if test="distLvl1 != null and distLvl1 != ''">
-			and dist_lvl_1 = #{distLvl1}
-		</if>
-		<if test="distLvl2 != null and distLvl2 != ''">
-			and dist_lvl_2 = #{distLvl2}
+		select count(*) 
+		from dwdm.dim_district
+		where 1=1
+		<if test="continentPage != null and continentPage != ''">
+			and continent = #{continentPage}
 		</if>
 	</select>
 
