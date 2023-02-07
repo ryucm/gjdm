@@ -74,21 +74,4 @@ public class DimCodeController {
 		dimCodeService.updateDimCode(paramMap);
 		return "redirect:dimCodeList.do";
 	}
-	
-	@ResponseBody
-	@RequestMapping("/checkInsert.do")
-	public String checkInsert(@RequestParam Map<String, String> paramMap) throws Exception {
-		int groupCode = dimCodeService.checkGroupCode(paramMap);
-		int code = dimCodeService.checkCode(paramMap);
-
-		if (groupCode != 0) {
-			return "groupCode";
-		}
-
-		if (code != 0) {
-			return "code";
-		}
-				
-		return "success";
-	}
 }
