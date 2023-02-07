@@ -12,6 +12,8 @@ public interface DimDistrictService {
 
 	public int selectDimDistrictListCount(Map<String,String> paramMap) throws Exception;
 	
+	public int selectDimDistrictAllListCount() throws Exception;
+	
 	public List<DimDistrictVO> selectDimDistrictListGroupByLvl1() throws Exception;
 	
 	public List<DimDistrictVO> selectDimDistrictListGroupByLvl2() throws Exception;

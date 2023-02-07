@@ -382,13 +382,13 @@
 		
 		$.ajax({
 			type: 'POST',
-			url: window.location.href.includes('List') ? '/gjdm/dimDistrictList.do' : '/gjdm/dimSelectDistLvl.do',
+			url: '/gjdm/dimDistrictList.do',
 			data: {
 				'contentLimit': contentLimit,
 				'currentPage': pageNo,
-				'nationId': nationId == "" ? null : nationId,
-				'distLvl1': distLvl1 == "" ? null : distLvl1,
-				'distLvl2': distLvl2 == "" ? null : distLvl2
+				'nationId': window.location.href.includes('Select') ? null : nationId,
+				'distLvl1': window.location.href.includes('Select') ? null : distLvl1,
+				'distLvl2': window.location.href.includes('Select') ? null : distLvl2
 			},
 			dataType: 'html',
 			success: function (data) {
