@@ -53,9 +53,10 @@
                                   <div class="item">
                                     <a class="sub-btn"><span class="ico_api">Dashboard</span>Dashboard</a>
                                     <div class="sub-menu">
-                                      <a href="#" class="sub-item">관광통계 분석</a>
-                                      <a href="#" class="sub-item">관광객 분석</a>
-                                      <a href="#" class="sub-item">관광소비 분석</a>
+                                      <a href="dashboardTour.do" class="sub-item">관광 현황 분석</a>
+                                      <a href="dashboardVisitor.do" class="sub-item">방문자 현황 분석</a>
+                                      <a href="dashboardInfo.do" class="sub-item">관광 정보</a>
+                                      <a href="dashboardDistour.do" class="sub-item">무장애 지원 현황</a>
                                     </div>
                                   </div>
                                   <div class="item">

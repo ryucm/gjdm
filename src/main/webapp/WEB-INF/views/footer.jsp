@@ -14,6 +14,23 @@ function cancel(id){
 }
   $(document).ready(function(){
 	//navbar active
+	if(window.location.href.includes('dashboard')) {
+		$('.sub-btn').eq(0).addClass('on');
+  		$('.sub-btn').eq(0).next('.sub-menu').show();
+  		
+  		if(window.location.href.includes('dashboardTour')) {
+  			$('a[href*="dashboardTour"]').addClass('active');
+  		}
+  		if(window.location.href.includes('dashboardVisitor')) {
+  			$('a[href*="dashboardVisitor"]').addClass('active');
+  		}
+  		if(window.location.href.includes('dashboardInfo')) {
+  			$('a[href*="dashboardInfo"]').addClass('active');
+  		}
+  		if(window.location.href.includes('dashboardDistour')) {
+  			$('a[href*="dashboardDistour"]').addClass('active');
+  		}
+	}
 	if(window.location.href.includes('dim')) {
 		$('.sub-btn').eq(1).addClass('on');
   		$('.sub-btn').eq(1).next('.sub-menu').show();
