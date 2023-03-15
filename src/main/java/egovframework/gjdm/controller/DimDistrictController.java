@@ -62,7 +62,7 @@ public class DimDistrictController {
 			model.addAttribute("distLvl2", paramMap.get("distLvl2"));
 		}
 	 	
-		return "standard_manage/district";
+		return "standard_manage/area";
 	}
 	
 	@RequestMapping("/dimSelectDistLvl.do")
@@ -96,7 +96,7 @@ public class DimDistrictController {
 			model.addAttribute("distLvl1", paramMap.get("distLvl1"));
 		}
 		
-		return "standard_manage/district";
+		return "standard_manage/area";
 	}
 	
 	@RequestMapping("/insertDimDistrict.do")

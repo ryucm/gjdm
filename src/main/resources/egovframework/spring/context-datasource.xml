@@ -12,7 +12,7 @@
      <!-- PostgresSQL -->
 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="org.postgresql.Driver"/>
-		<property name="url" value="jdbc:postgresql://211.253.9.250:5432/gjdm" />
+		<property name="url" value="jdbc:postgresql://211.253.11.2:5432/gjdm" />
 		<property name="username" value="gjdm"/>
 		<property name="password" value="dfocus!00"/>
     </bean>
