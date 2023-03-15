@@ -4,7 +4,7 @@
 <mapper namespace="egovframework.gjdm.mapper.DimDistrictMapper">
 	<select id="selectAll" parameterType="java.util.Map" resultType="dimDistrictVO">
 		select * from dwdm.dim_district 
-			order by nation_id, dist_lvl_1, dist_lvl_2, dist_lvl_3 LIMIT #{contentLimit}::INT offset (#{currentPage}::INT-1)*#{contentLimit}::INT
+			order by nation_id, dist_lvl_1, dist_lvl_2 LIMIT #{contentLimit}::INT offset (#{currentPage}::INT-1)*#{contentLimit}::INT
 	</select>
 	
 	<select id="selectDimDistrictAllListCount" resultType="int">
@@ -38,7 +38,7 @@
 			<if test="continentPage != null and continentPage != ''">
 				and continent = #{continentPage}
 			</if>
-			order by nation_id, dist_lvl_1, dist_lvl_2, dist_lvl_3 LIMIT #{contentLimit}::INT OFFSET (#{currentPage}::INT-1)*#{contentLimit}::INT
+			order by nation_id, dist_lvl_1, dist_lvl_2 LIMIT #{contentLimit}::INT OFFSET (#{currentPage}::INT-1)*#{contentLimit}::INT
 	</select>
 	
 	<select id="selectDimDistrictListGroupByLvl1" resultType="dimDistrictVO">
@@ -50,12 +50,12 @@
 	</select>
 	
 	<insert id="insertDimDistrict" parameterType="java.util.Map">
-		insert into dwdm.dim_district (nation_id, dist_lvl_1, dist_lvl_2, dist_lvl_3, rgtr_id, updt_id)
-			values (#{nationId}::INT, #{distLvl1}, #{distLvl2}, #{distLvl3}, #{rgtrId}, #{updtId})
+		insert into dwdm.dim_district (nation_id, dist_lvl_1, dist_lvl_1_cd, dist_lvl_2, dist_lvl_2_cd, rgtr_id, updt_id)
+			values (#{nationId}::INT, #{distLvl1}, #{distLvl1Cd}, #{distLvl2}, #{distLvl2Cd}, #{rgtrId}, #{updtId})
 	</insert>
 	
 	<update id="updateDimDistrict" parameterType="java.util.Map">
-		update dwdm.dim_district set nation_id = #{nationId}::INT, dist_lvl_1 = #{distLvl1}, dist_lvl_2 = #{distLvl2}, dist_lvl_3 = #{distLvl3}, updt_dt = now(), updt_id = 'test2'
+		update dwdm.dim_district set nation_id = #{nationId}::INT, dist_lvl_1 = #{distLvl1}, dist_lvl_2 = #{distLvl2}, updt_dt = now(), updt_id = 'test2'
 			where district_id = #{districtId}::INT
 	</update>
 	
