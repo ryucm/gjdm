@@ -13,7 +13,7 @@
 		<div class="title"></div>
 	</header>
 	<main class="content" style="height: 100%">
-		<img style="width:100%; height:100%" src="../gjdm/resources/images/visitor.png" />
+		<embed style="width:100%; height:100%" src="http://211.253.9.250:8088/superset/dashboard/p/9KxEdN3zy3d/" />
 	</main>
 </div>
 <%@ include file="../footer.jsp"%>
