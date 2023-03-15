@@ -13,7 +13,7 @@
 		<div class="title"></div>
 	</header>
 	<main class="content" style="height: 100%">
-		<embed style="width:100%; height:100%" src="http://211.253.9.250:8088/superset/dashboard/p/lmdEZROEMbV/" />
+		<embed style="width:100%; height:100%" src="http://211.253.11.2:8088/superset/dashboard/p/MREW7V6rN4g/" />
 	</main>
 </div>
 <%@ include file="../footer.jsp"%>
